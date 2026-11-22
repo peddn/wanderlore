@@ -12,8 +12,12 @@
 -- form:    function(a, b) -> height added to the base; a and b are the
 --          values of the two noises at this place, each within -1..1
 -- top, filler:       surface node and the three nodes below it
+--          The form may return a second value. If that is true, the place
+--          is marked, and the biome's `bar` node is used at the water line
+--          instead of `shore`.
 -- shore:             surface node at sea level and one node below
 -- bed:               surface node under water
+-- bar:               surface node at the water line of marked places
 -- patches:           {nodes = {...}, above = n}: level spots where one of
 --                    these nodes replaces the surface node, on land more
 --                    than n nodes above the water (default 0)
@@ -48,16 +52,18 @@ wl_world.biomes = {
 			local ground = plain + (10 * hills - plain) * smooth((v - 0.18) / 0.45)
 			local channel = 1 - smooth(v / 0.12)
 			local lift = smooth((bar - 0.2) / 0.3) * smooth((channel - 0.55) / 0.3)
-			return ground - 3.5 * channel * (1 - lift)
+			return ground - 3.5 * channel * (1 - lift), lift > 0
 		end,
 		top = "default:dirt_with_grass",
 		filler = "default:dirt",
-		-- Gravel at the water line: on the banks and on the bars.
-		shore = "default:gravel",
-		bed = "default:sand",
-		-- Bare stone and a few small rocks on the hills.
-		patches = {nodes = {"default:stone"}, above = 12},
-		boulders = {chance = 0.12, max = 2.6, moss = 0.1, above = 12},
+		-- Sand on the banks, gravel on the river bed and on the bars.
+		shore = "default:sand",
+		bed = "default:gravel",
+		bar = "default:gravel",
+		-- Bare stone and a few small rocks, only on the topmost levels of
+		-- the hills.
+		patches = {nodes = {"default:stone"}, above = 16},
+		boulders = {chance = 0.12, max = 2.6, moss = 0.1, above = 16},
 	},
 	{
 		name = "reed_meres",

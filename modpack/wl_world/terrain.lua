@@ -190,11 +190,12 @@ local function read_map(b, k, origin, size, buffer)
 	end
 end
 
--- Fills heights[], owners[] and levels[] for the square of the given size
--- that starts at (minx, minz): the y of the topmost ground node, the biome
--- index and the y of the water surface of each column, row by row along z.
+-- Fills heights[], owners[], levels[] and marks[] for the square of the
+-- given size that starts at (minx, minz): the y of the topmost ground
+-- node, the biome index, the y of the water surface and the mark of the
+-- biome's form for each column, row by row along z.
 -- Water stands where the ground is lower than the water surface.
-function terrain.chunk(minx, minz, size, heights, owners, levels)
+function terrain.chunk(minx, minz, size, heights, owners, levels, marks)
 	if map_size ~= size then
 		local dim = {x = size, y = size, z = 1}
 		map_noise = {warp = {ValueNoiseMap(warp_params[1], dim), ValueNoiseMap(warp_params[2], dim)}}
@@ -242,15 +243,18 @@ function terrain.chunk(minx, minz, size, heights, owners, levels)
 
 	for column = 1, size * size do
 		local height = 0
+		local own = owners[column]
 		for b = 1, nbiomes do
 			local w = share[b][column]
 			if w > 0 then
 				local biome = biomes[b]
-				height = height + w * biome.base
-					+ w ^ FADE * biome.form(form_a[b][column], form_b[b][column], form_c[b][column])
+				local form, mark = biome.form(form_a[b][column], form_b[b][column], form_c[b][column])
+				height = height + w * biome.base + w ^ FADE * form
+				if b == own then
+					marks[column] = mark
+				end
 			end
 		end
-		local own = owners[column]
 		heights[column], levels[column] = water_table(biomes[own], share[own][column], SEA + height)
 	end
 

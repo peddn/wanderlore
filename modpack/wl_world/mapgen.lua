@@ -29,6 +29,7 @@ for b, biome in ipairs(biomes) do
 		filler = core.get_content_id(biome.filler),
 		shore = core.get_content_id(biome.shore),
 		bed = core.get_content_id(biome.bed),
+		bar = core.get_content_id(biome.bar or biome.shore),
 	}
 	if biome.patches then
 		skins[b].patches = {}
@@ -39,7 +40,7 @@ for b, biome in ipairs(biomes) do
 	end
 end
 
-local data, heights, owners, levels = {}, {}, {}, {}
+local data, heights, owners, levels, marks = {}, {}, {}, {}, {}
 
 local function generate(vmanip, minp, maxp)
 	-- The sky stays empty.
@@ -67,7 +68,7 @@ local function generate(vmanip, minp, maxp)
 	end
 
 	local size = maxp.x - minp.x + 1
-	terrain.chunk(minp.x, minp.z, size, heights, owners, levels)
+	terrain.chunk(minp.x, minp.z, size, heights, owners, levels, marks)
 	local boulders = terrain.boulders(minp.x, minp.z, maxp.x, maxp.z)
 
 	-- Most chunks above the land hold nothing but air. Leaving them
@@ -113,7 +114,7 @@ local function generate(vmanip, minp, maxp)
 				if height > level then
 					data[vi] = skin.top
 				elseif height >= level - 1 then
-					data[vi] = skin.shore
+					data[vi] = marks[column] and skin.bar or skin.shore
 				else
 					data[vi] = skin.bed
 				end
