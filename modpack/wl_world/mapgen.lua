@@ -19,6 +19,10 @@ local c_water = core.get_content_id("default:water_source")
 local c_boulder = core.get_content_id("default:stone")
 local c_boulder_moss = core.get_content_id("default:mossycobble")
 
+-- The share of a meadow that is grass where the biome asks for all of it.
+local MEADOW = 0.8
+local hash = wl_world.hash
+
 -- Depth of the filler below the surface node.
 local FILLER = 3
 
@@ -116,8 +120,16 @@ local function generate(vmanip, minp, maxp)
 					-- A mark belongs to the biome of the column. Where
 					-- the column wears the surface of a neighbour, it
 					-- does not count.
-					local own = marks[column] and covers[column] == owners[column]
-					data[vi] = own and skin.meadow or skin.top
+					local mark = marks[column]
+					if mark and covers[column] ~= owners[column] then
+						mark = false
+					elseif mark and mark ~= true then
+						-- A share: speckles of the normal ground remain,
+						-- partly per column and partly per clump of 2 x 2.
+						mark = mark * MEADOW > 0.6 * hash(x, z, 47)
+							+ 0.4 * hash(floor(x / 2), floor(z / 2), 48)
+					end
+					data[vi] = mark and skin.meadow or skin.top
 				elseif height >= level - 1 then
 					data[vi] = marks[column] and skin.bar or skin.shore
 				else

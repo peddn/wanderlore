@@ -88,7 +88,7 @@ for _, place in ipairs(places) do
 				local x = place.pos.x + radius * math.cos(angle)
 				local z = place.pos.z + radius * math.sin(angle)
 				local height, _, level, mark = wl_world.terrain.point(x, z)
-				if mark and height > level and wl_world.get_biome({x = x, z = z}) == place.name then
+				if (mark == true or (mark or 0) >= 1) and height > level and wl_world.get_biome({x = x, z = z}) == place.name then
 					found = {x = x, y = height, z = z}
 					break
 				end

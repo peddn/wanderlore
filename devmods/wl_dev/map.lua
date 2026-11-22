@@ -58,7 +58,7 @@ core.after(1, function()
 				t = 1 + (height - level) / 8
 			else
 				local pair = colours[biome.name] or {{80, 80, 80}, {220, 220, 220}}
-				if mark and biome.meadow then
+				if biome.meadow and (mark == true or (mark or 0) > 0.5) then
 					pair = meadow
 				end
 				low, high = pair[1], pair[2]
