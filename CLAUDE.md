@@ -66,6 +66,7 @@ Diese Regeln stehen im Konzept. Sie sind hier wiederholt, weil ein Verstoß spä
 ## Git
 
 - Nie direkt auf `main` schreiben. Jede Aufgabe bekommt einen Zweig und einen Pull Request.
+- Zweige heißen nach Meilenstein und Stichwort, auf Englisch: `m1-generator-prototype`, `m1-vegetation`, `m2-world-map`. Arbeiten außerhalb eines Meilensteins bekommen ein Präfix, etwa `docs/…`. Das hat der Autor am 22.11.2026 festgelegt und damit erlaubt, auf solche Zweige zu schreiben. Gibt eine Cloud-Sitzung einen anderen Namen vor, etwa `claude/…`, gilt trotzdem dieses Schema; lässt die Sitzung das nicht zu, einmal beim Autor nachfragen.
 - Der Autor prüft und führt zusammen. Claude führt nie selbst zusammen.
 - Ein Meilenstein, ein Pull Request. Größere Meilensteine dürfen in mehrere kleine Pull Requests zerfallen, jeder für sich lauffähig.
 - Commit-Nachrichten auf Englisch, im Imperativ, ohne Präfixe wie `feat:`.
