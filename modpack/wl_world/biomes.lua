@@ -47,11 +47,16 @@ wl_world.biomes = {
 		name = "reed_meres",
 		title = "Reed Meres",
 		zone = 1,
-		base = 3,
-		noises = {{120, 3, 201}, {28, 2, 202}},
-		-- Almost level, +-2. Many hollows sink below the water table.
+		base = 2,
+		noises = {{120, 3, 201}, {18, 2, 202}},
+		-- Almost level, 1 to 3 above the water. Many small hollows sink
+		-- below the water table. Towards a pond the land eases down, so
+		-- that the bank is one node high and no more. Ponds are about 3
+		-- deep.
 		form = function(plain, hollow)
-			return 2 * plain - 6 * smooth((hollow - 0.18) / 0.25)
+			local near = smooth((hollow - 0.1) / 0.15)
+			local pond = smooth((hollow - 0.25) / 0.2)
+			return 1.5 * plain * (1 - near) - near - 3.5 * pond
 		end,
 		top = "default:dirt_with_grass",
 		filler = "default:dirt",
