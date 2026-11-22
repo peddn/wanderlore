@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.4 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.5 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -145,6 +145,8 @@ Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die
 - **Besondere Stoffe der Inseln** gibt es nur als Beute in den Strongholds der Inseln.
 - Werkzeugstufen und Rezepte für Werkzeuge bleiben die von Minetest Game.
 
+Offen ist, welche Erze in Zone 1 liegen. Der Autor neigt zu Eisen und Kohle statt Kohle, Kupfer und Zinn. Das verschiebt die Stufen der äußeren Zonen und ist vor dem Bau der Erzschichten zu klären.
+
 ### Unter der Erde
 
 - **Höhlen** sollen hohe Qualität haben: gut zu erforschen, ohne Rundwege, nicht zu lang, schön beleuchtet, mit eigenen Gegnern und schöner Dekoration. Geplant sind drei Typen.
@@ -157,11 +159,13 @@ Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die
 
 Die Biome sind eigene, aus vorhandenem Material neu zusammengesetzt. Jedes ist ein Steckbrief aus Landschaftsform, Farbpalette, Pflanzenmischung, Landmarke, Atmosphäre, einer eigenen Regel und seinem Spielinhalt: Kraut, Feldfrucht, Erz, Monster, Stronghold-Typ.
 
-Welche Biome es gibt, entsteht mit der Zeit am Generator. Erste Skizzen:
+Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
 
 | Arbeitsname | Zone | Landschaft | Besonderheit |
 | --- | --- | --- | --- |
-| Blossom Downs | 1 | sanfte Hügel mit Bachtälern | Riesenbäume als Wegmarken |
+| Blossom Downs | 1 | weite, runde Hügel mit eingeschnittenen Bachtälern | blühende Bäume, Riesenbäume als Wegmarken |
+| Reed Meres | 1 | flaches Tiefland mit vielen kleinen Seen und Tümpeln | Schilf, Weiden, Seerosen |
+| Old Wood | 1 | buckliger Waldboden aus Kuppen und Mulden, Lichtungen | sehr hohe alte Bäume, Moos, Findlinge |
 | Bamboo Terraces | 2 | gestufte Terrassen mit Wasserbecken | Reis wächst wild |
 | Mushroom Hollows | 2 | tiefe Senken | Pilze leuchten nachts |
 | Ember Scar | 3, Feuer | Schluchten in rotem Fels, Lavaflüsse | Hitze |
@@ -378,9 +382,10 @@ Noch zu entscheiden:
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
 
-5. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
-6. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
+5. **Die Erze je Zone**, ausgehend von Eisen und Kohle in Zone 1.
+6. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
+7. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
 
 Später:
 
-7. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.
+8. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.
