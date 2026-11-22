@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.0 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.1 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -22,7 +22,36 @@ Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets komm
 | Reihenfolge | Der Kartengenerator wird zuerst gebaut |
 | Namen | Spiel: Wanderlore. Mod-Kürzel: `wl_`. Was man sammelt: Lore |
 
-## 2. Form und Kompatibilität
+## 2. Ziel und Ablauf
+
+### Das Ziel
+
+Die Welt selbst ist das Rätsel. Tief unter ihr liegt die Zwischenschicht, und der einzige Weg hinab führt durch die Schlote der Vulkaninseln. Die sind versiegelt.
+
+1. **Die Siegel** sind Blöcke in den Schloten, die sich nur mit einem bestimmten Werkzeug abbauen lassen.
+2. **Das Werkzeug** stellt man aus vier Zutaten her, je eine aus den Strongholds der vier Elemente: Feuer, Wasser, Erde und Luft. Diese Strongholds liegen in Zone 3.
+3. **Der Abstieg** in die Zwischenschicht ist der Höhepunkt. Dort wartet als letzter Gegner ein Drache.
+4. **Danach geht es weiter.** Die Zwischenschicht reicht unter dem Meer hindurch und kann später zu weiteren Kontinenten führen.
+
+Die Vulkane sind nicht von weitem zu sehen, weil Luanti nur die nähere Umgebung zeichnet. Sie sind über die Inseln verteilt und müssen gefunden werden.
+
+Daneben gibt es ein stilles zweites Ziel: ein vollständiges Lorebook.
+
+### Die erste Stunde
+
+1. **Ankunft im Startland** mit leerem Inventar, wenig Leben und wenig Ausdauer, weil der Magen leer ist.
+2. **Erste Nahrung sammeln.** Wilde Feldfrüchte roh essen füllt die Leisten etwas.
+3. **Werkzeug aus Holz und Stein**, wie in Minetest Game.
+4. **Saatgut anbauen**, den ersten Herd bauen, das erste Gericht kochen.
+5. **Die erste Nacht:** schwache Monster. Ein Unterschlupf und ein Bett, das den Wiedereinstieg festlegt.
+6. **Die drei Biome des Startlands durchwandern.**
+7. **Flach graben:** Kohle, Kupfer, Zinn. Bronze.
+8. **Die Lore-Station bauen und die erste Lore ausgeben.** Hier fällt die erste Entscheidung.
+9. **Der Fluss.** Für die zweite Stufe einer Station braucht man Material von drüben.
+
+Es gibt keine Anleitung und keine Aufgabenliste. Das Lorebook zeigt, wie viel in jedem Bereich noch fehlt, und weist so den Weg.
+
+## 3. Form und Kompatibilität
 
 | Teil | Inhalt | Für wen |
 | --- | --- | --- |
@@ -43,7 +72,7 @@ Wanderlore hängt nicht von LEP ab, muss aber in dessen Welten laufen können. D
 
 In LEP sind zwei kleine Anpassungen nötig: Die Mod-Liste muss ein Modpack mit mehreren Mods laden können, und die Überschneidung mit dem Mod Awards ist zu klären.
 
-## 3. Die Welt
+## 4. Die Welt
 
 ### Aufbau des Generators
 
@@ -119,7 +148,7 @@ Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die
 - **Höhlen** sollen hohe Qualität haben: gut zu erforschen, ohne Rundwege, nicht zu lang, schön beleuchtet, mit eigenen Gegnern und schöner Dekoration. Geplant sind drei Typen.
 - **Dungeons** entstehen aus Bausteinen. Der Autor baut einzelne Räume und Gänge, der Generator setzt sie zu immer anderen Anlagen zusammen, ähnlich wie in Diablo 1: mehrere Ebenen, nach unten härter.
 - **Die Zwischenschicht** ist eine durchgehende zweite Welt etwa 360 bis 460 Blöcke unter dem Meer. Thema ist die Urzeit, mit Dinosauriern und Drachen. Sie ist die Zone des späten Spiels und liefert dessen Rohstoffe.
-- **Über der Zwischenschicht liegt unzerstörbares Gestein.** Nur die Schlote der Vulkaninseln durchbrechen es. Geplant sind vier Vulkaninseln in verschiedenen Himmelsrichtungen.
+- **Über der Zwischenschicht liegt unzerstörbares Gestein.** Nur die Schlote der Vulkaninseln durchbrechen es, und die sind versiegelt (Abschnitt 2). Geplant sind vier Vulkaninseln.
 - **Vorerst bleibt die Zwischenschicht leer** und gesperrt.
 
 ### Biome
@@ -137,7 +166,7 @@ Welche Biome es gibt, entsteht mit der Zeit am Generator. Erste Skizzen:
 | Frost Spires | 3 | Eisnadeln, dazwischen Frostwald | Schneesturm senkt die Sicht |
 | Crystal Atoll | Inseln | Ringinseln mit Lagune | nachwachsende Kristalle |
 
-## 4. Fortschritt
+## 5. Fortschritt
 
 ### Lore
 
@@ -153,9 +182,9 @@ Lore gibt es für alles, was man zum ersten Mal tut. Jeder Spieler hat sein eige
 | Höhlentyp, Dungeon oder Stronghold-Typ betreten | 3 |
 | Endgegner besiegt | 5 |
 
-Das **Lorebook** zeigt, was gefunden ist und wie viel noch fehlt, ohne das Fehlende zu verraten.
+Das **Lorebook** zeigt, was gefunden ist und wie viel noch fehlt, ohne das Fehlende zu verraten. Es ist kein Gegenstand, sondern ein Reiter im Inventar. So kann man es weder ablegen noch verlieren.
 
-Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung stehen:
+Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung stehen. Ausgegeben wird sie an einer eigenen, baubaren Station:
 
 - **Lore wird ausgegeben.** Der Spieler entscheidet, welche Rezepte er freischaltet.
 - **Lore reicht nicht für alles.** Richtwert: genug für einen der Bereiche Waffen, Rüstung und Alchemie ganz und für einen zweiten zur Hälfte.
@@ -166,7 +195,7 @@ Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung
 
 ### Stationen
 
-Es gibt drei Stationen: Herd, Kessel und Schmiede. Ein Rezept braucht die freigeschaltete Kenntnis und eine Station der nötigen Stufe.
+Hergestellt wird an drei Stationen: Herd, Kessel und Schmiede. Ein Rezept braucht die freigeschaltete Kenntnis und eine Station der nötigen Stufe. Die vierte Station ist die Lore-Station, an der man Rezepte freischaltet.
 
 Stationen werden nur mit Material aufgewertet, Lore spielt dabei keine Rolle. Das Material für höhere Stufen liegt in den äußeren Zonen und in Strongholds. Das lädt dazu ein, sich in gefährliche Gebiete zu wagen.
 
@@ -176,7 +205,7 @@ Waffen und Rüstungen entstehen nur an der Schmiede, weil das normale Handwerksf
 
 Reife Feldfrüchte geben beim Ernten manchmal Lebensessenz, wilde Pflanzen öfter. Damit kauft man Saatgut von Sorten, die man noch nicht gefunden hat. Essenz ist erneuerbar, Lore nicht.
 
-## 5. Überleben
+## 6. Überleben
 
 ### Nahrung
 
@@ -201,7 +230,7 @@ In Luanti lassen sich Hiebe nicht verhindern, aber wirkungslos machen, und zwar 
 
 Tränke sind das Gegenstück zur Nahrung: kurz, stark, für den Moment. Sie wirken ein bis drei Minuten, Heilung sofort. Verschiedene Tränke lassen sich gleichzeitig nutzen.
 
-## 6. Herstellen
+## 7. Herstellen
 
 ### Farming und Küche
 
@@ -232,7 +261,7 @@ Tränke sind das Gegenstück zur Nahrung: kurz, stark, für den Moment. Sie wirk
 
 Technisch wird die Flugbahn mit Strahlen in Schritten berechnet. Der sichtbare Pfeil ist nur Zierde. So fliegt nichts durch einen Gegner hindurch.
 
-## 7. Gegner, Tiere und Bauwerke
+## 8. Gegner, Tiere und Bauwerke
 
 ### Monster und Tiere
 
@@ -266,14 +295,14 @@ Strongholds sind ganze Bauwerke an der Oberfläche. Der Autor baut sie im Spiel:
 
 Die Zone bestimmt die Stärke von Beute und Monstern. Platziert wird vom Generator. Die Bausteine der Dungeons nutzen denselben Baukasten und dieselben Marker.
 
-## 8. Technik
+## 9. Technik
 
 ### Mods
 
 | Mod | Aufgabe | braucht |
 | --- | --- | --- |
 | `wl_world` | Generator, Zonen, Biome, Verteilung von allem in der Welt | Minetest Game |
-| `wl_lore` | Lore sammeln, Lorebook, Freischalten von Rezepten | `wl_world` |
+| `wl_lore` | Lore sammeln, Lorebook, Lore-Station, Freischalten von Rezepten | `wl_world` |
 | `wl_vitals` | Leben, Ausdauer, Wirkung von Nahrung | – |
 | `wl_farming` | Feldfrüchte, Speisen, Herd, Essenz | `wl_world`, `farming` |
 | `wl_alchemy` | Wildkräuter, Kessel, Tränke, Wurftränke | `wl_world`, `vessels` |
@@ -297,7 +326,7 @@ Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden i
 
 Selbst zu liefern sind Höhlen, Flüsse, Dungeons, die Auswahl der Biome, der Bewuchs und die Erzverteilung. Große Bauwerke reichen über mehrere Portionen der Welt; ihr Ort muss deshalb vorab berechenbar sein.
 
-## 9. Reihenfolge und Umfang
+## 10. Reihenfolge und Umfang
 
 | Schritt | Inhalt |
 | --- | --- |
@@ -311,7 +340,7 @@ Selbst zu liefern sind Höhlen, Flüsse, Dungeons, die Auswahl der Biome, der Be
 | 8 | `wl_strongholds`, zuerst der Baukasten |
 | 9 | `wl_monsters` |
 | 10 | `wl_combat` |
-| 11 | `wl_lore` vollständig: Ketten, Freischalten, Umentscheiden |
+| 11 | `wl_lore` vollständig: Lore-Station, Ketten, Freischalten, Umentscheiden |
 | 12 | `wl_world` G4: Höhlen und Dungeons |
 | 13 | `wl_world` G5: Zwischenschicht |
 | 14 | Spiel-Hülle, Anbindung an LEP |
@@ -320,7 +349,7 @@ Schritt 3 kommt früh, weil sich erst dort zeigt, ob Entdecken als Fortschritt t
 
 Grober Umfang: 7.000 bis 10.000 Zeilen Lua, davon etwa ein Drittel für den Generator. Die Zahl ist eine Schätzung ohne Messung. Dazu kommt die Bauzeit des Autors für Strongholds und Dungeon-Bausteine.
 
-## 10. Risiken
+## 11. Risiken
 
 - **Der Generator ist zu langsam** für viele gleichzeitige Spieler. Wird in G1 gemessen.
 - **Übergänge zwischen Biomen** sehen unnatürlich aus. Wird in G2 sichtbar.
@@ -331,7 +360,7 @@ Grober Umfang: 7.000 bis 10.000 Zeilen Lua, davon etwa ein Drittel für den Gene
 - **Der Umfang ist groß** für ein Projekt ohne festen Zeitplan.
 - **Das Spielgefühl lässt sich nur im Spiel beurteilen**, nicht an Screenshots.
 
-## 11. Offen
+## 12. Offen
 
 Bewusst auf später verschoben, weil es sich aus dem Spielen ergibt:
 
@@ -346,11 +375,12 @@ Noch zu entscheiden:
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
 
+5. **Die vier Elemente:** ob jedes der vier Biome von Zone 3 für ein Element steht.
+6. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
+
 Noch gar nicht besprochen:
 
-5. **Ziel und Ende des Spiels.** Was ist der Höhepunkt, und was kommt danach?
-6. **Die erste Stunde.** Was tut ein neuer Spieler in welcher Reihenfolge?
 7. **Mehrspieler.** Handel, gemeinsame Stationen, Kampf zwischen Spielern, Tod und Rückweg.
 8. **Bauen und Wohnen.** Hat ein eigenes Haus einen Nutzen?
-9. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Lorebook, Fenster der Stationen.
+9. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.
 10. **Klang und Musik.**
