@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.5 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.6 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -47,7 +47,7 @@ Daneben gibt es ein stilles zweites Ziel: ein vollständiges Lorebook.
 4. **Saatgut anbauen**, den ersten Herd bauen, das erste Gericht kochen.
 5. **Die erste Nacht:** schwache Monster. Ein Unterschlupf und ein Bett, das den Wiedereinstieg festlegt.
 6. **Die drei Biome des Startlands durchwandern.**
-7. **Flach graben:** Kohle, Kupfer, Zinn. Bronze.
+7. **Flach graben:** Eisen. Mit Kohle als Brennstoff wird daraus Stahl.
 8. **Die Lore-Station bauen und die erste Lore ausgeben.** Hier fällt die erste Entscheidung.
 9. **Der Fluss.** Für die zweite Stufe einer Station braucht man Material von drüben.
 
@@ -132,20 +132,24 @@ Jedes Biom hat eine Höhenformel aus zwei Teilen: einer **Grundhöhe** und der *
 
 ### Erze und Tiefe
 
-Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die richtige Tiefe. Tiefen in Blöcken unter der Oberfläche, als Startwerte:
+Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die richtige Tiefe.
 
-| Tiefe | unter Zone 1 | unter Zone 2 | unter Zone 3 und Inseln |
-| --- | --- | --- | --- |
-| 0 bis 30 | Kohle, Kupfer, Zinn | Kohle, Kupfer, Zinn | Kohle, Kupfer, Zinn |
-| 30 bis 120 | taubes Gestein | Eisen, Gold | Eisen, Gold |
-| 100 bis 250 | taubes Gestein | taubes Gestein | Mese, Diamant |
-
+- **Zone 1 hat genau ein Erz: Eisen.**
+- **Kohle ist kein Erz, sondern ein guter Brennstoff.** Sie folgt nicht den Regeln der Erze.
+- **Erze der inneren Zonen laufen in ihrer Schicht nach außen weiter.** Die äußeren Zonen haben sie in den oberen Schichten und ihre eigenen darunter.
 - **Das Biom entscheidet, welches Erz einer Schicht es gibt.**
 - **Keine Anzeichen an der Oberfläche.** Das Entdecken besteht darin, in einem Biom tief genug zu graben.
 - **Besondere Stoffe der Inseln** gibt es nur als Beute in den Strongholds der Inseln.
-- Werkzeugstufen und Rezepte für Werkzeuge bleiben die von Minetest Game.
 
-Offen ist, welche Erze in Zone 1 liegen. Der Autor neigt zu Eisen und Kohle statt Kohle, Kupfer und Zinn. Das verschiebt die Stufen der äußeren Zonen und ist vor dem Bau der Erzschichten zu klären.
+Tiefen in Blöcken unter der Oberfläche, als Startwerte:
+
+| Schicht | Tiefe | Erze |
+| --- | --- | --- |
+| obere | 0 bis 30 | Eisen, in allen Zonen |
+| mittlere | 30 bis 120 | Erze der Zone 2, ab Zone 2 |
+| tiefe | 100 bis 250 | Erze der Zone 3, ab Zone 3 und unter den Inseln |
+
+Offen ist, welche Erze Zone 2 und Zone 3 bekommen, was aus Kupfer, Zinn und Bronze wird, wo die Kohle liegt und unter welchem Biom von Zone 1 das Eisen. Zu klären vor dem Bau der Erzschichten.
 
 ### Unter der Erde
 
@@ -157,7 +161,15 @@ Offen ist, welche Erze in Zone 1 liegen. Der Autor neigt zu Eisen und Kohle stat
 
 ### Biome
 
-Die Biome sind eigene, aus vorhandenem Material neu zusammengesetzt. Jedes ist ein Steckbrief aus Landschaftsform, Farbpalette, Pflanzenmischung, Landmarke, Atmosphäre, einer eigenen Regel und seinem Spielinhalt: Kraut, Feldfrucht, Erz, Monster, Stronghold-Typ.
+Die Biome sind eigene, aus vorhandenem Material neu zusammengesetzt. Jedes ist ein Steckbrief aus Landschaftsform, Farbpalette, Pflanzenmischung, Landmarke, Atmosphäre und einer eigenen Regel.
+
+Jedes Biom hat außerdem etwas, das es nur dort gibt:
+
+- **eine eigene Holzart**
+- **eine Feldfrucht**
+- **zwei Kräuter oder andere Zutaten für die Alchemie**
+
+Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das 15 Holzarten, 15 Feldfrüchte und 30 Zutaten.
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
 
@@ -241,14 +253,14 @@ Tränke sind das Gegenstück zur Nahrung: kurz, stark, für den Moment. Sie wirk
 ### Farming und Küche
 
 - **Feldfrüchte** nach Auswahl aus den 42 von Farming Redo, nur die Texturen. Angebaut wird mit dem Farming aus Minetest Game.
-- **Wildvorkommen** als Saatgutquelle, je Biom verschieden.
+- **Jedes Biom hat seine Feldfrucht.** Sie wächst dort wild und ist die Quelle des Saatguts.
 - **Herd** mit vier Zutatenfächern, Brennstoff und Rezepte-Reiter.
 - **Alle Rezepte sind pflanzlich.** Tofu ersetzt Fleisch.
 - Bessere Gerichte brauchen Zutaten aus mehreren Biomen und höhere Stufen des Herds.
 
 ### Alchemie
 
-- **Wildkräuter:** eines je Biom, nicht anbaubar.
+- **Zutaten:** zwei Kräuter oder andere Zutaten je Biom, nicht anbaubar.
 - **Glasfläschchen:** die Glasflasche aus Minetest Game, an Wasser gefüllt.
 - **Kessel:** Wasserflasche plus bis zu drei Zutaten, kein Brennstoff.
 - **Tränke zum Trinken** in zwei Wirkstufen. Geplant: Heilung, Schnelligkeit, Sprungkraft, Federfall, Wasseratmung, Feuerschutz, Katzenauge.
@@ -257,7 +269,7 @@ Tränke sind das Gegenstück zur Nahrung: kurz, stark, für den Moment. Sie wirk
 
 ### Waffen und Rüstung
 
-- **Stufen folgen den Erzen:** Bronze, Stahl, Mese, Diamant, später Stoffe der Zwischenschicht.
+- **Stufen folgen den Erzen der Zonen**, beginnend mit Stahl aus dem Eisen von Zone 1, später Stoffe der Zwischenschicht.
 - **Rüstung** über 3D Armor.
 - **Fernkampf:** Bogen und Armbrust, dazu die Wurftränke der Alchemie. Alle nutzen dasselbe eigene Geschoss-System.
 - **Bogen:** Spannen kostet Ausdauer und bestimmt Wucht und Reichweite.
@@ -382,7 +394,7 @@ Noch zu entscheiden:
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
 
-5. **Die Erze je Zone**, ausgehend von Eisen und Kohle in Zone 1.
+5. **Die Erze von Zone 2 und 3**, der Verbleib von Kupfer, Zinn und Bronze, die Lage von Kohle und Eisen.
 6. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
 7. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
 
