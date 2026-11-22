@@ -1,10 +1,10 @@
 # Wanderlore: Konzept
 
-Fassung 1.2 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.3 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
-Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets kommen können und was die Recherche ergab, steht in [recherche.md](recherche.md).
+Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets kommen können und was die Recherche ergab, steht in [recherche.md](recherche.md). In welchen Schritten gebaut wird, steht in [arbeitsplan.md](arbeitsplan.md).
 
 ## 1. Grundsätze
 
@@ -262,7 +262,7 @@ Tränke sind das Gegenstück zur Nahrung: kurz, stark, für den Moment. Sie wirk
 
 Technisch wird die Flugbahn mit Strahlen in Schritten berechnet. Der sichtbare Pfeil ist nur Zierde. So fliegt nichts durch einen Gegner hindurch.
 
-## 8. Gegner, Tiere und Bauwerke
+## 8. Gegner, Bauwerke und Zusammenspiel
 
 ### Monster und Tiere
 
@@ -295,6 +295,22 @@ Strongholds sind ganze Bauwerke an der Oberfläche. Der Autor baut sie im Spiel:
 6. Mit einem Befehl zur Probe setzen.
 
 Die Zone bestimmt die Stärke von Beute und Monstern. Platziert wird vom Generator. Die Bausteine der Dungeons nutzen denselben Baukasten und dieselben Marker.
+
+### Schutz durch Häuser
+
+Ein Haus schützt vor den Monstern der Nacht. Monster entstehen nicht in Häusern. Als Regel für den Bau: Monster entstehen nur auf natürlichem Boden und nur im Dunkeln. Gebaute Böden und Licht halten sie fern, und Türen öffnen sie nicht.
+
+### Mehrspieler, Tod und Wiedereinstieg
+
+- **Handel** ist normales Tauschen von Gegenständen. Ein eigenes Handelssystem gibt es nicht.
+- **Stationen** kann jeder bedienen. Jeder sieht dort die Rezepte, die er selbst kennt.
+- **Kampf zwischen Spielern** ist wahlweise an oder aus, als Einstellung der Welt.
+- **Tod** wie in Minetest Game.
+- **Wiedereinstieg** am eigenen Bett, sonst am Startpunkt.
+
+### Klang und Musik
+
+Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Musik schreibt der Autor später selbst.
 
 ## 9. Technik
 
@@ -329,24 +345,9 @@ Selbst zu liefern sind Höhlen, Flüsse, Dungeons, die Auswahl der Biome, der Be
 
 ## 10. Reihenfolge und Umfang
 
-| Schritt | Inhalt |
-| --- | --- |
-| 1 | `wl_world` G1: Prototyp |
-| 2 | `wl_world` G2: Weltkarte |
-| 3 | `wl_lore` in einfacher Form: Lore für Biome, Lorebook |
-| 4 | `wl_world` G3: Ausbau |
-| 5 | `wl_vitals`: Leben, Ausdauer, Nahrung |
-| 6 | `wl_farming` |
-| 7 | `wl_alchemy` |
-| 8 | `wl_strongholds`, zuerst der Baukasten |
-| 9 | `wl_monsters` |
-| 10 | `wl_combat` |
-| 11 | `wl_lore` vollständig: Lore-Station, Ketten, Freischalten, Umentscheiden |
-| 12 | `wl_world` G4: Höhlen und Dungeons |
-| 13 | `wl_world` G5: Zwischenschicht |
-| 14 | Spiel-Hülle, Anbindung an LEP |
+Gebaut wird in 15 Meilensteinen, die im [Arbeitsplan](arbeitsplan.md) stehen. Die Reihenfolge in Kürze: zuerst die Welt bis zur Weltkarte, dann Lore in einfacher Form, dann der Ausbau der Welt, danach Überleben, Küche, Alchemie, Bauwerke, Monster, Kampf und die vollständige Lore, zuletzt Unterwelt, Zwischenschicht und die Spiel-Hülle.
 
-Schritt 3 kommt früh, weil sich erst dort zeigt, ob Entdecken als Fortschritt trägt.
+Lore kommt früh, weil sich erst dort zeigt, ob Entdecken als Fortschritt trägt.
 
 Grober Umfang: 7.000 bis 10.000 Zeilen Lua, davon etwa ein Drittel für den Generator. Die Zahl ist eine Schätzung ohne Messung. Dazu kommt die Bauzeit des Autors für Strongholds und Dungeon-Bausteine.
 
@@ -379,9 +380,6 @@ Noch zu entscheiden:
 5. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
 6. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
 
-Noch gar nicht besprochen:
+Später:
 
-7. **Mehrspieler.** Handel, gemeinsame Stationen, Kampf zwischen Spielern, Tod und Rückweg.
-8. **Bauen und Wohnen.** Hat ein eigenes Haus einen Nutzen?
-9. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.
-10. **Klang und Musik.**
+7. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.
