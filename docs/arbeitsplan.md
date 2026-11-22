@@ -7,7 +7,7 @@ Es gibt keinen Zeitplan. Die Reihenfolge zählt, nicht das Datum.
 ## Arbeitsweise
 
 - **Ein Meilenstein, ein Pull Request.** Zusammengeführt wird, wenn das „Fertig, wenn“ erfüllt ist.
-- **Ein Meilenstein, ein neuer Chat.** Lange Chats werden unzuverlässig. Damit ein neuer Chat nicht bei null anfängt, bekommt das Repository in M0 eine Datei mit den Regeln des Projekts.
+- **Ein Meilenstein, ein neuer Chat.** Lange Chats werden unzuverlässig. Damit ein neuer Chat nicht bei null anfängt, stehen die Regeln des Projekts in der [`CLAUDE.md`](../CLAUDE.md).
 - **Prüfen in zwei Schritten.** Claude lädt das Modpack in Luanti 5.18, prüft auf Fehler und macht Screenshots. Wie es sich anfühlt, prüft der Autor im Spiel.
 - **Neue Welt nach jeder Änderung am Generator.** Auf alte Welten wird keine Rücksicht genommen.
 - **Fremde Assets kommen nie ungeprüft ins Repository.** Jede Datei wird mit Autor, Lizenz und Quelle in der Lizenzdatei eingetragen.
@@ -16,8 +16,8 @@ Es gibt keinen Zeitplan. Die Reihenfolge zählt, nicht das Datum.
 
 | Nr. | Meilenstein | Ergebnis | Fertig, wenn | Beitrag des Autors |
 | --- | --- | --- | --- | --- |
-| M0 | Grundgerüst | Aufbau des Repositories, leeres Modpack, Skripte zum Einrichten und Starten, Regeln des Projekts, Lizenzdatei | das leere Modpack lädt in Luanti ohne Fehler | – |
-| M1 | Generator G1: Prototyp | die drei Biome von Zone 1 mit eigener Landschaftsform | Screenshots zeigen deutlich verschiedene Landschaften, die Geschwindigkeit ist gemessen | die drei Biome festlegen, die Landschaft im Spiel beurteilen |
+| M0 | Grundgerüst | Aufbau des Repositories, leeres Modpack, Skripte zum Einrichten und Starten, Lizenzdatei | das leere Modpack lädt in Luanti ohne Fehler | – |
+| M1 | Generator G1: Prototyp | die drei Biome von Zone 1 mit eigener Landschaftsform | Screenshots zeigen deutlich verschiedene Landschaften, die Geschwindigkeit ist gemessen | die Landschaft im Spiel beurteilen |
 | M2 | Generator G2: Weltkarte | Zonen, ausgeteilte Biome, Meer, Inseln, Vulkaninseln, Übergänge, Schwellen an Zonengrenzen | man kann vom Startland bis zu einer Insel reisen | Übergänge und Reisezeiten beurteilen |
 | M3 | Lore, einfach | Lore für betretene Biome, Lorebook als Reiter im Inventar | das Lorebook füllt sich beim Wandern | prüfen, ob Entdecken als Antrieb trägt |
 | M4 | Generator G3: Ausbau | Erzschichten nach Zone, Biom und Tiefe, Flüsse, Bewuchs, gesperrter Raum für die Zwischenschicht | eine Welt lässt sich flüssig erkunden, auch mit mehreren Spielern | Biome weiter ausarbeiten |
@@ -45,7 +45,7 @@ Nach der Wegmarke „Erste Stunde“ fehlen noch die Monster der ersten Nacht. W
 
 ## Festgelegt für den Anfang
 
-- **Der Prototyp beginnt mit den drei Biomen von Zone 1.** Welche das sind, ist vor M1 zu entscheiden.
+- **Der Prototyp beginnt mit den drei Biomen von Zone 1:** Blossom Downs, Reed Meres und Old Wood. Das sind Arbeitsnamen.
 - **Der eigene Code steht unter LGPL 3.0.** Die übernommenen Medien behalten ihre Lizenzen.
 
 ## Was den Plan umwerfen kann
