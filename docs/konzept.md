@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.3 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.4 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -21,6 +21,7 @@ Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets komm
 | Entwicklungsphase | Keine Rücksicht auf bereits erstellte Welten |
 | Reihenfolge | Der Kartengenerator wird zuerst gebaut |
 | Namen | Spiel: Wanderlore. Mod-Kürzel: `wl_`. Was man sammelt: Lore |
+| Lizenz | Eigener Code unter LGPL 3.0. Übernommene Medien behalten ihre Lizenzen |
 
 ## 2. Ziel und Ablauf
 
@@ -335,7 +336,7 @@ Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden i
 
 | Stufe | Inhalt | Fertig, wenn |
 | --- | --- | --- |
-| G1 Prototyp | Landschaftsformen und zwei bis drei Biome | Screenshots zeigen deutlich verschiedene Landschaften, die Geschwindigkeit ist gemessen |
+| G1 Prototyp | Landschaftsformen und die drei Biome von Zone 1 | Screenshots zeigen deutlich verschiedene Landschaften, die Geschwindigkeit ist gemessen |
 | G2 Weltkarte | Zonen, Lage der Biome, Meer und Inseln, Übergänge | man kann vom Startland bis zu einer Insel reisen |
 | G3 Ausbau | Erzschichten, Flüsse, Platz für Höhlen und Zwischenschicht freigehalten | eine Welt lässt sich flüssig erkunden |
 | G4 Unterwelt | Höhlen und Dungeons | man findet Höhlen und steigt in ihnen ab |
