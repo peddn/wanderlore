@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 14 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 15 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -235,7 +235,7 @@ Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung
 
 - **Lore wird ausgegeben.** Der Spieler entscheidet, welche Rezepte er freischaltet.
 - **Lore reicht nicht für alles.** Richtwert: genug für einen Bereich ganz und einen zweiten zur Hälfte. Es gibt die Bereiche Waffen, Rüstung und Alchemie.
-- **Rezepte bilden Ketten**, von schlecht nach gut, zum Beispiel eine Kette für Schwerter und eine für Bögen. Es gibt keine Gabelungen und keine förmliche Wahl eines Pfades. Die Spezialisierung ergibt sich allein daraus, dass die Lore knapp ist.
+- **Rezepte bilden Ketten**, von schlecht nach gut, zum Beispiel eine Kette für Schwerter, eine für Bögen und eine für Wurftränke. Es gibt keine Gabelungen und keine förmliche Wahl eines Pfades. Die Spezialisierung ergibt sich allein daraus, dass die Lore knapp ist.
 - **Die Küche steht allen offen.** Ihre Rezepte sind billig, weil Nahrung für jeden lebenswichtig ist.
 - **Umentscheiden ist gegen einen Preis möglich.** Was der Preis ist, ist offen.
 - **Freischaltungen gelten je Spieler.** Eine Station zeigt jedem die Rezepte, die er kennt.
@@ -264,6 +264,7 @@ Reife Feldfrüchte geben beim Ernten manchmal Lebensessenz, wilde Pflanzen öfte
 - **Glasfläschchen:** die Glasflasche aus Minetest Game, an Wasser gefüllt.
 - **Kessel:** Wasserflasche plus bis zu drei Zutaten, kein Brennstoff.
 - **Sieben Tränke** in zwei Wirkstufen: Heilung, Schnelligkeit, Sprungkraft, Federfall, Wasseratmung, Feuerschutz, Katzenauge.
+- **Wurftränke** gehören zur Alchemie und bilden dort eine eigene Kette. Sie werden geworfen und wirken am Einschlagsort, etwa als Brandsatz oder als Frost, der Gegner verlangsamt. Technisch nutzen sie dasselbe Geschoss-System wie Bogen und Armbrust.
 - **Wirkstufe II** braucht Kessel Stufe 3 und eine seltene Zutat: Mondstaub oder Eiskristall aus Truhen, Knochen, Zahn oder Horn als Monster-Beute.
 
 ## 9. Monster
@@ -349,7 +350,7 @@ An einer Schmiede, mit Monster-Beute und den besonderen Stoffen der Inseln. Welc
 
 ### Fernkampf
 
-Festgelegt am 22.11.2026: Bogen und Armbrust, mit eigenem Geschoss-System. Bestehende Mods dienen nur als Quelle für Assets und Ideen.
+Festgelegt am 22.11.2026: Bogen und Armbrust im Bereich Waffen, Wurftränke im Bereich Alchemie, alle mit demselben eigenen Geschoss-System. Bestehende Mods dienen nur als Quelle für Assets und Ideen.
 
 | Quelle | Inhalt | Lizenz | Stand |
 | --- | --- | --- | --- |
