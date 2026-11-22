@@ -42,8 +42,21 @@ end
 
 local warp_params = {noiseparams({600, 3, 11}), noiseparams({600, 3, 12})}
 local form_params = {}
+-- bends[b][k] is set if noise k of biome b is read at a shifted place.
+local bends = {}
 for b, biome in ipairs(biomes) do
-	form_params[b] = {noiseparams(biome.noises[1]), noiseparams(biome.noises[2])}
+	form_params[b], bends[b] = {}, {}
+	for k, def in ipairs(biome.noises) do
+		form_params[b][k] = noiseparams(def)
+		if def.bend then
+			local amount, spread, octaves, seed = unpack(def.bend)
+			bends[b][k] = {
+				amount = amount,
+				x = noiseparams({spread, octaves, seed}),
+				z = noiseparams({spread, octaves, seed + 1000}),
+			}
+		end
+	end
 end
 
 -- Noise objects cannot be created while mods load, so they are created on
@@ -54,6 +67,9 @@ local function get_point_noise()
 		point_noise = {warp = {ValueNoise(warp_params[1]), ValueNoise(warp_params[2])}}
 		for b = 1, nbiomes do
 			point_noise[b] = {ValueNoise(form_params[b][1]), ValueNoise(form_params[b][2])}
+			for k, bend in pairs(bends[b]) do
+				point_noise[b]["bend" .. k] = {ValueNoise(bend.x), ValueNoise(bend.z)}
+			end
 		end
 	end
 	return point_noise
@@ -72,6 +88,19 @@ local function mix(weights, form)
 	return height
 end
 
+-- Value of noise k of biome b at a single place, bent if the biome says so.
+local bent_pos = {x = 0, y = 0}
+local function read(noise, b, k, pos)
+	local bend = bends[b][k]
+	if not bend then
+		return noise[b][k]:get_2d(pos)
+	end
+	local shift = noise[b]["bend" .. k]
+	bent_pos.x = pos.x + bend.amount * shift[1]:get_2d(pos)
+	bent_pos.y = pos.y + bend.amount * shift[2]:get_2d(pos)
+	return noise[b][k]:get_2d(bent_pos)
+end
+
 -- Returns the exact height of the ground and the index of the biome at a
 -- single place. Does not know about boulders.
 local point_weights, point_pos = {}, {x = 0, y = 0}
@@ -83,7 +112,7 @@ function terrain.point(x, z)
 		z + WARP * noise.warp[2]:get_2d(point_pos),
 		point_weights)
 	local height = mix(point_weights, function(b)
-		return biomes[b].form(noise[b][1]:get_2d(point_pos), noise[b][2]:get_2d(point_pos))
+		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos))
 	end)
 	return SEA + height, own
 end
@@ -96,6 +125,34 @@ for b = 1, nbiomes do
 	form_a[b], form_b[b], share[b] = {}, {}, {}
 end
 local chunk_weights = {}
+local bend_x, bend_z = {}, {}
+
+-- Fills buffer[] with noise k of biome b for a whole chunk. A bent noise
+-- cannot be read as a map: its shift comes as two maps, and the noise is
+-- then read place by place, where the biome occurs at all.
+local function read_map(b, k, origin, size, buffer)
+	local bend = bends[b][k]
+	if not bend then
+		map_noise[b][k]:get_2d_map_flat(origin, buffer)
+		return
+	end
+	local shift = map_noise[b]["bend" .. k]
+	shift[1]:get_2d_map_flat(origin, bend_x)
+	shift[2]:get_2d_map_flat(origin, bend_z)
+	local noise = get_point_noise()[b][k]
+	local amount, weights, pos = bend.amount, share[b], bent_pos
+	local i = 0
+	for z = origin.y, origin.y + size - 1 do
+		for x = origin.x, origin.x + size - 1 do
+			i = i + 1
+			if weights[i] > 0 then
+				pos.x = x + amount * bend_x[i]
+				pos.y = z + amount * bend_z[i]
+				buffer[i] = noise:get_2d(pos)
+			end
+		end
+	end
+end
 
 -- Fills heights[] and owners[] for the square of the given size that starts
 -- at (minx, minz): the y of the topmost ground node and the biome index of
@@ -106,6 +163,9 @@ function terrain.chunk(minx, minz, size, heights, owners)
 		map_noise = {warp = {ValueNoiseMap(warp_params[1], dim), ValueNoiseMap(warp_params[2], dim)}}
 		for b = 1, nbiomes do
 			map_noise[b] = {ValueNoiseMap(form_params[b][1], dim), ValueNoiseMap(form_params[b][2], dim)}
+			for k, bend in pairs(bends[b]) do
+				map_noise[b]["bend" .. k] = {ValueNoiseMap(bend.x, dim), ValueNoiseMap(bend.z, dim)}
+			end
 		end
 		map_size = size
 	end
@@ -132,8 +192,8 @@ function terrain.chunk(minx, minz, size, heights, owners)
 	-- Only the biomes that occur in this chunk cost noise.
 	for b = 1, nbiomes do
 		if present[b] then
-			map_noise[b][1]:get_2d_map_flat(origin, form_a[b])
-			map_noise[b][2]:get_2d_map_flat(origin, form_b[b])
+			read_map(b, 1, origin, size, form_a[b])
+			read_map(b, 2, origin, size, form_b[b])
 		end
 	end
 

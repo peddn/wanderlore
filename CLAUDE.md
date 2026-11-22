@@ -27,6 +27,7 @@ Stand 22.11.2026: Das Konzept steht, M0 ist gebaut, und von M1 der erste Teil: d
 - `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt, lässt den Generator die Portionen um den Startpunkt erzeugen und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
 - `scripts/measure.sh` misst die Zeit des Generators je Portion, `scripts/measure.sh v7` zum Vergleich Luantis Generator v7. Nach jeder größeren Änderung am Generator neu messen und die Zahlen im Arbeitsplan nachtragen.
 - `scripts/shots.sh` macht Screenshots aller Biome und ihrer Grenzen nach `.dev/shots/`. Ein Durchlauf dauert in der Cloud etwa sieben Minuten.
+- `scripts/map.sh [biom] [blöcke je bildpunkt]` zeichnet in wenigen Sekunden eine Karte von oben mit Relief nach `.dev/map.png`. Das ist der schnellste Weg, eine Änderung an einer Höhenformel zu beurteilen, bevor man Screenshots macht.
 - `devmods/wl_dev` ist ein Hilfs-Mod außerhalb des Modpacks, den die Skripte nur in die Testwelten einbinden. Er stellt die Kamera, misst, setzt Tester auf die Oberfläche und bringt die Befehle `/wl_where` und `/wl_goto <biom>` mit.
 - Der Code des Generators läuft in zwei Umgebungen: `init.lua` lädt ihn für die Fragen der anderen Mods, `mapgen.lua` lädt dieselben Dateien in Luantis Generator-Umgebung. Gemeinsame Dateien dürfen deshalb nur nutzen, was es in beiden gibt.
 - `scripts/run.sh` startet den Client, mit `--new` auf frischer Welt.
@@ -126,7 +127,7 @@ DISPLAY=:9 import -window root bild.png
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
 
-- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, darin flache Bäche mit flachen Ufern. Tiefe, breite Flusstäler will der Autor dort nicht.
+- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, darin flache Bäche mit flachen Ufern, die stark mäandern. Tiefe, breite Flusstäler will der Autor dort nicht.
 - M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.

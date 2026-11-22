@@ -73,6 +73,9 @@ end
 if core.settings:get_bool("wl_dev_measure") then
 	dofile(path .. "/measure.lua")
 end
+if has_world and core.settings:get_bool("wl_dev_map") then
+	dofile(path .. "/map.lua")
+end
 if has_world and core.settings:get_bool("wl_dev_shots") then
 	dofile(path .. "/shots.lua")
 end

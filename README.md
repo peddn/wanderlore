@@ -60,7 +60,13 @@ misst, wie lange der Generator je Portion der Welt braucht. Mit `scripts/measure
 scripts/shots.sh
 ```
 
-macht Screenshots aller Biome und ihrer Grenzen und legt sie in `.dev/shots/` ab. Dafür braucht es `Xvfb` und ImageMagick.
+macht Screenshots aller Biome und ihrer Grenzen und legt sie in `.dev/shots/` ab. Dafür braucht es `Xvfb` und ImageMagick. Mit einem Wort dahinter, etwa `scripts/shots.sh old_wood`, entstehen nur die Bilder mit diesem Wort im Namen.
+
+```bash
+scripts/map.sh
+```
+
+zeichnet in wenigen Sekunden eine Karte von oben mit Relief nach `.dev/map.png`, ohne die Welt zu erzeugen. `scripts/map.sh blossom_downs 2` zeigt die nächste Zelle eines Bioms mit 2 Blöcken je Bildpunkt.
 
 Heißt das Programm nicht `luanti`, lässt es sich mit `LUANTI=/pfad/zum/programm` angeben.
 

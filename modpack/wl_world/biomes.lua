@@ -5,7 +5,10 @@
 -- apart because they blend differently at a biome border.
 --
 -- base:    height above sea level, in nodes
--- noises:  two noises the form needs, as {spread, octaves, seed}
+-- noises:  two noises the form needs, as {spread, octaves, seed}. With
+--          bend = {amount, spread, octaves, seed} a noise is read at a
+--          place shifted by up to that amount of nodes, which makes its
+--          lines swing to and fro. That costs more time.
 -- form:    function(a, b) -> height added to the base; a and b are the
 --          values of the two noises at this place, each within -1..1
 -- top, filler:       surface node and the three nodes below it
@@ -21,7 +24,9 @@ wl_world.biomes = {
 		title = "Blossom Downs",
 		zone = 1,
 		base = 12,
-		noises = {{260, 4, 101}, {330, 2, 102}},
+		-- The brooks run where the second noise crosses zero. Bending it
+		-- makes them meander.
+		noises = {{260, 4, 101}, {330, 2, 102, bend = {100, 120, 1, 103}}},
 		-- Low round hills of +-10. Towards a brook the land eases down,
 		-- over about 50 nodes, to a level meadow 3 above the water. The
 		-- brook itself is a shallow dip in that meadow, about 6 wide and
