@@ -25,8 +25,29 @@
 --                    max = largest radius, moss = share of mossy stones,
 --                    above = only on land more than this above the water}
 
+--
+-- zone:    1 to 3 on the continent, 0 for the sea
+-- placeholder: true for a biome that only holds a place on the world map.
+--          The author works these out one by one later; until then they
+--          have a simple form and a surface of nodes from Minetest Game
+--          that tells them apart.
+
 local smooth = wl_world.smooth
-local abs = math.abs
+local abs, floor = math.abs, math.floor
+
+-- A placeholder biome, see above.
+local function placeholder(zone, letter, seed, def)
+	def.name = ("zone%d_%s"):format(zone, letter:lower())
+	def.title = ("Zone %d %s"):format(zone, letter)
+	def.zone = zone
+	def.placeholder = true
+	def.noises = {{def.spread[1], 3, seed}, {def.spread[2], 2, seed + 1}}
+	def.spread = nil
+	def.filler = def.filler or "default:dirt"
+	def.shore = def.shore or "default:sand"
+	def.bed = def.bed or "default:gravel"
+	return def
+end
 
 wl_world.biomes = {
 	{
@@ -105,6 +126,82 @@ wl_world.biomes = {
 		-- Every hollow below this height above sea level fills with water
 		-- and becomes a forest lake, see terrain.lua.
 		water_table = 24,
+	},
+
+	-- Zone 2: more rugged than zone 1, but still walkable.
+	placeholder(2, "A", 1101, {
+		-- High rolling hills.
+		base = 28, spread = {220, 60},
+		form = function(a, b) return 22 * a + 6 * b end,
+		top = "default:dirt_with_dry_grass",
+	}),
+	placeholder(2, "B", 1201, {
+		-- Terraces: level steps of 8 with short slopes between them.
+		base = 26, spread = {260, 40},
+		form = function(a, b)
+			local h = 24 * a / 8
+			local step = floor(h)
+			return 8 * (step + smooth((h - step - 0.7) / 0.3)) + 1.5 * b
+		end,
+		top = "default:dirt_with_rainforest_litter",
+	}),
+	placeholder(2, "C", 1301, {
+		-- Dunes: long ridges on gentle swells.
+		base = 16, spread = {300, 70},
+		form = function(a, b) return 8 * a + 10 * (1 - abs(b) * 2) end,
+		top = "default:desert_sand", filler = "default:desert_sand",
+	}),
+	placeholder(2, "D", 1401, {
+		-- Highland.
+		base = 42, spread = {240, 50},
+		form = function(a, b) return 30 * a + 8 * b end,
+		top = "default:dirt_with_snow",
+	}),
+	placeholder(2, "E", 1501, {
+		-- A plain with deep round hollows.
+		base = 20, spread = {280, 90},
+		form = function(a, b) return 8 * a - 16 * smooth((b - 0.15) / 0.4) end,
+		top = "default:dry_dirt_with_dry_grass", filler = "default:dry_dirt",
+	}),
+
+	-- Zone 3: so rugged that one has to build, climb or use a potion.
+	placeholder(3, "A", 2101, {
+		-- A plateau cut by canyons.
+		base = 55, spread = {300, 220},
+		form = function(a, b) return 15 * a - 38 * (1 - smooth(abs(b) / 0.14)) end,
+		top = "default:desert_stone", filler = "default:desert_stone",
+	}),
+	placeholder(3, "B", 2201, {
+		-- Spires on an ice field.
+		base = 45, spread = {260, 45},
+		form = function(a, b) return 12 * a + 50 * smooth((b - 0.3) / 0.3) end,
+		top = "default:ice", filler = "default:ice",
+	}),
+	placeholder(3, "C", 2301, {
+		-- Craggy mountains.
+		base = 65, spread = {200, 40},
+		form = function(a, b) return 40 * a + 12 * b end,
+		top = "default:permafrost_with_stones", filler = "default:permafrost",
+	}),
+	placeholder(3, "D", 2401, {
+		-- Table mountains with steep sides.
+		base = 40, spread = {180, 50},
+		form = function(a, b) return 34 * smooth((a - 0.02) / 0.12) + 5 * b end,
+		top = "default:desert_sandstone", filler = "default:desert_sandstone",
+	}),
+
+	-- The sea beyond zone 3. Coasts and islands are not built yet.
+	{
+		name = "ocean",
+		title = "Ocean",
+		zone = 0,
+		base = -30,
+		noises = {{400, 3, 9001}, {80, 2, 9002}},
+		form = function(a, b) return 5 * a + 2 * b end,
+		top = "default:sand",
+		filler = "default:sand",
+		shore = "default:sand",
+		bed = "default:sand",
 	},
 }
 

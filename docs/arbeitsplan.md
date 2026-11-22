@@ -35,7 +35,11 @@ Es gibt keinen Zeitplan. Die Reihenfolge zählt, nicht das Datum.
 ## Stand
 
 - **M0** ist zusammengeführt.
-- **M1** ist in zwei Pull Requests geteilt. Der erste bringt Landschaftsform und Oberfläche der drei Biome, die Übergänge zwischen ihnen, die Messung und die Screenshots. Ob ein zweiter mit vorläufigem Bewuchs aus Minetest Game nötig ist, entscheidet der Autor an den Bildern und im Spiel.
+- **M1** ist zusammengeführt: Landschaftsform und Oberfläche der drei Biome, die Übergänge zwischen ihnen, die Messung und die Screenshots. Einen zweiten Teil mit vorläufigem Bewuchs gibt es nicht; das hat der Autor am 22.11.2026 entschieden. Der Bewuchs kommt mit M4.
+- **M2** ist in drei Pull Requests geteilt, jeder für sich lauffähig:
+  1. Zonen und Austeilen der Biome, mit Platzhaltern für die neun Biome der Zonen 2 und 3 und einem vorläufigen Meer.
+  2. Meer und Inseln: Küsten, Inselgruppen, Vulkaninseln als Form.
+  3. Schwellen an den Zonengrenzen, Reisen über weite Strecken in der Testwelt, Messung und Screenshots.
 
 ### Messung zu M1
 
@@ -55,6 +59,21 @@ Die Zahlen gelten für den Stand am Ende des ersten Teils von M1, mit mäandernd
 - Von den rund 30 ms einer Portion mit Oberfläche entfallen etwa 18 ms auf das Übergeben der Blöcke zwischen Luanti und Lua, 8 ms auf das Licht und 4 ms auf die Rechnung der Landschaft. Diese Aufteilung stammt aus einem einzelnen Lauf während der Entwicklung.
 - Der Vergleich mit v7 ist nicht gerecht: v7 erzeugt dabei auch Höhlen, Erze und Bewuchs. Er zeigt nur die Größenordnung.
 - Wie es sich mit vielen Spielern verhält, ist nicht gemessen.
+
+### Messung zu M2, erster Teil
+
+Gemessen am 22.11.2026 wie oben, nach dem Einbau von Zonen, Austeilen und Platzhaltern. Je Biom 108 Portionen, alles zusammen, wie der Server es erlebt:
+
+| | Zeit je Portion |
+| --- | --- |
+| die drei Biome von Zone 1 | 15 bis 18 ms |
+| dieselben auf dem Stand von M1, am selben Tag auf derselben Maschine | 16 bis 18 ms |
+| Platzhalter von Zone 2 | 14 bis 21 ms |
+| Platzhalter von Zone 3 | 20 bis 24 ms |
+
+- Zone 3 kostet mehr, weil das Land dort bis über 100 Blöcke hoch reicht. Dann enthält auch die obere der drei gemessenen Lagen Land statt nur Luft.
+- Der eigene Code braucht für eine Portion aus reiner Luft in Zone 1 jetzt 5 bis 6 ms im Mittel; der Stand von M1 kam im selben Lauf auf 4 bis 5 ms. Der Unterschied liegt in der Größe der Schwankung zwischen zwei Läufen.
+- Der Generator sieht je Portion nur die Biome der umliegenden Zellen an, nicht alle 13. In einem Lauf ohne das kostete eine Portion aus Luft 6 bis 7 ms; auch dieser Unterschied ist kaum größer als die Schwankung.
 
 ## Wegmarken
 

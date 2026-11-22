@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.9 · 22.11.2026 · Luanti 5.18, Minetest Game · Gebaut ist der Prototyp des Generators, vom Spiel selbst noch nichts
+Fassung 1.9 · 22.11.2026 · Luanti 5.18, Minetest Game · Gebaut sind der Prototyp des Generators und von der Weltkarte Zonen und Austeilen, vom Spiel selbst noch nichts
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -89,11 +89,11 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
-**Stand des Prototyps (G1):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Alle Zellen gehören zu Zone 1, und jede Zelle ist 1.000 Blöcke groß und bekommt eines der drei Biome per Zufall aus dem Startwert der Welt. Zonen, das Austeilen der Biome und das Meer kommen mit G2. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+**Stand (G2, erster von drei Teilen):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. Jenseits von Zone 3 liegt ein vorläufiges Meer: ein ebener Grund 30 unter dem Wasser, zu dem das Land ohne eigene Küstenform abfällt. Küsten, Inseln und Vulkaninseln kommen mit dem zweiten Teil, die Schwellen an den Zonengrenzen mit dem dritten. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
 
 ### Die Weltkarte
 
-Skizze und Verfahren: `docs/weltkarte/`.
+Skizze und Verfahren: `docs/weltkarte/skizze.py`. Daneben liegt `karte.png`: der Kontinent, wie ihn der Generator für den Startwert `wanderlore` berechnet, gezeichnet mit `scripts/map.sh world`.
 
 | | Zone 1 Startland | Zone 2 Wildnis | Zone 3 Ödland | Inseln |
 | --- | --- | --- | --- | --- |
@@ -106,7 +106,10 @@ Skizze und Verfahren: `docs/weltkarte/`.
 | Ein Biom-Land ist etwa | 1.000 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
 - **Eine Zelle gehört immer ganz zu einer Zone.** So zerschneidet keine Zonengrenze ein Biom.
-- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet noch mit 1.600; sie wird mit G2 angepasst, ebenso die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3.
+- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet seit G2 mit 1.000. Die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3 werden mit den Inseln neu beurteilt.
+- **Der Rand einer Zone schwingt.** Die Zone einer Zelle folgt aus dem Abstand ihrer Mitte zum Start; dieser Abstand wird mit einem weiten Rauschen um bis zu 22 % gestreckt oder gestaucht. Die Zahlen der Tabelle sind deshalb Mittelwerte.
+- **Die Heimatrichtungen hängen vom Startwert der Welt ab.** In jeder Welt liegt ein Biom der Zonen 2 und 3 in einer anderen Himmelsrichtung. Eine Zelle weicht von der Heimatrichtung ihres Bioms meist um weniger als 20 Grad ab, einzelne mehr; das sind die Ausreißer.
+- **Auf dem Meer ist die Zone 0.** Das Meer meldet sich als eigenes Biom `ocean`.
 - **An Land gibt es nur eine Zellgröße.** Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
 - **Biome werden fest ausgeteilt.** Alle Zellen einer Zone werden aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
 - **Zone 1 wird reihum ausgeteilt**, damit alle Grundzutaten nah am Start liegen.
@@ -195,6 +198,20 @@ Jedes Biom hat außerdem etwas, das es nur dort gibt:
 Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Holzarten, Feldfrüchte, Kochzutaten und Zutaten für die Alchemie.
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
+
+**Platzhalter.** Damit die Weltkarte gebaut werden kann, bevor es die äußeren Biome gibt, stehen im Generator Platzhalter: fünf für Zone 2 (`Zone 2 A` bis `E`) und vier für Zone 3 (`Zone 3 A` bis `D`). Jeder hat eine einfache Landschaftsform und eine Oberfläche aus Blöcken von Minetest Game, an der man ihn erkennt. Sie sind Vorschläge von Claude ohne Anspruch und halten nur den Platz frei. Der Autor arbeitet die echten Biome danach einzeln aus, wie bei Zone 1; die Skizzen der folgenden Tabelle sind dabei der Ausgangspunkt. Das hat der Autor am 22.11.2026 entschieden.
+
+| Platzhalter | Form | Oberfläche |
+| --- | --- | --- |
+| Zone 2 A | hohe, runde Hügel | trockenes Gras |
+| Zone 2 B | Terrassen in Stufen von 8 | Regenwaldboden |
+| Zone 2 C | Dünen | Wüstensand |
+| Zone 2 D | Hochland | Schnee auf Erde |
+| Zone 2 E | Ebene mit tiefen, runden Senken | Savannenboden |
+| Zone 3 A | Hochfläche mit Schluchten | roter Wüstenstein |
+| Zone 3 B | Nadeln auf einer Eisfläche | Eis |
+| Zone 3 C | schroffes Gebirge | Dauerfrostboden mit Steinen |
+| Zone 3 D | Tafelberge mit steilen Flanken | Wüstensandstein |
 
 | Arbeitsname | Zone | Landschaft | Besonderheit |
 | --- | --- | --- | --- |
@@ -372,7 +389,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
 
-`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone, wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
+`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone (1 bis 3, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
 
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 

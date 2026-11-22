@@ -63,14 +63,14 @@ trap 'kill "$client" "$xvfb" 2>/dev/null || true' EXIT
 # wl_dev writes "[wl_dev] shot <name>" when a view is ready.
 taken=0
 waited=0
-while kill -0 "$client" 2>/dev/null && [ "$waited" -lt "${WL_SHOTS_TIMEOUT:-900}" ]; do
+while kill -0 "$client" 2>/dev/null && [ "$waited" -lt "${WL_SHOTS_TIMEOUT:-5400}" ]; do
 	while read -r name; do
 		if [ ! -f "$out/$name.png" ]; then
 			DISPLAY="$display" import -window root "$out/$name.png"
 			echo "shot    $name"
 			taken=$((taken + 1))
 		fi
-	done < <(grep -o "\[wl_dev\] shot [a-z_]*" "$log" | awk '{print $3}')
+	done < <(grep -o "\[wl_dev\] shot [a-z0-9_]*" "$log" | awk '{print $3}')
 	if grep -qF "[wl_dev] shots done" "$log"; then
 		break
 	fi

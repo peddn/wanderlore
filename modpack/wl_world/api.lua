@@ -11,8 +11,8 @@ function wl_world.get_biome(pos)
 	return biomes[own].name
 end
 
--- Returns the number of the zone at a position. The prototype has only
--- zone 1.
+-- Returns the number of the zone at a position: 1 to 3 on the continent,
+-- 0 on the sea.
 function wl_world.get_zone(pos)
 	local _, own = terrain.point(floor(pos.x + 0.5), floor(pos.z + 0.5))
 	return biomes[own].zone
@@ -40,24 +40,20 @@ function wl_world.find_safe_pos(pos)
 end
 
 -- Returns a safe place in the nearest cell of the named biome, or nil if
--- the name is unknown or no such cell is near.
+-- the name is unknown or the biome has no cell.
 function wl_world.find_biome(pos, name)
 	local biome = wl_world.biome_by_name[name]
 	if not biome then
 		return nil
 	end
-	local ci, cj = floor(pos.x / layout.CELL), floor(pos.z / layout.CELL)
 	local best, best_distance
-	for di = -6, 6 do
-		for dj = -6, 6 do
-			local site = layout.site(ci + di, cj + dj)
+	for _, site in ipairs(layout.land) do
+		if site.biome == biome.index then
+			local distance = (site.x - pos.x) ^ 2 + (site.z - pos.z) ^ 2
 			-- The centre of a cell is given before the shift by noise, so
 			-- make sure the biome is really there.
-			if site.biome == biome.index and wl_world.get_biome(site) == name then
-				local distance = (site.x - pos.x) ^ 2 + (site.z - pos.z) ^ 2
-				if not best or distance < best_distance then
-					best, best_distance = site, distance
-				end
+			if (not best or distance < best_distance) and wl_world.get_biome(site) == name then
+				best, best_distance = site, distance
 			end
 		end
 	end
