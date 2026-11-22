@@ -21,10 +21,15 @@ Verwandte Repositories:
 
 ## Stand
 
-Stand 22.11.2026: Das Konzept steht, und Meilenstein M0 ist gebaut: das Grundgerüst. Das Modpack unter `modpack/` enthält nur `wl_world`, und der Mod schreibt bisher nur eine Zeile ins Log. Die Welt ist leer. Als Nächstes kommt M1 aus dem Arbeitsplan, der Prototyp des Generators.
+Stand 22.11.2026: Das Konzept steht, M0 ist gebaut, und von M1 der erste Teil: der Prototyp des Generators. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt die drei Biome von Zone 1 mit eigener Landschaftsform, Oberfläche und Übergängen, noch ohne Bewuchs, Erze, Höhlen, Zonen und Meer. Er bringt die ersten eigenen Blöcke mit, vier Sumpfblöcke für Reed Meres in `nodes.lua`, mit sieben Texturen aus Extra Biomes. Offen ist, ob M1 einen zweiten Teil mit vorläufigem Bewuchs bekommt; das entscheidet der Autor. Danach kommt M2, die Weltkarte.
 
 - `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein.
-- `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
+- `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt, lässt den Generator die Portionen um den Startpunkt erzeugen und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
+- `scripts/measure.sh` misst die Zeit des Generators je Portion, `scripts/measure.sh v7` zum Vergleich Luantis Generator v7. Nach jeder größeren Änderung am Generator neu messen und die Zahlen im Arbeitsplan nachtragen.
+- `scripts/shots.sh` macht Screenshots aller Biome und ihrer Grenzen nach `.dev/shots/`. Ein Durchlauf dauert in der Cloud etwa sieben Minuten.
+- `scripts/map.sh [biom] [blöcke je bildpunkt]` zeichnet in wenigen Sekunden eine Karte von oben mit Relief nach `.dev/map.png`. Das ist der schnellste Weg, eine Änderung an einer Höhenformel zu beurteilen, bevor man Screenshots macht.
+- `devmods/wl_dev` ist ein Hilfs-Mod außerhalb des Modpacks, den die Skripte nur in die Testwelten einbinden. Er stellt die Kamera, misst, setzt Tester auf die Oberfläche und bringt die Befehle `/wl_where` und `/wl_goto <biom>` mit.
+- Der Code des Generators läuft in zwei Umgebungen: `init.lua` lädt ihn für die Fragen der anderen Mods, `mapgen.lua` lädt dieselben Dateien in Luantis Generator-Umgebung. Gemeinsame Dateien dürfen deshalb nur nutzen, was es in beiden gibt.
 - `scripts/run.sh` startet den Client, mit `--new` auf frischer Welt.
 - Jeder Mod schreibt am Ende seiner `init.lua` die Zeile `[<Name>] loaded` ins Log. `check.sh` wartet darauf.
 - Ein neuer Mod kommt mit dem Meilenstein, der ihn braucht, nicht vorher als leere Hülle. Dasselbe gilt für Mobs Redo und 3D Armor in `sources.toml`.
@@ -40,7 +45,7 @@ Wer diese Datei liest und etwas anderes vorfindet, etwa weitere Mods unter `modp
 4. **Widersprechen, wenn etwas das Projekt beschädigt**, etwa durch Doppelentwicklung oder große Verkomplizierung. Erst begründen, dann die Entscheidung des Autors umsetzen.
 5. **Ehrlich über Geprüftes und Ungeprüftes.** Was nur im Code gelesen und nicht im Spiel gesehen wurde, wird so benannt. Schätzungen ohne Messung heißen Schätzung.
 6. **Keine Rücksicht auf bereits erstellte Welten.** Das Projekt ist in Entwicklung und wird von niemandem sonst genutzt. Jede Änderung am Generator darf eine neue Welt verlangen.
-7. **Sprache:** Code, Bezeichner, Kommentare und Commit-Nachrichten auf Englisch. Dokumentation und Gespräch auf Deutsch. Für Texte im Spiel ist noch nichts entschieden; der Vorschlag ist Englisch im Code mit deutscher Übersetzung über Luantis Übersetzungssystem. Vor dem ersten Text im Spiel nachfragen.
+7. **Sprache:** Code, Bezeichner, Kommentare und Commit-Nachrichten auf Englisch. Dokumentation und Gespräch auf Deutsch. Texte im Spiel stehen auf Englisch im Code, über `core.get_translator`, und bekommen eine deutsche Übersetzung über Luantis Übersetzungssystem. Das hat der Autor am 22.11.2026 bestätigt. Eine Übersetzungsdatei gibt es noch nicht.
 8. **Dateien für den Autor als Markdown oder Bild.** Dokumente in Claudes eigenem Dokumentenformat ließen sich bei ihm nicht öffnen.
 
 ## Regeln aus dem Konzept, die jeden Code betreffen
@@ -61,6 +66,7 @@ Diese Regeln stehen im Konzept. Sie sind hier wiederholt, weil ein Verstoß spä
 ## Git
 
 - Nie direkt auf `main` schreiben. Jede Aufgabe bekommt einen Zweig und einen Pull Request.
+- Zweige heißen nach Meilenstein und Stichwort, auf Englisch: `m1-generator-prototype`, `m1-vegetation`, `m2-world-map`. Arbeiten außerhalb eines Meilensteins bekommen ein Präfix, etwa `docs/…`. Das hat der Autor am 22.11.2026 festgelegt und damit erlaubt, auf solche Zweige zu schreiben. Gibt eine Cloud-Sitzung einen anderen Namen vor, etwa `claude/…`, gilt trotzdem dieses Schema; lässt die Sitzung das nicht zu, einmal beim Autor nachfragen.
 - Der Autor prüft und führt zusammen. Claude führt nie selbst zusammen.
 - Ein Meilenstein, ein Pull Request. Größere Meilensteine dürfen in mehrere kleine Pull Requests zerfallen, jeder für sich lauffähig.
 - Commit-Nachrichten auf Englisch, im Imperativ, ohne Präfixe wie `feat:`.
@@ -113,10 +119,22 @@ DISPLAY=:9 import -window root bild.png
 - Ein Mod mit dem Namen eines Mods aus dem Spiel ersetzt diesen.
 - Alte Mods scheitern unter Luanti 5.18 teils an strengeren Prüfungen. Der Katalog zeigt in `mods/wl_catalog/compat.lua`, wie sich das ohne Eingriff in die Quelle ausgleichen lässt.
 - Die Einstellungen des Generators stehen in der Welt, sobald sie einmal gestartet wurde. Wer sie ändert, braucht eine neue Welt.
+- Lücken in Himmelsfarbe auf fernen, ebenen Flächen sind kein Fehler des Generators. Der Server schickt ferne Blöcke aus reiner Luft nicht an den Client. Abhilfe in der Testwelt: `block_send_optimize_distance = 32`. Näheres in der Recherche.
+- Ein Fehler in der Generator-Umgebung beendet den Server. Die Meldung steht in der Logdatei.
+- `ValueNoiseMap` verlangt für zweidimensionales Rauschen eine Größe mit `z = 1`, anders als die Dokumentation sagt.
+- Aus dem Rückruf von `core.emerge_area` nicht gleich die nächste Anfrage stellen, sondern erst mit `core.after(0, ...)` herausspringen. Ohne das blieb der Server in einem Lauf hängen, in dem zugleich der Generator scheiterte; die Ursache ist nicht einzeln geprüft.
 
 ## Was der Autor zuletzt entschieden hat
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
+
+- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, dazwischen breite, flache Flüsse, die stark mäandern, mit einer ebenen Aue am Ufer und sehr sanftem Anstieg. Die Ufer sind aus Sand, der Flussgrund aus Kies; in den Flüssen liegen Kiesbänke und kleine Inseln. Steine an der Oberfläche gibt es nur in den obersten Lagen der Hügel. Tiefe Flusstäler und treppige Ufer will der Autor dort nicht.
+- Reed Meres: kleine Tümpel, und vom Ufer geht es höchstens einen Block hinab zum Wasser. Wasser, das tief unter dem Ufer sitzt, will der Autor nicht.
+- Old Wood hat Waldseen über dem Meeresspiegel. Sie entstehen aus einem eigenen Wasserspiegel des Bioms, bis zu dem alle Mulden gefüllt werden; das war die Idee des Autors. Auch dort höchstens ein Block hinab zum Wasser.
+- Zellgröße 1.000 statt 1.600, als Versuch: Mit 1.600 wirkten die Biome sehr groß.
+- Reed Meres: sehr flach, das Land liegt nur 1 oder 2 über dem Wasser. Sumpfgras als Deckschicht, Torf (der trockene, Nummer 6 der Tafel) am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos, deren Farbe gegenüber der Vorlage dunkler und kräftiger ist. Die Werte hat der Autor an einer Tafel gewählt; sie stehen in `docs/medien.md`.
+- Biomübergänge sollen nicht künstlich wirken: keine gerade Linie, kein harter Wechsel der Oberfläche. Gebaut sind eine unregelmäßige Grenzlinie und ein gesprenkelter Wechsel der Oberfläche; ob das dem Autor reicht, ist offen.
+- M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.
 - Jedes Biom hat eine eigene Holzart, eine Feldfrucht, eine Kochzutat und eine Zutat für die Alchemie.

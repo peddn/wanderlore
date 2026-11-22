@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.8 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.9 · 22.11.2026 · Luanti 5.18, Minetest Game · Gebaut ist der Prototyp des Generators, vom Spiel selbst noch nichts
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -22,6 +22,7 @@ Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets komm
 | Reihenfolge | Der Kartengenerator wird zuerst gebaut |
 | Namen | Spiel: Wanderlore. Mod-Kürzel: `wl_`. Was man sammelt: Lore |
 | Lizenz | Eigener Code unter LGPL 3.0. Übernommene Medien behalten ihre Lizenzen |
+| Texte im Spiel | Englisch im Code, deutsche Übersetzung über Luantis Übersetzungssystem |
 
 ## 2. Ziel und Ablauf
 
@@ -88,6 +89,8 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
+**Stand des Prototyps (G1):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Alle Zellen gehören zu Zone 1, und jede Zelle ist 1.000 Blöcke groß und bekommt eines der drei Biome per Zufall aus dem Startwert der Welt. Zonen, das Austeilen der Biome und das Meer kommen mit G2. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+
 ### Die Weltkarte
 
 Skizze und Verfahren: `docs/weltkarte/`.
@@ -97,12 +100,13 @@ Skizze und Verfahren: `docs/weltkarte/`.
 | Charakter | freundlich, Grundzutaten | abwechslungsreich | karg, gefährlich | Sonderzone, nur über Wasser |
 | Äußerer Rand ab Start | 4.000 Blöcke | 7.500 | 11.500 | 14.000 bis 17.500 |
 | Fußweg bis zum Rand | ca. 16 Minuten | ca. 31 | ca. 48 | – |
-| Zellgröße | 1.600 | 1.600 | 1.600 | 800 |
+| Zellgröße | 1.000 | 1.000 | 1.000 | 800 |
 | Biome | 3 | 5 | 4 | 3, dazu Vulkaninseln |
 | Austeilen der Biome | reihum | nach Richtung | nach Richtung | nach Richtung |
-| Ein Biom-Land ist etwa | 1.600 breit | 4.500 breit | 7.000 breit | Inselgruppen |
+| Ein Biom-Land ist etwa | 1.000 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
 - **Eine Zelle gehört immer ganz zu einer Zone.** So zerschneidet keine Zonengrenze ein Biom.
+- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet noch mit 1.600; sie wird mit G2 angepasst, ebenso die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3.
 - **An Land gibt es nur eine Zellgröße.** Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
 - **Biome werden fest ausgeteilt.** Alle Zellen einer Zone werden aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
 - **Zone 1 wird reihum ausgeteilt**, damit alle Grundzutaten nah am Start liegen.
@@ -121,13 +125,32 @@ Jedes Biom hat eine Höhenformel aus zwei Teilen: einer **Grundhöhe** und der *
 - **Begehbarkeit nach Zone.** Zone 1 ist überall zu Fuß begehbar. Nach außen wird das Gelände sperriger, in Zone 3 so, dass man bauen, klettern oder einen Trank nutzen muss.
 - **Dreidimensionales Rauschen** nur dort, wo eine Form es braucht, etwa für Bögen und Überhänge.
 
+Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle Zahlen sind Startwerte:
+
+| Biom | Grundhöhe | Form | Oberfläche |
+| --- | --- | --- | --- |
+| Blossom Downs | 12 | flache Hügel von ±10 zwischen Flüssen. Ein Fluss ist etwa 28 breit und bis 3 tief und mäandert in weiten Schwüngen. Neben ihm liegt eine ebene Aue, einen Block über dem Wasser und je Seite etwa 15 breit; erst dahinter steigt das Land langsam zu den Hügeln an. In den Flüssen liegen Kiesbänke und kleine Inseln | Gras, am Ufer Sand, am Flussgrund und auf den Bänken Kies. Nur in den obersten Lagen der Hügel, mehr als 16 über dem Wasser, Flecken aus blankem Stein und einzelne kleine Felsen |
+| Reed Meres | 1,6 | eben, das Land liegt 1 oder 2 über dem Wasser und nirgends höher. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Sumpfgras mit ebenen Flecken aus grünem und gelbem Sumpfmoos, am Ufer und im Wasser Torf |
+| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
+
+Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Flüsse von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Zur Biomgrenze hin laufen sie aus, weil sich dort die Höhe mit der des Nachbarn mischt. Gewässer, die einen Hang hinabfließen oder Biome verbinden, gehören zu den Flüssen in G3.
+
+Die Flüsse mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschobenen Stelle gelesen wird. Dabei schließt sich gelegentlich ein Bogen zu einem Ring um eine kleine Insel.
+
+Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 24 über dem Meer: Jede Mulde, die tiefer liegt, füllt sich bis dorthin. So liegen die Seen in Gruppen in den Niederungen, und die höheren Gegenden bleiben trocken. Das Ufer liegt von selbst einen Block über dem Wasser. Zur Biomgrenze hin fällt das Land zum Nachbarn ab; deshalb hält der Generator den äußersten Streifen des Bioms als natürlichen Rand über dem Wasserspiegel, und jenseits davon gibt es dieses Wasser nicht. Am Wasser gilt in allen drei Biomen: höchstens ein Block hinab.
+
+Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Die Höhenformel eines Bioms kann Stellen markieren, die an der Wasserlinie einen anderen Block bekommen; so entstehen die Kiesbänke. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern. Jedes Biom nennt, ob es Findlinge und Flecken hat, wie häufig und wie groß, und ab welcher Höhe über dem Wasser.
+
+Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und Torf, mit Texturen aus Extra Biomes. Die Farbe der Moose ist gegenüber der Vorlage dunkler und kräftiger, damit sich die Flecken vom Gras abheben. Der Torf ist ein fester Block. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
+
 ### Übergänge
 
 - **Zwischen Biomen derselben Zone** werden die Grundhöhen weich gemischt, und die Form blendet zur Grenze hin aus.
 - **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug.
 - **Zwischen Varianten desselben Bioms** gleiten die Regler der Formel ineinander.
-- **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite.
-- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke.
+- **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
+- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke. Für die Oberfläche ist das seit G1 gebaut: Nahe der Grenze trägt eine Stelle mal die Oberfläche des einen, mal die des anderen Bioms, teils Block für Block, teils in kleinen Gruppen.
+- **Die Grenzlinie ist unregelmäßig.** Eine zweite, feine Verschiebung von bis zu 24 Blöcken gibt ihr Buchten und Zungen.
 - **Küste:** je Biom Strand oder Steilküste.
 
 ### Erze und Tiefe
@@ -175,7 +198,7 @@ Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die dr
 
 | Arbeitsname | Zone | Landschaft | Besonderheit |
 | --- | --- | --- | --- |
-| Blossom Downs | 1 | weite, runde Hügel mit eingeschnittenen Bachtälern | blühende Bäume, Riesenbäume als Wegmarken |
+| Blossom Downs | 1 | flache, runde Hügel zwischen breiten, mäandernden Flüssen mit ebenen Auen | blühende Bäume, Riesenbäume als Wegmarken |
 | Reed Meres | 1 | flaches Tiefland mit vielen kleinen Seen und Tümpeln | Schilf, Weiden, Seerosen |
 | Old Wood | 1 | buckliger Waldboden aus Kuppen und Mulden, Lichtungen | sehr hohe alte Bäume, Moos, Findlinge |
 | Bamboo Terraces | 2 | gestufte Terrassen mit Wasserbecken | Reis wächst wild |
@@ -347,6 +370,10 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 `wl_vitals` ist ein Vorschlag aus dieser Fassung und noch nicht bestätigt.
 
+Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
+
+`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone, wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
+
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 
 ### Stufen des Generators
@@ -371,7 +398,7 @@ Grober Umfang: 7.000 bis 10.000 Zeilen Lua, davon etwa ein Drittel für den Gene
 
 ## 11. Risiken
 
-- **Der Generator ist zu langsam** für viele gleichzeitige Spieler. Wird in G1 gemessen.
+- **Der Generator ist zu langsam** für viele gleichzeitige Spieler. In G1 gemessen: Der Prototyp braucht etwa ein Viertel der Zeit von Luantis Generator v7, hat aber noch keinen Bewuchs, keine Erze und keine Höhlen. Die Zahlen stehen im [Arbeitsplan](arbeitsplan.md). Jede weitere Stufe wird neu gemessen.
 - **Übergänge zwischen Biomen** sehen unnatürlich aus. Wird in G2 sichtbar.
 - **Feinschliff ohne Ende.** Jede Generator-Stufe hat deshalb ein festes Ende.
 - **Assets aus vielen Quellen passen optisch nicht zusammen.** Bei den Monstern ist das im Katalog schon zu sehen.

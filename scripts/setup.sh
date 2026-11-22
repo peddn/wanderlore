@@ -51,13 +51,21 @@ done < <(read_sources)
 rm -rf "$dev/mods/wanderlore"
 ln -sfn "$repo/modpack" "$dev/mods/wanderlore"
 
+# Development helpers are not part of the modpack. They are linked one by
+# one and only loaded in the worlds of .dev/.
+for conf in "$repo"/devmods/*/mod.conf; do
+	mod="$(basename "$(dirname "$conf")")"
+	rm -rf "$dev/mods/$mod"
+	ln -sfn "$repo/devmods/$mod" "$dev/mods/$mod"
+done
+
 {
 	echo "gameid = minetest"
 	echo "backend = sqlite3"
 	echo "player_backend = sqlite3"
 	echo "auth_backend = sqlite3"
 	echo "mod_storage_backend = sqlite3"
-	for conf in "$repo"/modpack/*/mod.conf; do
+	for conf in "$repo"/modpack/*/mod.conf "$repo"/devmods/*/mod.conf; do
 		echo "load_mod_$(basename "$(dirname "$conf")") = true"
 	done
 } > "$world/world.mt"
@@ -68,6 +76,10 @@ if [ ! -f "$dev/minetest.conf" ]; then
 # Wanderlore brings its own generator. Luanti stores this setting in the
 # world on its first start; changing it later needs a new world.
 mg_name = singlenode
+# Beyond this distance (in blocks of 16 nodes) the server does not send
+# blocks of plain air. Level ground whose top lies exactly on a block border
+# then shows as a gap in the distance. Luanti's default is 4.
+block_send_optimize_distance = 32
 CONF
 fi
 
