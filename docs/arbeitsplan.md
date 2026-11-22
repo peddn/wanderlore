@@ -43,11 +43,13 @@ Gemessen am 22.11.2026 mit `scripts/measure.sh` in Claudes Arbeitsumgebung in de
 
 | | Zeit je Portion |
 | --- | --- |
-| Wanderlore, alles zusammen, wie der Server es erlebt | 15 bis 18 ms |
-| Luantis Generator v7 mit Minetest Game, dieselbe Menge | 58 bis 65 ms |
-| Wanderlore, nur der eigene Code, Portion mit Oberfläche | 30 bis 36 ms im Mittel, höchstens 53 ms |
-| Wanderlore, nur der eigene Code, Portion aus reinem Stein | 28 bis 29 ms im Mittel |
-| Wanderlore, nur der eigene Code, Portion aus reiner Luft | 2 bis 3 ms im Mittel |
+| Wanderlore, alles zusammen, wie der Server es erlebt | 13 bis 16 ms |
+| Luantis Generator v7 mit Minetest Game, dieselbe Menge | 52 bis 55 ms |
+| Wanderlore, nur der eigene Code, Portion mit Oberfläche | 31 bis 32 ms im Mittel, höchstens 52 ms |
+| Wanderlore, nur der eigene Code, Portion aus reinem Stein | 26 bis 28 ms im Mittel, höchstens 70 ms |
+| Wanderlore, nur der eigene Code, Portion aus reiner Luft | 3 bis 5 ms im Mittel |
+
+Die Zahlen gelten für den Stand am Ende des ersten Teils von M1, mit mäandernden Bächen, Waldseen und Moosflecken. Diese Ergänzungen haben die Zeit nicht messbar verändert; zwischen zwei Läufen schwanken die Werte um einige Millisekunden.
 
 - Die erste Zeile ist kleiner als die dritte, weil Luanti mehrere Portionen gleichzeitig erzeugt.
 - Von den rund 30 ms einer Portion mit Oberfläche entfallen etwa 18 ms auf das Übergeben der Blöcke zwischen Luanti und Lua, 8 ms auf das Licht und 4 ms auf die Rechnung der Landschaft. Diese Aufteilung stammt aus einem einzelnen Lauf während der Entwicklung.
