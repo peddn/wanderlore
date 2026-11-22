@@ -27,8 +27,11 @@ end
 -- the two cells, by asking wl_world for the biome only.
 local land, by_cell = {}, {}
 for _, site in ipairs(wl_world.layout.land) do
-	land[#land + 1] = site
-	by_cell[site.i .. "," .. site.j] = site
+	-- The islands lie on a grid of their own and border on the sea only.
+	if site.zone <= 3 then
+		land[#land + 1] = site
+		by_cell[site.i .. "," .. site.j] = site
+	end
 end
 table.sort(land, function(a, b)
 	return a.x ^ 2 + a.z ^ 2 < b.x ^ 2 + b.z ^ 2
@@ -36,7 +39,9 @@ end)
 local biomes, paired = wl_world.biomes, {}
 for _, site in ipairs(land) do
 	for _, step in ipairs({{1, 0}, {0, 1}}) do
+		-- A cell that is not land is sea: that gives the views of the coasts.
 		local other = by_cell[(site.i + step[1]) .. "," .. (site.j + step[2])]
+			or wl_world.layout.site(site.i + step[1], site.j + step[2])
 		local low = other and math.min(site.biome, other.biome)
 		local high = other and math.max(site.biome, other.biome)
 		if other and low ~= high and not paired[low .. "," .. high] then
@@ -54,7 +59,16 @@ for _, site in ipairs(land) do
 				if here == to_name and previous == from_name then
 					local camera = wl_world.find_safe_pos(
 						vector.subtract(pos, vector.multiply(dir, 110)))
-					if camera then
+					if to_name == "ocean" then
+						-- A coast shows best from the sea, looking back
+						-- at the land along the shore.
+						paired[low .. "," .. high] = true
+						local out = vector.add(pos, vector.multiply(dir, 70))
+						out.y = wl_world.terrain.SEA + 28
+						views[#views + 1] = {
+							name = "coast_" .. from_name, pos = out,
+							yaw = math.deg(core.dir_to_yaw(dir)) + 140, pitch = 18}
+					elseif camera then
 						paired[low .. "," .. high] = true
 						views[#views + 1] = {
 							name = "border_" .. from_name .. "_" .. to_name,
@@ -75,6 +89,14 @@ for _, place in ipairs(places) do
 	if lake then
 		views[#views + 1] = {name = place.name .. "_lake",
 			pos = vector.offset(lake, -30, 14, -30), yaw = -45, pitch = 22}
+	end
+end
+
+-- One view of a volcano island from the side.
+for _, place in ipairs(places) do
+	if place.name == "volcano" then
+		views[#views + 1] = {name = "volcano_side",
+			pos = vector.offset(place.pos, -260, 40, -260), yaw = -45, pitch = 0}
 	end
 end
 

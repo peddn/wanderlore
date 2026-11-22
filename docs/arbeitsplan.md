@@ -71,6 +71,9 @@ Gemessen am 22.11.2026 wie oben, nach dem Einbau von Zonen, Austeilen und Platzh
 | Platzhalter von Zone 2 | 14 bis 21 ms |
 | Platzhalter von Zone 3 | 20 bis 24 ms |
 
+| Platzhalter der Inseln und Vulkaninsel, nach dem zweiten Teil | 19 bis 22 ms |
+
+- Nach dem zweiten Teil, mit Küsten und Inseln, lagen Zone 1 bei 15 bis 18 ms, Zone 2 bei 15 bis 19 ms und Zone 3 bei 19 bis 22 ms, also unverändert.
 - Zone 3 kostet mehr, weil das Land dort bis über 100 Blöcke hoch reicht. Dann enthält auch die obere der drei gemessenen Lagen Land statt nur Luft.
 - Der eigene Code braucht für eine Portion aus reiner Luft in Zone 1 jetzt 5 bis 6 ms im Mittel; der Stand von M1 kam im selben Lauf auf 4 bis 5 ms. Der Unterschied liegt in der Größe der Schwankung zwischen zwei Läufen.
 - Der Generator sieht je Portion nur die Biome der umliegenden Zellen an, nicht alle 13. In einem Lauf ohne das kostete eine Portion aus Luft 6 bis 7 ms; auch dieser Unterschied ist kaum größer als die Schwankung.

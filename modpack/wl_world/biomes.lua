@@ -9,8 +9,9 @@
 --          bend = {amount, spread, octaves, seed} a noise is read at a
 --          place shifted by up to that amount of nodes, which makes its
 --          lines swing to and fro. That costs more time.
--- form:    function(a, b) -> height added to the base; a and b are the
---          values of the two noises at this place, each within -1..1
+-- form:    function(a, b, c, distance) -> height added to the base; a, b
+--          and c are the values of the noises at this place, each within
+--          -1..1, and distance is how far the centre of the cell is
 -- top, filler:       surface node and the three nodes below it
 --          The form may return a second value. If that is true, the place
 --          is marked, and the biome's `bar` node is used at the water line
@@ -30,7 +31,9 @@
 --                    above = only on land more than this above the water}
 
 --
--- zone:    1 to 3 on the continent, 0 for the sea
+-- zone:    1 to 3 on the continent, 4 on the islands, 0 for the sea
+-- coast:   "cliff" if the land drops into the sea as a cliff. Otherwise it
+--          runs out in a beach. See terrain.lua.
 -- placeholder: true for a biome that only holds a place on the world map.
 --          The author works these out one by one later; until then they
 --          have a simple form and a surface of nodes from Minetest Game
@@ -41,8 +44,13 @@ local abs, floor = math.abs, math.floor
 
 -- A placeholder biome, see above.
 local function placeholder(zone, letter, seed, def)
-	def.name = ("zone%d_%s"):format(zone, letter:lower())
-	def.title = ("Zone %d %s"):format(zone, letter)
+	if zone == 4 then
+		def.name = "island_" .. letter:lower()
+		def.title = "Island " .. letter
+	else
+		def.name = ("zone%d_%s"):format(zone, letter:lower())
+		def.title = ("Zone %d %s"):format(zone, letter)
+	end
 	def.zone = zone
 	def.placeholder = true
 	def.noises = {{def.spread[1], 3, seed}, {def.spread[2], 2, seed + 1}}
@@ -178,6 +186,7 @@ wl_world.biomes = {
 		base = 55, spread = {300, 220},
 		form = function(a, b) return 15 * a - 38 * (1 - smooth(abs(b) / 0.14)) end,
 		top = "default:desert_stone", filler = "default:desert_stone",
+		coast = "cliff",
 	}),
 	placeholder(3, "B", 2201, {
 		-- Spires on an ice field.
@@ -190,6 +199,7 @@ wl_world.biomes = {
 		base = 65, spread = {200, 40},
 		form = function(a, b) return 40 * a + 12 * b end,
 		top = "default:permafrost_with_stones", filler = "default:permafrost",
+		coast = "cliff",
 	}),
 	placeholder(3, "D", 2401, {
 		-- Table mountains with steep sides.
@@ -198,7 +208,47 @@ wl_world.biomes = {
 		top = "default:desert_sandstone", filler = "default:desert_sandstone",
 	}),
 
-	-- The sea beyond zone 3. Coasts and islands are not built yet.
+	-- The islands, far out in the sea.
+	placeholder(4, "A", 3101, {
+		-- Low and level, with dunes.
+		base = 5, spread = {200, 40},
+		form = function(a, b) return 3 * a + 2 * b end,
+		top = "default:sand", filler = "default:sand", bed = "default:sand",
+	}),
+	placeholder(4, "B", 3201, {
+		-- Green hills.
+		base = 16, spread = {160, 40},
+		form = function(a, b) return 12 * a + 5 * b end,
+		top = "default:dirt_with_rainforest_litter",
+	}),
+	placeholder(4, "C", 3301, {
+		-- A rocky table above cliffs.
+		base = 30, spread = {180, 35},
+		form = function(a, b) return 10 * a + 6 * b end,
+		top = "default:silver_sandstone", filler = "default:silver_sandstone",
+		coast = "cliff",
+	}),
+	-- A volcano island: a cone with a crater in the middle of its cell.
+	-- Only its form is built. The vent and its seal come with the layer
+	-- below the world. There are four, see layout.lua.
+	{
+		name = "volcano",
+		title = "Volcano Island",
+		zone = 4,
+		base = 4,
+		noises = {{120, 3, 3401}, {30, 2, 3402}},
+		form = function(a, b, _, distance)
+			local cone = math.max(0, 1 - distance / 270)
+			local crater = math.max(0, 1 - distance / 34)
+			return 95 * cone ^ 1.4 - 45 * smooth(crater) + (4 * a + 3 * b) * (1 - crater)
+		end,
+		top = "default:obsidian",
+		filler = "default:stone",
+		shore = "default:gravel",
+		bed = "default:gravel",
+	},
+
+	-- The sea beyond zone 3 and between the islands.
 	{
 		name = "ocean",
 		title = "Ocean",

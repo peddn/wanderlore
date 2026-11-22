@@ -4,7 +4,7 @@
 #   scripts/map.sh                       4000 nodes around the origin
 #   scripts/map.sh blossom_downs         centred on the nearest cell of a biome
 #   scripts/map.sh blossom_downs 1       1 node per pixel instead of 5
-#   scripts/map.sh world                 the whole continent, 28000 nodes wide
+#   scripts/map.sh world                 the continent and the islands, 38000 nodes wide
 # Zone borders are dark lines. The biomes on the map are listed on the left.
 # The picture lands in .dev/map.png, or in the file given as WL_MAP_OUT.
 set -euo pipefail
@@ -25,7 +25,7 @@ step="${2:-5}"
 size="${WL_MAP_SIZE:-800}"
 if [ "$at" = "world" ]; then
 	at=origin
-	step="${2:-28}"
+	step="${2:-38}"
 	size="${WL_MAP_SIZE:-1000}"
 fi
 
