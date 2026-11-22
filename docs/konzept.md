@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 7 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 8 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -22,6 +22,7 @@ Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt
 | Welt | Eigener Kartengenerator, der Zone, Biom und Landschaftsform gemeinsam festlegt. Vier Zonen zum Start |
 | Biome | Eigene, aus vorhandenem Material neu zusammengesetzt, jedes mit eigener Landschaftsform |
 | Reihenfolge | Generator zuerst |
+| Entwicklungsphase | Keine Rücksicht auf bereits erstellte Welten. Jede Änderung am Generator darf eine neue Welt verlangen |
 
 ## 2. Form und Kompatibilität
 
@@ -100,7 +101,7 @@ Die Regeln:
 - **Zone 2, 3 und die Inseln werden nach Richtung ausgeteilt.** Jedes Biom hat eine Heimatrichtung, mit einzelnen Ausreißern. Wer alle Zutaten will, muss in verschiedene Richtungen reisen.
 - **Die Größe eines Bioms hängt am Austeilen, nicht an der Zellgröße.** Regler sind der Zusammenhang gleicher Biome, die Zahl der Biome je Zone und die Größe der Zone.
 - **Die Zelle ist die Spielart des Bioms.** Jede Zelle bekommt eine Variante, etwa dicht, licht, mit See oder mit Landmarke.
-- **Die Welt speichert ihre Verteilung** beim Anlegen und rechnet sie nie neu. Neue Biome erscheinen nur in neuen Welten oder neuen Zonen.
+- **Die Verteilung wird aus dem Startwert der Welt berechnet.** In der Entwicklungsphase darf sie sich mit jeder Änderung am Generator ändern. Erst ab einer Veröffentlichung für andere wäre zu klären, ob eine Welt ihre Verteilung festhält.
 - **Weites Reisen soll kosten.** Es gibt keine Wegsteine. Portale kommen vielleicht später. Betten setzen den Wiedereinstiegspunkt.
 - **Hinter dem Meer ist Platz.** Die Welt reicht bis etwa 31.000 Blöcke; dort können später weitere Kontinente mit neuen Zonen liegen.
 
@@ -147,8 +148,9 @@ Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die
 - **Dungeons** kommen unter der Erde vor. Idee: einzelne Räume und Gänge als gebaute Bausteine, die der Generator zu immer anderen Anlagen zusammensetzt.
 - **Die Zwischenschicht** ist eine durchgehende zweite Welt etwa 360 bis 460 Blöcke unter dem Meer, im Sinn von „Reise zum Mittelpunkt der Erde“. Sie ist vor allem eine Zone für das späte Spiel und kann später auch ein Reiseweg zu weiteren Kontinenten sein.
 - **Über der Zwischenschicht liegt unzerstörbares Gestein.** Nur die Schlote von Vulkaninseln durchbrechen es. Man erreicht die Zwischenschicht also nur über eine Vulkaninsel.
-- **Vorerst bleibt die Zwischenschicht leer**, das heißt als gesperrter Raum angelegt. Weil niemand hineinkommt, kann sie später gefüllt werden, auch in bestehenden Welten.
-- **Vulkaninseln werden von Anfang an mit ausgeteilt**, mit verschlossenem Schlot. Die Verteilung der Inseln wird beim Anlegen der Welt gespeichert und lässt sich später nicht mehr ändern.
+- **Vorerst bleibt die Zwischenschicht leer**, das heißt als gesperrter Raum angelegt.
+- **Vier Vulkaninseln** als Startwert, in verschiedenen Himmelsrichtungen, damit die Zwischenschicht von jeder Seite erreichbar ist, aber nie nah. Bis G5 ist ihr Schlot verschlossen.
+- **Zum Testen** unerreichbarer Orte reichen die Rechte `fly`, `fast` und `noclip` sowie der Befehl `/teleport`.
 
 ### Übergänge
 
