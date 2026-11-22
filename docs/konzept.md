@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 6 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 7 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -122,6 +122,34 @@ Festgelegt:
 - **Begehbarkeit nach Zone.** Zone 1 ist überall zu Fuß begehbar. Nach außen wird das Gelände sperriger, in Zone 3 bewusst so, dass man bauen, klettern oder einen Trank nutzen muss.
 - **Dreidimensionales Rauschen** nur dort, wo eine Form es braucht. Echte Nadeln, Bögen und Überhänge gehen mit einer Höhenformel nicht.
 
+### Erze und Tiefe
+
+Skizze und Skript: `docs/landschaft/skizze_profil.png`.
+
+Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die richtige Tiefe. Tiefen in Blöcken unter der Oberfläche, als Startwerte:
+
+| Tiefe | unter Zone 1 | unter Zone 2 | unter Zone 3 | unter Inseln |
+| --- | --- | --- | --- | --- |
+| 0 bis 30 | Kohle, Kupfer, Zinn | Kohle, Kupfer, Zinn | Kohle, Kupfer, Zinn | Kohle, Kupfer, Zinn |
+| 30 bis 120 | taubes Gestein | Eisen, Gold | Eisen, Gold | Eisen, Gold |
+| 100 bis 250 | taubes Gestein | taubes Gestein | Mese, Diamant | Mese, Diamant |
+
+- **Erze niedrigerer Stufen laufen in ihrer Schicht nach außen weiter.**
+- **Das Biom entscheidet, welches Erz einer Schicht es gibt.**
+- **Keine Anzeichen an der Oberfläche.** Das Entdecken besteht darin, in einem Biom tief genug zu graben. Der erste Fund eines Erzes bringt Lore.
+- **Unter Inseln liegen alle Erze.**
+- **Besondere Stoffe der Inseln** für Tränke und Stationsstufen liegen flach. Vorschlag: nur als Beute in den Strongholds der Inseln.
+- Werkzeugstufen und Rezepte bleiben die von Minetest Game.
+
+### Höhlen, Dungeons, Zwischenschicht
+
+- **Höhlen** sind wichtig und sollen hohe Qualität bekommen: Hallen, Gänge, Schächte, unterirdische Seen, je Biom verschieden.
+- **Dungeons** kommen unter der Erde vor. Idee: einzelne Räume und Gänge als gebaute Bausteine, die der Generator zu immer anderen Anlagen zusammensetzt.
+- **Die Zwischenschicht** ist eine durchgehende zweite Welt etwa 360 bis 460 Blöcke unter dem Meer, im Sinn von „Reise zum Mittelpunkt der Erde“. Sie ist vor allem eine Zone für das späte Spiel und kann später auch ein Reiseweg zu weiteren Kontinenten sein.
+- **Über der Zwischenschicht liegt unzerstörbares Gestein.** Nur die Schlote von Vulkaninseln durchbrechen es. Man erreicht die Zwischenschicht also nur über eine Vulkaninsel.
+- **Vorerst bleibt die Zwischenschicht leer**, das heißt als gesperrter Raum angelegt. Weil niemand hineinkommt, kann sie später gefüllt werden, auch in bestehenden Welten.
+- **Vulkaninseln werden von Anfang an mit ausgeteilt**, mit verschlossenem Schlot. Die Verteilung der Inseln wird beim Anlegen der Welt gespeichert und lässt sich später nicht mehr ändern.
+
 ### Übergänge
 
 Skizze und Skript: `docs/landschaft/skizze_uebergaenge.png`.
@@ -141,7 +169,7 @@ Jede Höhenformel besteht aus zwei Teilen: einer **Grundhöhe** des Bioms und de
 - **Überhänge und Bögen** brauchen dreidimensionales Rauschen, das deutlich teurer ist. Start mit Höhenformeln, 3D nur wo ein Biom es braucht.
 - **Große Bauwerke** reichen über mehrere Portionen. Ihr Ort muss vorab berechenbar sein, damit jede Portion ihren Teil zeichnet.
 - **Geschwindigkeit** ist erst nach einer Messung am Prototyp bekannt.
-- **Selbst zu liefern:** Höhlen, Flüsse, Dungeons, Biom-Auswahl und Bewuchs. Erzverteilung und das Setzen von Bauvorlagen stellt Luanti weiter bereit.
+- **Selbst zu liefern:** Höhlen, Flüsse, Dungeons, Biom-Auswahl, Bewuchs und die Erzverteilung nach Zone, Biom und Tiefe. Das Setzen von Bauvorlagen stellt Luanti weiter bereit.
 
 ### Stufen
 
@@ -149,7 +177,11 @@ Jede Höhenformel besteht aus zwei Teilen: einer **Grundhöhe** des Bioms und de
 | --- | --- | --- |
 | G1 Prototyp | Landschaftsformen und zwei bis drei Biome, ohne Höhlen und Erze | Screenshots zeigen deutlich verschiedene Landschaften, Geschwindigkeit ist gemessen |
 | G2 Weltkarte | Zonen, Lage der Biome, Meer und Inseln, Übergänge | man kann vom Startland bis zu einer Insel reisen |
-| G3 Ausbau | Höhlen, Erze, Flüsse, Feinschliff der Geschwindigkeit | eine Welt lässt sich flüssig erkunden |
+| G3 Ausbau | Erzschichten, Flüsse, Platz für Höhlen und Zwischenschicht freigehalten, Geschwindigkeit | eine Welt lässt sich flüssig erkunden |
+| G4 Unterwelt | Höhlen und Dungeons | man findet Höhlen und steigt in ihnen ab |
+| G5 Zwischenschicht | die zweite Welt, Schlote der Vulkaninseln öffnen sich | man reist durch einen Vulkan hinab |
+
+Die frühere Schätzung von 800 bis 1.200 Zeilen galt für die Oberfläche. Mit Höhlen, Dungeons und Zwischenschicht ist grob das Zwei- bis Dreifache zu erwarten.
 
 ## 5. Zonen und Biome
 
@@ -284,11 +316,13 @@ Mahlzeit-Boni: Regeneration, Zusatzherzen, Langer Atem, Zähigkeit, Leichtfuß, 
 | 7 | `wl_strongholds`, zuerst der Baukasten |
 | 8 | `wl_monsters` |
 | 9 | `wl_lore` vollständig: Lore Table, Äste |
-| 10 | Spiel-Hülle, Anbindung an LEP |
+| 10 | `wl_world` G4: Höhlen und Dungeons |
+| 11 | `wl_world` G5: Zwischenschicht |
+| 12 | Spiel-Hülle, Anbindung an LEP |
 
 Schritt 3 kommt früh, weil sich erst dort zeigt, ob Entdecken als Fortschritt trägt.
 
-Grober Umfang: 4.000 bis 5.000 Zeilen Lua. Der unsicherste Posten ist der Generator.
+Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Generator. Er ist der größte und unsicherste Posten.
 
 ## 13. Risiken
 
