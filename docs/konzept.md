@@ -130,13 +130,13 @@ Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle
 | --- | --- | --- | --- |
 | Blossom Downs | 12 | flache Hügel von ±10. Zu einem Bach hin senkt sich das Land über etwa 50 Blöcke auf eine ebene Wiese 3 über dem Wasser. Der Bach ist eine flache Rinne darin, etwa 6 breit und 2 tief, und er mäandert in weiten Schwüngen | Gras, im Wasser Sand |
 | Reed Meres | 2 | fast eben, 1 bis 3 über dem Wasser. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Gras, am Ufer Sand, im Wasser Erde |
-| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu kleine Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
+| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
 
 Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Bäche von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Bäche, die einen Hang hinabfließen, gehören zu den Flüssen in G3.
 
 Die Bäche mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschobenen Stelle gelesen wird. Dabei schließt sich gelegentlich ein Bogen zu einem Ring um eine kleine Insel.
 
-Die Waldseen von Old Wood sind stehendes Wasser in einem eigenen Becken, 16 bis 40 Blöcke breit und 2 bis 4 tief. Ein See entsteht nur, wo der Boden ringsum fast gleich hoch ist, damit er keinen Damm braucht. Sein Wasser steht einen Block unter dem niedrigsten Ufer, und das Ufer steigt von dort flach an. Am Wasser gilt in Reed Meres und Old Wood: höchstens ein Block hinab. In Blossom Downs liegt die Wiese am Bach 3 über dem Wasser.
+Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 24 über dem Meer: Jede Mulde, die tiefer liegt, füllt sich bis dorthin. So liegen die Seen in Gruppen in den Niederungen, und die höheren Gegenden bleiben trocken. Das Ufer liegt von selbst einen Block über dem Wasser. Zur Biomgrenze hin fällt das Land zum Nachbarn ab; deshalb hält der Generator den äußersten Streifen des Bioms als natürlichen Rand über dem Wasserspiegel, und jenseits davon gibt es dieses Wasser nicht. Am Wasser gilt in Reed Meres und Old Wood: höchstens ein Block hinab. In Blossom Downs liegt die Wiese am Bach 3 über dem Wasser.
 
 Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken.
 

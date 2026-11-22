@@ -64,16 +64,23 @@ function wl_world.find_biome(pos, name)
 	return best and wl_world.find_safe_pos({x = best.x, z = best.z})
 end
 
--- Returns the centre of the lake nearest to a position, at the height of
--- its water, or nil if none lies within the given distance.
+-- Returns a place on the water of the nearest lake above sea level, or nil
+-- if none lies within the given distance.
 function wl_world.find_lake(pos, distance)
+	local x0, z0 = floor(pos.x + 0.5), floor(pos.z + 0.5)
 	local best, best_distance
-	for _, lake in ipairs(terrain.lakes(pos.x - distance, pos.z - distance,
-			pos.x + distance, pos.z + distance)) do
-		local d = (lake.x - pos.x) ^ 2 + (lake.z - pos.z) ^ 2
-		if d <= distance * distance and (not best or d < best_distance) then
-			best, best_distance = lake, d
+	for dx = -distance, distance, 8 do
+		for dz = -distance, distance, 8 do
+			local d = dx * dx + dz * dz
+			if d <= distance * distance and (not best or d < best_distance) then
+				local height, _, level = terrain.point(x0 + dx, z0 + dz)
+				-- At least two nodes of water, to skip puddles.
+				if level > terrain.SEA and height < level - 2 then
+					best = {x = x0 + dx, y = level, z = z0 + dz}
+					best_distance = d
+				end
+			end
 		end
 	end
-	return best and {x = best.x, y = best.level, z = best.z}
+	return best
 end

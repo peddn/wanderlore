@@ -79,8 +79,9 @@ wl_world.biomes = {
 		bed = "default:dirt",
 		-- Boulders of stone with patches of moss, see terrain.lua.
 		boulders = true,
-		-- Small lakes above sea level where the ground is level enough.
-		lakes = true,
+		-- Every hollow below this height above sea level fills with water
+		-- and becomes a forest lake, see terrain.lua.
+		water_table = 24,
 	},
 }
 

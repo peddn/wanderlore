@@ -7,8 +7,7 @@
 
 local layout, biomes = wl_world.layout, wl_world.biomes
 local hash = wl_world.hash
-local floor, sqrt, min, max = math.floor, math.sqrt, math.min, math.max
-local sin, cos, atan2, pi = math.sin, math.cos, math.atan2, math.pi
+local floor, sqrt, max = math.floor, math.sqrt, math.max
 
 local terrain = {}
 wl_world.terrain = terrain
@@ -115,118 +114,38 @@ local function formula(x, z)
 	local height = mix(point_weights, function(b)
 		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos))
 	end)
-	return SEA + height, own
+	return SEA + height, own, point_weights[own]
 end
 
--- Lakes above sea level: still water in a basin of its own. Biomes that
--- ask for them get one where the ground around a spot is level enough,
--- so that no dam is needed. Each square of the grid holds at most one.
-local LAKE_GRID = 64
-local LAKE_CHANCE = 0.9
-local LAKE_MIN, LAKE_MAX = 8, 20   -- radius
-local LAKE_LEVEL = 3               -- the ground around may differ this much
-local LAKE_BANK = 12               -- width of the bank that is reshaped
-local LAKE_REACH = LAKE_MAX * 1.4 + LAKE_BANK
-
--- lake_cache[key] is the lake of a grid square, or false if it has none.
-local lake_cache = {}
-local function lake_of(gi, gj)
-	local key = gi * 65536 + gj
-	local lake = lake_cache[key]
-	if lake ~= nil then
-		return lake
+-- A biome with a water table has standing water in every hollow below a
+-- fixed height. That only holds inside the biome: towards a border the
+-- land drops to the neighbour, so the outermost strip of the biome is kept
+-- above the water as a natural rim, and there is no such water beyond it.
+--
+-- For a place with the given share of its own biome: returns the height
+-- of the ground, raised where the rim needs it, and the water level.
+local RIM = 0.93    -- share of the own biome down to which the rim is held
+local function water_table(biome, share, height)
+	local depth = biome.water_table
+	if not depth then
+		return height, SEA
 	end
-	lake = false
-	if hash(gi, gj, 31) < LAKE_CHANCE then
-		local x = floor((gi + hash(gi, gj, 32)) * LAKE_GRID)
-		local z = floor((gj + hash(gi, gj, 33)) * LAKE_GRID)
-		local r = LAKE_MIN + (LAKE_MAX - LAKE_MIN) * hash(gi, gj, 34)
-		local lowest, own = formula(x, z)
-		local highest, fits = lowest, biomes[own].lakes
-		-- Look at the ground on two rings around the lake.
-		for ring = 1, 2 do
-			for step = 0, 7 do
-				if fits then
-					local angle = step * pi / 4
-					local distance = r * (ring == 1 and 0.7 or 1.4) + (ring - 1) * 3
-					local height
-					height, own = formula(floor(x + distance * cos(angle) + 0.5),
-						floor(z + distance * sin(angle) + 0.5))
-					lowest, highest = min(lowest, height), max(highest, height)
-					fits = biomes[own].lakes and highest - lowest <= LAKE_LEVEL
-				end
-			end
-		end
-		if fits then
-			lake = {
-				x = x, z = z, r = r,
-				-- The water stands one node below the lowest bank.
-				level = floor(lowest + 0.5) - 1,
-				depth = 2 + 2 * hash(gi, gj, 35),
-				-- Two waves along the shore make it irregular.
-				phase2 = 2 * pi * hash(gi, gj, 36),
-				phase3 = 2 * pi * hash(gi, gj, 37),
-			}
-		end
+	local level = SEA + depth
+	if share >= 1 then
+		return height, level
 	end
-	lake_cache[key] = lake
-	return lake
-end
-
--- Returns the lakes that can reach into the given square.
-function terrain.lakes(minx, minz, maxx, maxz)
-	local list = {}
-	for gi = floor((minx - LAKE_REACH) / LAKE_GRID), floor((maxx + LAKE_REACH) / LAKE_GRID) do
-		for gj = floor((minz - LAKE_REACH) / LAKE_GRID), floor((maxz + LAKE_REACH) / LAKE_GRID) do
-			local lake = lake_of(gi, gj)
-			if lake then
-				list[#list + 1] = lake
-			end
-		end
-	end
-	return list
-end
-
--- Reshapes the ground at one place for one lake. Returns the new height,
--- and true if the place lies in the basin of the lake.
-local function carve(lake, x, z, height)
-	local dx, dz = x - lake.x, z - lake.z
-	local distance = sqrt(dx * dx + dz * dz)
-	if distance > LAKE_REACH then
-		return height, false
-	end
-	local angle = atan2(dz, dx)
-	local r = lake.r * (1 + 0.25 * sin(2 * angle + lake.phase2) + 0.15 * sin(3 * angle + lake.phase3))
-	if distance < r then
-		-- A shallow bowl that meets the water level at its rim.
-		local share = distance / r
-		return min(height, lake.level - lake.depth * (1 - share * share)), true
-	end
-	local out = distance - r
-	if out < LAKE_BANK then
-		-- The bank: one node above the water at the rim, then rising
-		-- gently until it meets the land as it was.
-		height = min(height, lake.level + 1 + max(0, out - 3) * 0.4)
-		if out < 3 then
-			height = max(height, lake.level + 1)
-		end
-	end
-	return height, false
+	-- Below RIM the lower limit falls away quickly and stops mattering.
+	local limit = level + 1 - max(0, RIM - share) * 150
+	return max(height, limit), SEA
 end
 
 -- Returns the exact height of the ground at a single place, the index of
 -- the biome, and the level of the water that stands there if the ground is
 -- lower. Does not know about boulders.
 function terrain.point(x, z)
-	local height, own = formula(x, z)
-	local level = SEA
-	for _, lake in ipairs(terrain.lakes(x, z, x, z)) do
-		local inside
-		height, inside = carve(lake, x, z, height)
-		if inside then
-			level = lake.level
-		end
-	end
+	local height, own, share = formula(x, z)
+	local level
+	height, level = water_table(biomes[own], share, height)
 	return height, own, level
 end
 
@@ -321,23 +240,8 @@ function terrain.chunk(minx, minz, size, heights, owners, levels)
 					+ w ^ FADE * biome.form(form_a[b][column], form_b[b][column])
 			end
 		end
-		heights[column] = SEA + height
-		levels[column] = SEA
-	end
-
-	local maxx, maxz = minx + size - 1, minz + size - 1
-	for _, lake in ipairs(terrain.lakes(minx, minz, maxx, maxz)) do
-		for z = max(minz, floor(lake.z - LAKE_REACH)), min(maxz, floor(lake.z + LAKE_REACH) + 1) do
-			local column = (z - minz) * size + max(minx, floor(lake.x - LAKE_REACH)) - minx
-			for x = max(minx, floor(lake.x - LAKE_REACH)), min(maxx, floor(lake.x + LAKE_REACH) + 1) do
-				column = column + 1
-				local inside
-				heights[column], inside = carve(lake, x, z, heights[column])
-				if inside then
-					levels[column] = lake.level
-				end
-			end
-		end
+		local own = owners[column]
+		heights[column], levels[column] = water_table(biomes[own], share[own][column], SEA + height)
 	end
 
 	for column = 1, size * size do
