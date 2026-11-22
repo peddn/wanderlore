@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 13 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 14 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -234,11 +234,13 @@ Das **Lorebook** zeigt, was gefunden ist und wie viel noch fehlt, ohne das Fehle
 Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung stehen. Festgelegt am 22.11.2026:
 
 - **Lore wird ausgegeben.** Der Spieler entscheidet, welche Rezepte er freischaltet.
-- **Lore reicht nicht für alles.** Die Rezepte sind als Baum mit Zweigen angelegt. Es gibt drei Pfade: Waffen, Rüstung und Alchemie. Man muss sich für einen entscheiden und hauptsächlich dort investieren.
+- **Lore reicht nicht für alles.** Richtwert: genug für einen Bereich ganz und einen zweiten zur Hälfte. Es gibt die Bereiche Waffen, Rüstung und Alchemie.
+- **Rezepte bilden Ketten**, von schlecht nach gut, zum Beispiel eine Kette für Schwerter und eine für Bögen. Es gibt keine Gabelungen und keine förmliche Wahl eines Pfades. Die Spezialisierung ergibt sich allein daraus, dass die Lore knapp ist.
+- **Die Küche steht allen offen.** Ihre Rezepte sind billig, weil Nahrung für jeden lebenswichtig ist.
+- **Umentscheiden ist gegen einen Preis möglich.** Was der Preis ist, ist offen.
 - **Freischaltungen gelten je Spieler.** Eine Station zeigt jedem die Rezepte, die er kennt.
 - **Ein Rezept braucht beides:** die freigeschaltete Kenntnis und eine Station der nötigen Stufe.
-
-Offen: ob die Küche ein vierter Pfad ist oder allen offensteht, wie viel Lore es insgesamt gibt und ob man sich umentscheiden kann.
+- **Waffen und Rüstungen entstehen nur an der Schmiede.** Das normale Handwerksfeld kann Rezepte nicht je Spieler sperren, deshalb werden die Rezepte für Schwerter aus Minetest Game und für Rüstungen aus 3D Armor dort entfernt. Werkzeuge wie Spitzhacken bleiben im Handwerksfeld.
 
 ### Stationsstufen
 
@@ -411,7 +413,7 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 2. Feldfrüchte und Speisen auswählen.
 3. Aufteilung der Monster prüfen.
 4. Kampf und Überleben: Werte der Gerichte, Waffen- und Rüstungsstufen im Einzelnen.
-5. Lore: Küche als Pfad oder frei, Gesamtmenge, Umentscheiden, Aufbau der drei Bäume.
+5. Lore: Preis für das Umentscheiden, die Ketten im Einzelnen, Kosten je Rezept.
 
 ## Quellen
 
