@@ -129,15 +129,15 @@ Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle
 
 | Biom | Grundhöhe | Form | Oberfläche |
 | --- | --- | --- | --- |
-| Blossom Downs | 12 | flache Hügel von ±10. Zu einem Bach hin senkt sich das Land über etwa 50 Blöcke auf eine ebene Wiese 3 über dem Wasser. Der Bach ist eine flache Rinne darin, etwa 6 breit und 2 tief, und er mäandert in weiten Schwüngen | Gras, im Wasser Sand |
+| Blossom Downs | 12 | flache Hügel von ±10 zwischen Flüssen. Ein Fluss ist etwa 28 breit und bis 3 tief und mäandert in weiten Schwüngen. Neben ihm liegt eine ebene Aue, einen Block über dem Wasser und je Seite etwa 15 breit; erst dahinter steigt das Land langsam zu den Hügeln an | Gras, am Ufer und im Wasser Sand |
 | Reed Meres | 1,6 | eben, das Land liegt 1 oder 2 über dem Wasser und nirgends höher. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Sumpfgras mit ebenen Flecken aus grünem und gelbem Sumpfmoos, am Ufer und im Wasser Torf |
 | Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
 
-Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Bäche von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Bäche, die einen Hang hinabfließen, gehören zu den Flüssen in G3.
+Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Flüsse von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Zur Biomgrenze hin laufen sie aus, weil sich dort die Höhe mit der des Nachbarn mischt. Gewässer, die einen Hang hinabfließen oder Biome verbinden, gehören zu den Flüssen in G3.
 
-Die Bäche mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschobenen Stelle gelesen wird. Dabei schließt sich gelegentlich ein Bogen zu einem Ring um eine kleine Insel.
+Die Flüsse mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschobenen Stelle gelesen wird. Dabei schließt sich gelegentlich ein Bogen zu einem Ring um eine kleine Insel.
 
-Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 24 über dem Meer: Jede Mulde, die tiefer liegt, füllt sich bis dorthin. So liegen die Seen in Gruppen in den Niederungen, und die höheren Gegenden bleiben trocken. Das Ufer liegt von selbst einen Block über dem Wasser. Zur Biomgrenze hin fällt das Land zum Nachbarn ab; deshalb hält der Generator den äußersten Streifen des Bioms als natürlichen Rand über dem Wasserspiegel, und jenseits davon gibt es dieses Wasser nicht. Am Wasser gilt in Reed Meres und Old Wood: höchstens ein Block hinab. In Blossom Downs liegt die Wiese am Bach 3 über dem Wasser.
+Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 24 über dem Meer: Jede Mulde, die tiefer liegt, füllt sich bis dorthin. So liegen die Seen in Gruppen in den Niederungen, und die höheren Gegenden bleiben trocken. Das Ufer liegt von selbst einen Block über dem Wasser. Zur Biomgrenze hin fällt das Land zum Nachbarn ab; deshalb hält der Generator den äußersten Streifen des Bioms als natürlichen Rand über dem Wasserspiegel, und jenseits davon gibt es dieses Wasser nicht. Am Wasser gilt in allen drei Biomen: höchstens ein Block hinab.
 
 Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern.
 

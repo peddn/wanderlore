@@ -128,9 +128,9 @@ DISPLAY=:9 import -window root bild.png
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
 
-- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, darin flache Bäche mit flachen Ufern, die stark mäandern. Tiefe, breite Flusstäler will der Autor dort nicht.
+- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, dazwischen breite, flache Flüsse, die stark mäandern, mit einer ebenen Aue am Ufer und sehr sanftem Anstieg. Tiefe Flusstäler und treppige Ufer will der Autor dort nicht.
 - Reed Meres: kleine Tümpel, und vom Ufer geht es höchstens einen Block hinab zum Wasser. Wasser, das tief unter dem Ufer sitzt, will der Autor nicht.
-- Old Wood hat Waldseen über dem Meeresspiegel. Sie entstehen aus einem eigenen Wasserspiegel des Bioms, bis zu dem alle Mulden gefüllt werden; das war die Idee des Autors. Auch dort höchstens ein Block hinab zum Wasser. In Blossom Downs sind 3 Blöcke von der Wiese zum Bach in Ordnung.
+- Old Wood hat Waldseen über dem Meeresspiegel. Sie entstehen aus einem eigenen Wasserspiegel des Bioms, bis zu dem alle Mulden gefüllt werden; das war die Idee des Autors. Auch dort höchstens ein Block hinab zum Wasser.
 - Zellgröße 1.000 statt 1.600, als Versuch: Mit 1.600 wirkten die Biome sehr groß.
 - Reed Meres: sehr flach, das Land liegt nur 1 oder 2 über dem Wasser. Sumpfgras als Deckschicht, Torf (der trockene, Nummer 6 der Tafel) am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos, deren Farbe gegenüber der Vorlage dunkler und kräftiger ist. Die Werte hat der Autor an einer Tafel gewählt; sie stehen in `docs/medien.md`.
 - M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.

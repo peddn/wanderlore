@@ -28,16 +28,16 @@ wl_world.biomes = {
 		-- The brooks run where the second noise crosses zero. Bending it
 		-- makes them meander.
 		noises = {{260, 4, 101}, {330, 2, 102, bend = {100, 120, 1, 103}}},
-		-- Low round hills of +-10. Towards a brook the land eases down,
-		-- over about 50 nodes, to a level meadow 3 above the water. The
-		-- brook itself is a shallow dip in that meadow, about 6 wide and
-		-- 2 deep. All water of the prototype stands at sea level, so the
-		-- brooks do too.
+		-- Low round hills of +-10 between rivers. A river is about 28
+		-- wide and up to 3 deep. Beside it lies a level flood plain, one
+		-- node above the water and about 15 wide on each side, and only
+		-- beyond that the land rises, slowly, to the hills. All water of
+		-- the prototype stands at sea level, so the rivers do too.
 		form = function(hills, valley)
 			local v = abs(valley)
-			local meadow = -9
-			local ground = meadow + (10 * hills - meadow) * smooth(v / 0.3)
-			return ground - 5 * (1 - smooth(v / 0.04))
+			local plain = -10.8
+			local ground = plain + (10 * hills - plain) * smooth((v - 0.18) / 0.45)
+			return ground - 3.5 * (1 - smooth(v / 0.12))
 		end,
 		top = "default:dirt_with_grass",
 		filler = "default:dirt",
