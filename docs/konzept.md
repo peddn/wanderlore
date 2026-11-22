@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 11 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 12 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -321,7 +321,15 @@ Es gibt keinen Hunger, der einen umbringt. Stattdessen bestimmt Nahrung, wie sta
 
 Das ersetzt den früheren Entwurf mit einem einzelnen Mahlzeit-Bonus. Die dort genannten Wirkungen (Regeneration, Zusatzherzen, Langer Atem, Zähigkeit, Leichtfuß, Sanfte Landung) werden zu Eigenschaften einzelner Gerichte. Tränke bleiben getrennt: kurz, stark, aktiv.
 
-**Ausdauer** gibt es als zweite Leiste neben dem Leben. Nahrung erhöht beide, je nach Gericht eher das eine oder das andere. Wofür Ausdauer verbraucht wird, ist offen; vorgeschlagen sind Rennen und das Spannen des Bogens.
+### Ausdauer
+
+Ausdauer ist eine zweite Leiste neben dem Leben. Nahrung erhöht beide, je nach Gericht eher das eine oder das andere.
+
+- **Verbraucht wird sie durch** Rennen, Springen, Schwimmen, Hiebe und das Spannen des Bogens.
+- **Ist sie leer, gilt wie in Valheim:** kein Rennen, kein Springen, keine wirksamen Hiebe, kein Spannen. Wer mit leerer Ausdauer schwimmt, nimmt Schaden.
+- Sie füllt sich von selbst wieder auf, solange man nichts davon tut.
+
+Zur Machbarkeit in Luanti: Rennen und Springen lassen sich sperren, indem Tempo und Sprungkraft zurückgesetzt werden. Hiebe lassen sich nicht verhindern, aber wirkungslos machen, und zwar gegen unsere eigenen Monster und gegen Spieler. Das Abbauen von Blöcken kostet keine Ausdauer.
 
 ### Rüstung
 
@@ -364,7 +372,7 @@ Entwurf: Die Flugbahn wird mit Strahlen in Schritten berechnet. Der sichtbare Pf
 
 - **Bogen:** Spannen kostet Ausdauer und bestimmt Wucht und Reichweite. Schnell, beweglich.
 - **Armbrust:** Laden dauert, der Schuss selbst ist sofort da und stark. Kostet keine Ausdauer.
-- **Pfeile und Bolzen** je Erzstufe.
+- **Pfeile und Bolzen** je Erzstufe. Sie fliegen in einer Bogenbahn. Verschossene lassen sich mit einer gewissen Chance je Stück wieder aufsammeln.
 
 ## 13. Reihenfolge
 
@@ -402,7 +410,7 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 1. Biome: entstehen mit der Zeit. Die Anzahl je Zone steht fest.
 2. Feldfrüchte und Speisen auswählen.
 3. Aufteilung der Monster prüfen.
-4. Kampf und Überleben: wofür Ausdauer verbraucht wird, Werte der Gerichte, Einzelheiten zu Bogen und Armbrust.
+4. Kampf und Überleben: Werte der Gerichte, Waffen- und Rüstungsstufen im Einzelnen.
 5. Was Lore außer den Stationsstufen freischaltet.
 
 ## Quellen
