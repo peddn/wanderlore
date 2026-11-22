@@ -111,4 +111,5 @@ Stand 22.11.2026, für den Einstieg in M0 und M1:
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.
 - Jedes Biom hat eine eigene Holzart, eine Feldfrucht, eine Kochzutat und eine Zutat für die Alchemie.
-- In Zone 1 hat jedes der drei Biome einen von drei Stoffen: Kupfer, Zinn oder Kohle. Kohle gilt als Brennstoff, nicht als Erz, wird aber wie die Erze verteilt. Eisen und Gold liegen in Zone 2, Mese und Diamant in Zone 3.
+- Kohle liegt überall in der oberen Schicht, unabhängig von Zone und Biom. Sie gilt als Brennstoff, nicht als Erz.
+- Zone 1: unter Blossom Downs Kupfer, unter Reed Meres Zinn, unter Old Wood besonders viel Kohle. Eisen und Gold liegen in Zone 2, Mese und Diamant in Zone 3.

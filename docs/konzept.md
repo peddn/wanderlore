@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.7 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.8 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -47,7 +47,7 @@ Daneben gibt es ein stilles zweites Ziel: ein vollständiges Lorebook.
 4. **Saatgut anbauen**, den ersten Herd bauen, das erste Gericht kochen.
 5. **Die erste Nacht:** schwache Monster. Ein Unterschlupf und ein Bett, das den Wiedereinstieg festlegt.
 6. **Die drei Biome des Startlands durchwandern.**
-7. **Flach graben:** Kupfer unter dem einen Biom, Zinn unter dem zweiten, Kohle unter dem dritten. Bronze.
+7. **Flach graben:** Kohle überall, Kupfer unter dem einen Biom, Zinn unter einem anderen. Bronze.
 8. **Die Lore-Station bauen und die erste Lore ausgeben.** Hier fällt die erste Entscheidung.
 9. **Der Fluss.** Für die zweite Stufe einer Station braucht man Material von drüben.
 
@@ -136,12 +136,12 @@ Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die
 
 | Schicht | Tiefe | unter Zone 1 | unter Zone 2 | unter Zone 3 und Inseln |
 | --- | --- | --- | --- | --- |
-| obere | 0 bis 30 | Kupfer, Zinn, Kohle | Kupfer, Zinn, Kohle | Kupfer, Zinn, Kohle |
+| obere | 0 bis 30 | Kupfer, Zinn | Kupfer, Zinn | Kupfer, Zinn |
 | mittlere | 30 bis 120 | taubes Gestein | Eisen, Gold | Eisen, Gold |
 | tiefe | 100 bis 250 | taubes Gestein | taubes Gestein | Mese, Diamant |
 
-- **In Zone 1 hat jedes der drei Biome einen der drei Stoffe:** eines Kupfer, eines Zinn, eines Kohle. Für Bronze muss man also zwei Biome aufsuchen, für den Brennstoff das dritte.
-- **Kohle ist kein Erz, sondern ein guter Brennstoff.** Verteilt wird sie trotzdem wie die Erze.
+- **Kohle liegt überall in der oberen Schicht,** unabhängig von Zone und Biom. Sie ist kein Erz, sondern ein guter Brennstoff.
+- **Die drei Biome von Zone 1:** unter Blossom Downs liegt Kupfer, unter Reed Meres Zinn, unter Old Wood besonders viel Kohle. Für Bronze muss man also zwei Biome aufsuchen.
 - **Erze der inneren Zonen laufen in ihrer Schicht nach außen weiter.**
 - **Das Biom entscheidet, welches Erz einer Schicht es gibt.**
 - **Keine Anzeichen an der Oberfläche.** Das Entdecken besteht darin, in einem Biom tief genug zu graben.
@@ -395,7 +395,7 @@ Noch zu entscheiden:
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
 
-5. **Welches Start-Biom** Kupfer, welches Zinn und welches Kohle bekommt, und welche Biome der äußeren Zonen welches Erz.
+5. **Welche Biome der äußeren Zonen welches Erz bekommen.** Das folgt, sobald es diese Biome gibt.
 6. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
 7. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
 
