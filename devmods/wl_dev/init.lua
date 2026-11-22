@@ -7,6 +7,17 @@
 local path = core.get_modpath("wl_dev")
 local has_world = core.global_exists("wl_world")
 
+-- Testers may fly and jump around. Luanti does not give these rights to a
+-- single player by default.
+core.register_on_joinplayer(function(player)
+	local name = player:get_player_name()
+	local privs = core.get_player_privs(name)
+	for _, priv in ipairs({"fly", "fast", "noclip", "teleport"}) do
+		privs[priv] = true
+	end
+	core.set_player_privs(name, privs)
+end)
+
 if has_world then
 	-- A "singlenode" world would drop new players into the stone at the
 	-- origin. Wanderlore itself does not decide where players appear, so
