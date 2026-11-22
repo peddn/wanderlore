@@ -87,6 +87,7 @@ Stand der Diskussion vom 22.11.2026. Die Skizze dazu liegt unter `docs/weltkarte
 | Fußweg bis zum Rand | ca. 16 Minuten | ca. 31 | ca. 48 | – |
 | Zellgröße | 1.600 | 1.600 | 1.600 | 800 |
 | Zellen in der Skizze | 23 | 49 | 92 | 82 |
+| Biome | 3 | 6 | 5 | 3 |
 | Austeilen der Biome | reihum | nach Richtung | nach Richtung | nach Richtung |
 | Ein Biom-Land ist etwa | 1.600 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
@@ -102,6 +103,24 @@ Die Regeln:
 - **Die Welt speichert ihre Verteilung** beim Anlegen und rechnet sie nie neu. Neue Biome erscheinen nur in neuen Welten oder neuen Zonen.
 - **Weites Reisen soll kosten.** Es gibt keine Wegsteine. Portale kommen vielleicht später. Betten setzen den Wiedereinstiegspunkt.
 - **Hinter dem Meer ist Platz.** Die Welt reicht bis etwa 31.000 Blöcke; dort können später weitere Kontinente mit neuen Zonen liegen.
+
+### Landschaftsformen
+
+Jedes Biom hat eine Höhenformel, die für eine Position die Geländehöhe liefert. Alle Formen entstehen aus weichem Rauschen, nur anders weiterverarbeitet. Skizze und Skript liegen unter `docs/landschaft/`.
+
+| Form | Verfahren | Werte in der Skizze |
+| --- | --- | --- |
+| Hügel mit Bachtälern | Rauschen als Höhe, ein zweites Rauschen gräbt schmale Täler | Höhen bis etwa 45 Blöcke |
+| Terrassen | Höhe in Stufen gerundet, kurze Rampe an der Kante | Stufen von 11 Blöcken |
+| Schluchten | Hochebene, gefaltetes Rauschen schneidet tief ein | etwa 75 Blöcke tief |
+| Felsnadeln | flacher Boden, feines Rauschen oberhalb einer Schwelle stark überhöht | Spitzen bis etwa 115 Blöcke |
+
+Festgelegt:
+
+- **Kräftige Formen.** Die Landschaft darf deutlich dramatischer sein als in Minetest Game.
+- **Höchstens etwa 120 Blöcke über dem Meer.**
+- **Begehbarkeit nach Zone.** Zone 1 ist überall zu Fuß begehbar. Nach außen wird das Gelände sperriger, in Zone 3 bewusst so, dass man bauen, klettern oder einen Trank nutzen muss.
+- **Dreidimensionales Rauschen** nur dort, wo eine Form es braucht. Echte Nadeln, Bögen und Überhänge gehen mit einer Höhenformel nicht.
 
 ### Technische Knackpunkte
 
@@ -125,7 +144,7 @@ Die Regeln:
 
 | Zone | Charakter | Monster | Strongholds |
 | --- | --- | --- | --- |
-| 1 Startland | freundlich, Grundzutaten | wenige, schwach, nur nachts | kleine Ruinen |
+| 1 Startland | freundlich, Grundzutaten, drei Biome | wenige, schwach, nur nachts | kleine Ruinen |
 | 2 Wildnis | abwechslungsreich, die meisten Kräuter | mehr, mittel | Türme, Schreine |
 | 3 Ödland | karg, gefährlich, seltene Zutaten | stark, auch tags | Festungen mit Endgegner |
 | Inseln | Sonderzone, nur über Wasser erreichbar | eigene | einzelne besondere |
@@ -270,10 +289,9 @@ Grober Umfang: 4.000 bis 5.000 Zeilen Lua. Der unsicherste Posten ist der Genera
 
 ## 14. Offen
 
-1. Drei oder vier Biome im Startland.
-2. Biome: welche Skizzen, welche weiteren.
-3. Feldfrüchte und Speisen auswählen.
-4. Aufteilung der Monster prüfen.
+1. Biome: welche Skizzen, welche weiteren.
+2. Feldfrüchte und Speisen auswählen.
+3. Aufteilung der Monster prüfen.
 
 ## Quellen
 
