@@ -16,7 +16,8 @@ local floor, min, max = math.floor, math.min, math.max
 
 local c_stone = core.get_content_id("default:stone")
 local c_water = core.get_content_id("default:water_source")
-local c_boulder = core.get_content_id("default:mossycobble")
+local c_boulder = core.get_content_id("default:stone")
+local c_boulder_moss = core.get_content_id("default:mossycobble")
 
 -- Depth of the filler below the surface node.
 local FILLER = 3
@@ -130,7 +131,9 @@ local function generate(vmanip, minp, maxp)
 				for y = max(miny, floor(cy - r)), min(maxy, floor(cy + r)) do
 					local dx, dy, dz = x - boulder.x, y - cy, z - boulder.z
 					if dx * dx + dy * dy + dz * dz <= r * r then
-						data[area:index(x, y, z)] = c_boulder
+						-- About a third of the stones is mossy.
+						local mossy = wl_world.hash(x * 31 + y, z, 25) < 0.35
+						data[area:index(x, y, z)] = mossy and c_boulder_moss or c_boulder
 					end
 				end
 			end

@@ -22,9 +22,16 @@ wl_world.biomes = {
 		zone = 1,
 		base = 12,
 		noises = {{260, 4, 101}, {330, 2, 102}},
-		-- Wide round hills of +-10, cut by valleys 20 deep.
+		-- Low round hills of +-10. Towards a brook the land eases down,
+		-- over about 50 nodes, to a level meadow 3 above the water. The
+		-- brook itself is a shallow dip in that meadow, about 6 wide and
+		-- 2 deep. All water of the prototype stands at sea level, so the
+		-- brooks do too.
 		form = function(hills, valley)
-			return 10 * hills - 20 * (1 - smooth(abs(valley) / 0.12))
+			local v = abs(valley)
+			local meadow = -9
+			local ground = meadow + (10 * hills - meadow) * smooth(v / 0.3)
+			return ground - 5 * (1 - smooth(v / 0.04))
 		end,
 		top = "default:dirt_with_grass",
 		filler = "default:dirt",
@@ -60,7 +67,7 @@ wl_world.biomes = {
 		filler = "default:dirt",
 		shore = "default:dirt",
 		bed = "default:dirt",
-		-- Mossy boulders, see terrain.lua.
+		-- Boulders of stone with patches of moss, see terrain.lua.
 		boulders = true,
 	},
 }

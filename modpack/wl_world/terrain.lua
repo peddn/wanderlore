@@ -151,7 +151,7 @@ function terrain.chunk(minx, minz, size, heights, owners)
 	end
 end
 
--- Boulders: half sunken balls of mossy stone, scattered over biomes that
+-- Boulders: half sunken balls of stone, scattered over biomes that
 -- ask for them. Each square of the grid holds at most one.
 local GRID = 24
 local MAX_RADIUS = 4

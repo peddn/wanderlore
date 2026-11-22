@@ -49,6 +49,19 @@ for a = 1, #places do
 	end
 end
 
+-- wl_dev_shot_filter = <text> keeps only the views with that text in their
+-- name.
+local filter = core.settings:get("wl_dev_shot_filter") or ""
+if filter ~= "" then
+	local kept = {}
+	for _, view in ipairs(views) do
+		if view.name:find(filter, 1, true) then
+			kept[#kept + 1] = view
+		end
+	end
+	views = kept
+end
+
 local function show(player, index)
 	local view = views[index]
 	if not view then

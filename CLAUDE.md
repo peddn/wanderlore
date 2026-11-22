@@ -126,7 +126,7 @@ DISPLAY=:9 import -window root bild.png
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
 
-- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, Täler von 20 Tiefe.
+- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, darin flache Bäche mit flachen Ufern. Tiefe, breite Flusstäler will der Autor dort nicht.
 - M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.

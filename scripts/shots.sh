@@ -3,6 +3,8 @@
 # ground, and the borders between biomes. Needs Xvfb and ImageMagick; the client draws without a
 # graphics card, so one picture takes almost a minute.
 # Run scripts/setup.sh first. The pictures land in .dev/shots/.
+#   scripts/shots.sh             all views
+#   scripts/shots.sh old_wood    only the views with this text in their name
 set -euo pipefail
 
 repo="$(cd "$(dirname "$0")/.." && pwd)"
@@ -26,6 +28,7 @@ cat > "$dev/shots.conf" <<CONF
 mg_name = singlenode
 fixed_map_seed = ${WL_SEED:-wanderlore}
 wl_dev_shots = true
+wl_dev_shot_filter = ${1:-}
 wl_dev_shot_wait = ${WL_SHOT_WAIT:-40}
 screen_w = 1280
 screen_h = 760
