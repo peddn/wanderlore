@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.1 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.2 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -29,9 +29,10 @@ Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets komm
 Die Welt selbst ist das Rätsel. Tief unter ihr liegt die Zwischenschicht, und der einzige Weg hinab führt durch die Schlote der Vulkaninseln. Die sind versiegelt.
 
 1. **Die Siegel** sind Blöcke in den Schloten, die sich nur mit einem bestimmten Werkzeug abbauen lassen.
-2. **Das Werkzeug** stellt man aus vier Zutaten her, je eine aus den Strongholds der vier Elemente: Feuer, Wasser, Erde und Luft. Diese Strongholds liegen in Zone 3.
-3. **Der Abstieg** in die Zwischenschicht ist der Höhepunkt. Dort wartet als letzter Gegner ein Drache.
-4. **Danach geht es weiter.** Die Zwischenschicht reicht unter dem Meer hindurch und kann später zu weiteren Kontinenten führen.
+2. **Das Werkzeug** stellt man aus vier Zutaten her, je eine aus den Strongholds der vier Elemente: Feuer, Wasser, Erde und Luft. Jedes der vier Biome von Zone 3 steht für ein Element und hat seinen Stronghold. Weil diese Biome nach Himmelsrichtung verteilt sind, muss man den ganzen Kontinent bereisen.
+3. **Das Werkzeug verbraucht sich.** Eines reicht, um einen Vulkan zu öffnen.
+4. **Der Abstieg** in die Zwischenschicht ist der Höhepunkt. Dort wartet als letzter Gegner ein Drache.
+5. **Danach geht es weiter.** Die Zwischenschicht reicht unter dem Meer hindurch und kann später zu weiteren Kontinenten führen.
 
 Die Vulkane sind nicht von weitem zu sehen, weil Luanti nur die nähere Umgebung zeichnet. Sie sind über die Inseln verteilt und müssen gefunden werden.
 
@@ -162,8 +163,8 @@ Welche Biome es gibt, entsteht mit der Zeit am Generator. Erste Skizzen:
 | Blossom Downs | 1 | sanfte Hügel mit Bachtälern | Riesenbäume als Wegmarken |
 | Bamboo Terraces | 2 | gestufte Terrassen mit Wasserbecken | Reis wächst wild |
 | Mushroom Hollows | 2 | tiefe Senken | Pilze leuchten nachts |
-| Ember Scar | 3 | Schluchten in rotem Fels, Lavaflüsse | Hitze |
-| Frost Spires | 3 | Eisnadeln, dazwischen Frostwald | Schneesturm senkt die Sicht |
+| Ember Scar | 3, Feuer | Schluchten in rotem Fels, Lavaflüsse | Hitze |
+| Frost Spires | 3, Wasser | Eisnadeln, dazwischen Frostwald | Schneesturm senkt die Sicht |
 | Crystal Atoll | Inseln | Ringinseln mit Lagune | nachwachsende Kristalle |
 
 ## 5. Fortschritt
@@ -195,7 +196,7 @@ Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung
 
 ### Stationen
 
-Hergestellt wird an drei Stationen: Herd, Kessel und Schmiede. Ein Rezept braucht die freigeschaltete Kenntnis und eine Station der nötigen Stufe. Die vierte Station ist die Lore-Station, an der man Rezepte freischaltet.
+Hergestellt wird an drei Stationen: Herd, Kessel und Schmiede. Ein Rezept braucht die freigeschaltete Kenntnis und eine Station der nötigen Stufe. Die vierte Station ist die Lore-Station, an der man Rezepte freischaltet. Sie ist billig zu bauen und hat keine Stufen.
 
 Stationen werden nur mit Material aufgewertet, Lore spielt dabei keine Rolle. Das Material für höhere Stufen liegt in den äußeren Zonen und in Strongholds. Das lädt dazu ein, sich in gefährliche Gebiete zu wagen.
 
@@ -375,7 +376,7 @@ Noch zu entscheiden:
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
 
-5. **Die vier Elemente:** ob jedes der vier Biome von Zone 3 für ein Element steht.
+5. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
 6. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
 
 Noch gar nicht besprochen:
