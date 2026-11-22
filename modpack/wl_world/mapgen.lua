@@ -40,7 +40,7 @@ for b, biome in ipairs(biomes) do
 	end
 end
 
-local data, heights, owners, levels, marks = {}, {}, {}, {}, {}
+local data, heights, owners, covers, levels, marks = {}, {}, {}, {}, {}, {}
 
 local function generate(vmanip, minp, maxp)
 	-- The sky stays empty.
@@ -68,7 +68,7 @@ local function generate(vmanip, minp, maxp)
 	end
 
 	local size = maxp.x - minp.x + 1
-	terrain.chunk(minp.x, minp.z, size, heights, owners, levels, marks)
+	terrain.chunk(minp.x, minp.z, size, heights, owners, covers, levels, marks)
 	local boulders = terrain.boulders(minp.x, minp.z, maxp.x, maxp.z)
 
 	-- Most chunks above the land hold nothing but air. Leaving them
@@ -96,7 +96,7 @@ local function generate(vmanip, minp, maxp)
 		for x = minp.x, maxp.x do
 			column = column + 1
 			local height, level = heights[column], levels[column]
-			local skin = skins[owners[column]]
+			local skin = skins[covers[column]]
 			local vi = area:index(x, miny, z)
 
 			-- Stone, then filler, then the surface node.
@@ -135,7 +135,7 @@ local function generate(vmanip, minp, maxp)
 			for x = max(minp.x, patch.x - reach), min(maxp.x, patch.x + reach) do
 				local index = (z - minp.z) * size + x - minp.x + 1
 				local height = heights[index]
-				local skin = skins[owners[index]]
+				local skin = skins[covers[index]]
 				local nodes = skin.patches
 				if nodes and height > levels[index] + skin.patches_above
 						and height >= miny and height <= maxy then

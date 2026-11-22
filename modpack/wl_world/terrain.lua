@@ -17,7 +17,7 @@ terrain.SEA = tonumber(core.get_mapgen_setting("water_level")) or 1
 terrain.MIN_Y = terrain.SEA - 40
 terrain.MAX_Y = terrain.SEA + 120
 
-local SEA, WARP = terrain.SEA, layout.WARP
+local SEA, WARP, RIPPLE, SPECKLE = terrain.SEA, layout.WARP, layout.RIPPLE, layout.SPECKLE
 local nbiomes = #biomes
 -- The form of a biome fades faster than its base height.
 local FADE = 2.2
@@ -40,7 +40,10 @@ local function noiseparams(def)
 	}
 end
 
-local warp_params = {noiseparams({600, 3, 11}), noiseparams({600, 3, 12})}
+-- The shift of a position before the cell lookup: a wide one that bends
+-- the cells, and a fine one that makes their borders irregular.
+local warp_params = {noiseparams({600, 3, 11}), noiseparams({600, 3, 12}),
+	noiseparams({70, 2, 13}), noiseparams({70, 2, 14})}
 local form_params = {}
 -- bends[b][k] is set if noise k of biome b is read at a shifted place.
 local bends = {}
@@ -64,7 +67,10 @@ end
 local point_noise
 local function get_point_noise()
 	if not point_noise then
-		point_noise = {warp = {ValueNoise(warp_params[1]), ValueNoise(warp_params[2])}}
+		point_noise = {warp = {}}
+		for k, params in ipairs(warp_params) do
+			point_noise.warp[k] = ValueNoise(params)
+		end
 		for b = 1, nbiomes do
 			point_noise[b] = {}
 			for k, params in ipairs(form_params[b]) do
@@ -111,8 +117,8 @@ local function formula(x, z)
 	local noise = get_point_noise()
 	point_pos.x, point_pos.y = x, z
 	local own = layout.weights(
-		x + WARP * noise.warp[1]:get_2d(point_pos),
-		z + WARP * noise.warp[2]:get_2d(point_pos),
+		x + WARP * noise.warp[1]:get_2d(point_pos) + RIPPLE * noise.warp[3]:get_2d(point_pos),
+		z + WARP * noise.warp[2]:get_2d(point_pos) + RIPPLE * noise.warp[4]:get_2d(point_pos),
 		point_weights)
 	local height = mix(point_weights, function(b)
 		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos),
@@ -155,7 +161,7 @@ end
 
 -- Buffers for one chunk, reused between chunks.
 local map_noise, map_size
-local warp_x, warp_z = {}, {}
+local warp_x, warp_z, ripple_x, ripple_z = {}, {}, {}, {}
 local form_a, form_b, form_c, share = {}, {}, {}, {}
 for b = 1, nbiomes do
 	form_a[b], form_b[b], form_c[b], share[b] = {}, {}, {}, {}
@@ -190,15 +196,19 @@ local function read_map(b, k, origin, size, buffer)
 	end
 end
 
--- Fills heights[], owners[], levels[] and marks[] for the square of the
--- given size that starts at (minx, minz): the y of the topmost ground
--- node, the biome index, the y of the water surface and the mark of the
+-- Fills heights[], owners[], covers[], levels[] and marks[] for the square
+-- of the given size that starts at (minx, minz): the y of the topmost
+-- ground node, the index of the biome, the index of the biome whose
+-- surface the column wears, the y of the water surface and the mark of the
 -- biome's form for each column, row by row along z.
 -- Water stands where the ground is lower than the water surface.
-function terrain.chunk(minx, minz, size, heights, owners, levels, marks)
+function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 	if map_size ~= size then
 		local dim = {x = size, y = size, z = 1}
-		map_noise = {warp = {ValueNoiseMap(warp_params[1], dim), ValueNoiseMap(warp_params[2], dim)}}
+		map_noise = {warp = {}}
+		for k, params in ipairs(warp_params) do
+			map_noise.warp[k] = ValueNoiseMap(params, dim)
+		end
 		for b = 1, nbiomes do
 			map_noise[b] = {}
 			for k, params in ipairs(form_params[b]) do
@@ -213,6 +223,8 @@ function terrain.chunk(minx, minz, size, heights, owners, levels, marks)
 	local origin = {x = minx, y = minz}
 	map_noise.warp[1]:get_2d_map_flat(origin, warp_x)
 	map_noise.warp[2]:get_2d_map_flat(origin, warp_z)
+	map_noise.warp[3]:get_2d_map_flat(origin, ripple_x)
+	map_noise.warp[4]:get_2d_map_flat(origin, ripple_z)
 
 	-- Which biome has which share of each column.
 	local present = {}
@@ -221,12 +233,32 @@ function terrain.chunk(minx, minz, size, heights, owners, levels, marks)
 	for z = minz, minz + size - 1 do
 		for x = minx, minx + size - 1 do
 			i = i + 1
-			owners[i] = layout.weights(x + WARP * warp_x[i], z + WARP * warp_z[i], weights)
+			local own = layout.weights(x + WARP * warp_x[i] + RIPPLE * ripple_x[i],
+				z + WARP * warp_z[i] + RIPPLE * ripple_z[i], weights)
+			owners[i] = own
 			for b = 1, nbiomes do
 				local w = weights[b]
 				share[b][i] = w
 				if w > 0 then present[b] = true end
 			end
+			-- Whose surface the column wears. Near a border each biome
+			-- gets a random bonus, partly per column and partly per
+			-- clump of 3 x 3, so the two surfaces mix in speckles.
+			local cover = own
+			if weights[own] < 1 then
+				local best = -1
+				for b = 1, nbiomes do
+					local w = weights[b]
+					if w > 0 then
+						local score = w + SPECKLE * (hash(x, z, 50 + b)
+							+ hash(floor(x / 3), floor(z / 3), 60 + b))
+						if score > best then
+							cover, best = b, score
+						end
+					end
+				end
+			end
+			covers[i] = cover
 		end
 	end
 

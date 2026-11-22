@@ -12,6 +12,8 @@ wl_world.layout = layout
 
 layout.CELL = 1000   -- size of a cell in nodes
 layout.WARP = 170    -- how far noise shifts a position before the lookup
+layout.RIPPLE = 24   -- a second, finer shift that makes borders irregular
+layout.SPECKLE = 0.06 -- how far the surfaces of two biomes mix at a border
 layout.BLEND = 120   -- width of the blend on each side of a biome border
 
 local CELL, BLEND = layout.CELL, layout.BLEND

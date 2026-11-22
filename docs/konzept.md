@@ -149,7 +149,8 @@ Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfm
 - **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug.
 - **Zwischen Varianten desselben Bioms** gleiten die Regler der Formel ineinander.
 - **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
-- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke. Im Prototyp wechselt die Oberfläche noch hart an der Grenze.
+- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke. Für die Oberfläche ist das seit G1 gebaut: Nahe der Grenze trägt eine Stelle mal die Oberfläche des einen, mal die des anderen Bioms, teils Block für Block, teils in kleinen Gruppen.
+- **Die Grenzlinie ist unregelmäßig.** Eine zweite, feine Verschiebung von bis zu 24 Blöcken gibt ihr Buchten und Zungen.
 - **Küste:** je Biom Strand oder Steilküste.
 
 ### Erze und Tiefe
