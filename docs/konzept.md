@@ -141,7 +141,7 @@ Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 2
 
 Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern.
 
-Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und Torf, mit Texturen aus Extra Biomes. Der Torf ist ein fester Block. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
+Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und Torf, mit Texturen aus Extra Biomes. Die Farbe der Moose ist gegenüber der Vorlage verstärkt, damit sich die Flecken vom Gras abheben. Der Torf ist ein fester Block. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
 
 ### Übergänge
 
