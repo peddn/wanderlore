@@ -16,7 +16,7 @@ layout.CELL = 1000   -- size of a cell in nodes
 layout.WARP = 170    -- how far noise shifts a position before the lookup
 layout.RIPPLE = 24   -- a second, finer shift that makes borders irregular
 layout.SPECKLE = 0.06 -- how far the surfaces of two biomes mix at a border
-layout.BLEND = 120   -- width of the blend on each side of a biome border
+layout.BLEND = 60    -- width of the blend on each side of a biome border
 -- Outer edge of zones 1 to 3, as a distance from the origin.
 layout.ZONE_EDGE = {4000, 7500, 11500}
 -- The edges swing in and out by this share of the distance, in waves of

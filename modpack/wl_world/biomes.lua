@@ -18,6 +18,7 @@
 -- shore:             surface node at sea level and one node below
 -- bed:               surface node under water
 -- bar:               surface node at the water line of marked places
+-- meadow:            surface node of marked places on dry land
 -- patches:           {nodes = {...}, above = n}: level spots where one of
 --                    these nodes replaces the surface node, on land more
 --                    than n nodes above the water (default 0)
@@ -114,10 +115,12 @@ wl_world.biomes = {
 		base = 30,
 		noises = {{300, 3, 301}, {50, 2, 302}},
 		-- Long swells of +-10 with tight knolls and hollows of +-8 on top.
+		-- The higher levels of the swells are marked and carry meadows.
 		form = function(swell, knoll)
-			return 10 * swell + 8 * knoll
+			return 10 * swell + 8 * knoll, 10 * swell + 3 * knoll > 2
 		end,
 		top = "default:dirt_with_coniferous_litter",
+		meadow = "wl_world:forest_grass",
 		filler = "default:dirt",
 		shore = "default:dirt",
 		bed = "default:dirt",

@@ -120,11 +120,14 @@ local function formula(x, z)
 		x + WARP * noise.warp[1]:get_2d(point_pos) + RIPPLE * noise.warp[3]:get_2d(point_pos),
 		z + WARP * noise.warp[2]:get_2d(point_pos) + RIPPLE * noise.warp[4]:get_2d(point_pos),
 		point_weights)
+	local own_mark
 	local height = mix(point_weights, function(b)
-		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos),
-			noise[b][3] and read(noise, b, 3, point_pos))
+		local form, mark = biomes[b].form(read(noise, b, 1, point_pos),
+			read(noise, b, 2, point_pos), noise[b][3] and read(noise, b, 3, point_pos))
+		if b == own then own_mark = mark end
+		return form
 	end)
-	return SEA + height, own, point_weights[own]
+	return SEA + height, own, point_weights[own], own_mark
 end
 
 -- A biome with a water table has standing water in every hollow below a
@@ -151,12 +154,12 @@ end
 
 -- Returns the exact height of the ground at a single place, the index of
 -- the biome, and the level of the water that stands there if the ground is
--- lower. Does not know about boulders.
+-- lower, and the mark of the biome's form. Does not know about boulders.
 function terrain.point(x, z)
-	local height, own, share = formula(x, z)
+	local height, own, share, mark = formula(x, z)
 	local level
 	height, level = water_table(biomes[own], share, height)
-	return height, own, level
+	return height, own, level, mark
 end
 
 -- Buffers for one chunk, reused between chunks.

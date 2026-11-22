@@ -21,9 +21,9 @@ Verwandte Repositories:
 
 ## Stand
 
-Stand 22.11.2026: Das Konzept steht, M0 und M1 sind gebaut, und von M2, der Weltkarte, der erste von drei Teilen. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt einen Kontinent aus drei Zonen und teilt die Biome auf dessen Zellen aus: in Zone 1 die drei ausgearbeiteten Biome mit eigener Landschaftsform, Oberfläche und Übergängen, in Zone 2 und 3 neun Platzhalter (`zone2_a` bis `zone3_d`), dahinter ein vorläufiges Meer. Bewuchs, Erze und Höhlen gibt es noch nicht. Er bringt die ersten eigenen Blöcke mit, vier Sumpfblöcke für Reed Meres in `nodes.lua`, mit sieben Texturen aus Extra Biomes. Es fehlen von M2 noch der zweite Teil, Meer und Inseln, und der dritte, die Schwellen an den Zonengrenzen.
+Stand 22.11.2026: Das Konzept steht, M0 und M1 sind gebaut, und von M2, der Weltkarte, der erste von drei Teilen. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt einen Kontinent aus drei Zonen und teilt die Biome auf dessen Zellen aus: in Zone 1 die drei ausgearbeiteten Biome mit eigener Landschaftsform, Oberfläche und Übergängen, in Zone 2 und 3 neun Platzhalter (`zone2_a` bis `zone3_d`), dahinter ein vorläufiges Meer. Bewuchs, Erze und Höhlen gibt es noch nicht. Er bringt die ersten eigenen Blöcke mit: vier Sumpfblöcke für Reed Meres in `nodes.lua`, mit sieben Texturen aus Extra Biomes, und Waldgras für Old Wood, das die Grastextur von Minetest Game im Spiel umfärbt. Es fehlen von M2 noch der zweite Teil, Meer und Inseln, und der dritte, die Schwellen an den Zonengrenzen.
 
-- `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein.
+- `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein. Die Testwelt hat den festen Startwert `wanderlore`, denselben wie `map.sh` und `shots.sh`; so passen Karten, Bilder und Koordinaten zur Welt des Autors.
 - `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt, lässt den Generator die Portionen um den Startpunkt erzeugen und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
 - `scripts/measure.sh` misst die Zeit des Generators je Portion, `scripts/measure.sh v7` zum Vergleich Luantis Generator v7. Nach jeder größeren Änderung am Generator neu messen und die Zahlen im Arbeitsplan nachtragen.
 - `scripts/shots.sh [text]` macht Screenshots aller Biome und ihrer Grenzen nach `.dev/shots/`, mit einem Text nur die Ansichten, deren Name ihn enthält, etwa `_above` oder `zone2_b`. Eine Ansicht dauert in der Cloud knapp eine Minute; alle zusammen sind es seit den Platzhaltern weit über fünfzig.
@@ -134,6 +134,8 @@ Stand 22.11.2026, für den Einstieg in M0 und M1:
 - Zellgröße 1.000 statt 1.600, als Versuch: Mit 1.600 wirkten die Biome sehr groß.
 - Reed Meres: sehr flach, das Land liegt nur 1 oder 2 über dem Wasser. Sumpfgras als Deckschicht, Torf (der trockene, Nummer 6 der Tafel) am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos, deren Farbe gegenüber der Vorlage dunkler und kräftiger ist. Die Werte hat der Autor an einer Tafel gewählt; sie stehen in `docs/medien.md`.
 - Biomübergänge sollen nicht künstlich wirken: keine gerade Linie, kein harter Wechsel der Oberfläche. Gebaut sind eine unregelmäßige Grenzlinie und ein gesprenkelter Wechsel der Oberfläche; ob das dem Autor reicht, ist offen.
+- Der Übergang zwischen zwei Biomen war mit 120 Blöcken je Seite zu breit und ist auf 60 halbiert.
+- Old Wood hat auf den höheren Lagen größere Wiesen aus einem eigenen Waldgras. Dessen Farbton ist ein Vorschlag von Claude und vom Autor noch nicht bestätigt.
 - M1 bekommt keinen zweiten Teil mit Bewuchs. Der Bewuchs kommt mit M4.
 - M2 wird in drei Pull Requests gebaut: Zonen und Austeilen, dann Meer und Inseln, dann Schwellen an den Zonengrenzen.
 - Die Biome der Zonen 2 und 3 und der Inseln sind in M2 Platzhalter aus Blöcken von Minetest Game. Der Autor arbeitet die echten Biome danach einzeln aus.

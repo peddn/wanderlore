@@ -30,6 +30,7 @@ local colours = {
 	zone3_d = {{150, 110, 140}, {235, 200, 225}},
 	ocean = {{200, 190, 140}, {240, 230, 180}},
 }
+local meadow = {{50, 110, 70}, {120, 190, 130}}
 local water = {{40, 80, 150}, {90, 150, 215}}
 
 core.after(1, function()
@@ -48,7 +49,7 @@ core.after(1, function()
 		local line = {}
 		for col = 0, size - 1 do
 			local x = centre.x - half + col * step
-			local height, own, level = terrain.point(x, z)
+			local height, own, level, mark = terrain.point(x, z)
 			local biome = biomes[own]
 			seen[own] = true
 			local low, high, t
@@ -57,6 +58,9 @@ core.after(1, function()
 				t = 1 + (height - level) / 8
 			else
 				local pair = colours[biome.name] or {{80, 80, 80}, {220, 220, 220}}
+				if mark and biome.meadow then
+					pair = meadow
+				end
 				low, high = pair[1], pair[2]
 				t = (height - sea) / 50
 			end

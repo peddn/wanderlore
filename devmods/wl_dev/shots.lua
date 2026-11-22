@@ -78,6 +78,30 @@ for _, place in ipairs(places) do
 	end
 end
 
+-- One view of a meadow, in the biomes that have them: the nearest marked
+-- place on dry land, seen from 60 nodes away.
+for _, place in ipairs(places) do
+	if wl_world.biome_by_name[place.name].meadow then
+		local found
+		for radius = 0, 600, 20 do
+			for angle = 0, 2 * math.pi, 0.3 do
+				local x = place.pos.x + radius * math.cos(angle)
+				local z = place.pos.z + radius * math.sin(angle)
+				local height, _, level, mark = wl_world.terrain.point(x, z)
+				if mark and height > level and wl_world.get_biome({x = x, z = z}) == place.name then
+					found = {x = x, y = height, z = z}
+					break
+				end
+			end
+			if found then break end
+		end
+		if found then
+			views[#views + 1] = {name = place.name .. "_meadow",
+				pos = vector.offset(found, -60, 30, -60), yaw = -45, pitch = 22}
+		end
+	end
+end
+
 -- wl_dev_shot_filter = <text> keeps only the views with that text in their
 -- name.
 local filter = core.settings:get("wl_dev_shot_filter") or ""

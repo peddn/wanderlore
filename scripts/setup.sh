@@ -73,6 +73,9 @@ done
 if [ ! -f "$dev/minetest.conf" ]; then
 	cat > "$dev/minetest.conf" <<'CONF'
 # Local settings for the Wanderlore test world. Not checked in.
+# The seed scripts/map.sh and scripts/shots.sh use too, so that maps,
+# pictures and coordinates fit this world. A new seed needs a new world.
+fixed_map_seed = wanderlore
 # Wanderlore brings its own generator. Luanti stores this setting in the
 # world on its first start; changing it later needs a new world.
 mg_name = singlenode
@@ -81,6 +84,12 @@ mg_name = singlenode
 # then shows as a gap in the distance. Luanti's default is 4.
 block_send_optimize_distance = 32
 CONF
+fi
+
+# A minetest.conf from before the fixed seed gets it added.
+if ! grep -q "^fixed_map_seed" "$dev/minetest.conf"; then
+	echo "fixed_map_seed = wanderlore" >> "$dev/minetest.conf"
+	echo "Added fixed_map_seed = wanderlore to .dev/minetest.conf. Start a new world with scripts/run.sh --new"
 fi
 
 echo "Ready. Check with scripts/check.sh, play with scripts/run.sh"

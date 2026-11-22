@@ -30,6 +30,7 @@ for b, biome in ipairs(biomes) do
 		shore = core.get_content_id(biome.shore),
 		bed = core.get_content_id(biome.bed),
 		bar = core.get_content_id(biome.bar or biome.shore),
+		meadow = core.get_content_id(biome.meadow or biome.top),
 	}
 	if biome.patches then
 		skins[b].patches = {}
@@ -112,7 +113,11 @@ local function generate(vmanip, minp, maxp)
 			end
 			if height >= miny and height <= maxy then
 				if height > level then
-					data[vi] = skin.top
+					-- A mark belongs to the biome of the column. Where
+					-- the column wears the surface of a neighbour, it
+					-- does not count.
+					local own = marks[column] and covers[column] == owners[column]
+					data[vi] = own and skin.meadow or skin.top
 				elseif height >= level - 1 then
 					data[vi] = marks[column] and skin.bar or skin.shore
 				else
