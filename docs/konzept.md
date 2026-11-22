@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 12 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 13 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -231,18 +231,18 @@ Lore gibt es für alles, was man zum ersten Mal tut. Jeder Spieler hat sein eige
 
 Das **Lorebook** zeigt, was gefunden ist und wie viel noch fehlt, ohne das Fehlende zu verraten.
 
-Am **Lore Table** gibt man Lore aus. Vier Äste:
+Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung stehen. Festgelegt am 22.11.2026:
 
-| Ast | Beispiele |
-| --- | --- |
-| Küche | einzelne Bonus-Gerichte, zweiter Mahlzeit-Bonus gleichzeitig, kürzere Kochzeit |
-| Alchemie | einzelne Tränke, längere Wirkdauer, zwei Tränke pro Brauvorgang |
-| Feld | schnelleres Wachstum, mehr Ertrag, Saatgut fremder Zonen |
-| Entdecker | Kompass zum nächsten Stronghold, größerer Rucksack, Rückkehr-Trank |
+- **Lore wird ausgegeben.** Der Spieler entscheidet, welche Rezepte er freischaltet.
+- **Lore reicht nicht für alles.** Die Rezepte sind als Baum mit Zweigen angelegt. Es gibt drei Pfade: Waffen, Rüstung und Alchemie. Man muss sich für einen entscheiden und hauptsächlich dort investieren.
+- **Freischaltungen gelten je Spieler.** Eine Station zeigt jedem die Rezepte, die er kennt.
+- **Ein Rezept braucht beides:** die freigeschaltete Kenntnis und eine Station der nötigen Stufe.
+
+Offen: ob die Küche ein vierter Pfad ist oder allen offensteht, wie viel Lore es insgesamt gibt und ob man sich umentscheiden kann.
 
 ### Stationsstufen
 
-Stationen haben Stufen. Lore erhöht die Stufe, die eine Station höchstens erreichen darf; das Aufwerten selbst kostet Material. Das Material für Stufe 2 stammt aus Zone 2, für Stufe 3 aus Zone 3 und aus Strongholds.
+Stationen werden nur mit Material aufgewertet, Lore spielt dabei keine Rolle. Das Material für höhere Stufen liegt in den äußeren Zonen und in Strongholds. Das lädt dazu ein, sich in gefährliche Gebiete zu wagen.
 
 ### Essenz
 
@@ -343,7 +343,7 @@ Zur Machbarkeit in Luanti: Rennen und Springen lassen sich sperren, indem Tempo 
 
 ### Aufwertungen
 
-An einer Schmiede, mit Monster-Beute und den besonderen Stoffen der Inseln. Lore begrenzt die höchste Stufe. Bei Waffen und Werkzeugen kann ein einzelnes Stück eigene Werte tragen; bei Rüstung braucht es je Stufe einen eigenen Gegenstand.
+An einer Schmiede, mit Monster-Beute und den besonderen Stoffen der Inseln. Welche Aufwertungen man kennt, hängt an den mit Lore freigeschalteten Rezepten. Bei Waffen und Werkzeugen kann ein einzelnes Stück eigene Werte tragen; bei Rüstung braucht es je Stufe einen eigenen Gegenstand.
 
 ### Fernkampf
 
@@ -411,7 +411,7 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 2. Feldfrüchte und Speisen auswählen.
 3. Aufteilung der Monster prüfen.
 4. Kampf und Überleben: Werte der Gerichte, Waffen- und Rüstungsstufen im Einzelnen.
-5. Was Lore außer den Stationsstufen freischaltet.
+5. Lore: Küche als Pfad oder frei, Gesamtmenge, Umentscheiden, Aufbau der drei Bäume.
 
 ## Quellen
 
