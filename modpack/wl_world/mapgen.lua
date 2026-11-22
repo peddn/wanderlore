@@ -32,9 +32,10 @@ for b, biome in ipairs(biomes) do
 	}
 	if biome.patches then
 		skins[b].patches = {}
-		for k, name in ipairs(biome.patches) do
+		for k, name in ipairs(biome.patches.nodes) do
 			skins[b].patches[k] = core.get_content_id(name)
 		end
+		skins[b].patches_above = biome.patches.above or 0
 	end
 end
 
@@ -133,8 +134,10 @@ local function generate(vmanip, minp, maxp)
 			for x = max(minp.x, patch.x - reach), min(maxp.x, patch.x + reach) do
 				local index = (z - minp.z) * size + x - minp.x + 1
 				local height = heights[index]
-				local nodes = skins[owners[index]].patches
-				if nodes and height > levels[index] and height >= miny and height <= maxy then
+				local skin = skins[owners[index]]
+				local nodes = skin.patches
+				if nodes and height > levels[index] + skin.patches_above
+						and height >= miny and height <= maxy then
 					-- A ragged edge instead of a circle.
 					local dx, dz = x - patch.x, z - patch.z
 					local limit = patch.r * (0.6 + 0.4 * wl_world.hash(x, z, 46))
@@ -157,8 +160,7 @@ local function generate(vmanip, minp, maxp)
 				for y = max(miny, floor(cy - r)), min(maxy, floor(cy + r)) do
 					local dx, dy, dz = x - boulder.x, y - cy, z - boulder.z
 					if dx * dx + dy * dy + dz * dz <= r * r then
-						-- About a third of the stones is mossy.
-						local mossy = wl_world.hash(x * 31 + y, z, 25) < 0.35
+						local mossy = wl_world.hash(x * 31 + y, z, 25) < boulder.moss
 						data[area:index(x, y, z)] = mossy and c_boulder_moss or c_boulder
 					end
 				end

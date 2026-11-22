@@ -14,7 +14,12 @@
 -- top, filler:       surface node and the three nodes below it
 -- shore:             surface node at sea level and one node below
 -- bed:               surface node under water
--- patches:           nodes that replace the surface node in scattered spots
+-- patches:           {nodes = {...}, above = n}: level spots where one of
+--                    these nodes replaces the surface node, on land more
+--                    than n nodes above the water (default 0)
+-- boulders:          {chance = share of grid squares with a boulder,
+--                    max = largest radius, moss = share of mossy stones,
+--                    above = only on land more than this above the water}
 
 local smooth = wl_world.smooth
 local abs = math.abs
@@ -27,22 +32,32 @@ wl_world.biomes = {
 		base = 12,
 		-- The brooks run where the second noise crosses zero. Bending it
 		-- makes them meander.
-		noises = {{260, 4, 101}, {330, 2, 102, bend = {100, 120, 1, 103}}},
+		noises = {{260, 4, 101}, {330, 2, 102, bend = {100, 120, 1, 103}}, {34, 2, 104}},
 		-- Low round hills of +-10 between rivers. A river is about 28
 		-- wide and up to 3 deep. Beside it lies a level flood plain, one
 		-- node above the water and about 15 wide on each side, and only
 		-- beyond that the land rises, slowly, to the hills. All water of
 		-- the prototype stands at sea level, so the rivers do too.
-		form = function(hills, valley)
+		--
+		-- In the middle of a river the third noise lifts the bed here and
+		-- there: a little for a gravel bar at the water line, more for a
+		-- small island level with the flood plain. Both banks stay water.
+		form = function(hills, valley, bar)
 			local v = abs(valley)
 			local plain = -10.8
 			local ground = plain + (10 * hills - plain) * smooth((v - 0.18) / 0.45)
-			return ground - 3.5 * (1 - smooth(v / 0.12))
+			local channel = 1 - smooth(v / 0.12)
+			local lift = smooth((bar - 0.2) / 0.3) * smooth((channel - 0.55) / 0.3)
+			return ground - 3.5 * channel * (1 - lift)
 		end,
 		top = "default:dirt_with_grass",
 		filler = "default:dirt",
-		shore = "default:sand",
+		-- Gravel at the water line: on the banks and on the bars.
+		shore = "default:gravel",
 		bed = "default:sand",
+		-- Bare stone and a few small rocks on the hills.
+		patches = {nodes = {"default:stone"}, above = 12},
+		boulders = {chance = 0.12, max = 2.6, moss = 0.1, above = 12},
 	},
 	{
 		name = "reed_meres",
@@ -63,7 +78,7 @@ wl_world.biomes = {
 		shore = "wl_world:peat",
 		bed = "wl_world:peat",
 		-- Level patches of moss in the grass, see terrain.lua.
-		patches = {"wl_world:swamp_moss_green", "wl_world:swamp_moss_yellow"},
+		patches = {nodes = {"wl_world:swamp_moss_green", "wl_world:swamp_moss_yellow"}},
 	},
 	{
 		name = "old_wood",
@@ -80,7 +95,7 @@ wl_world.biomes = {
 		shore = "default:dirt",
 		bed = "default:dirt",
 		-- Boulders of stone with patches of moss, see terrain.lua.
-		boulders = true,
+		boulders = {chance = 0.3, max = 4, moss = 0.35},
 		-- Every hollow below this height above sea level fills with water
 		-- and becomes a forest lake, see terrain.lua.
 		water_table = 24,

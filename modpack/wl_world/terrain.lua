@@ -7,7 +7,7 @@
 
 local layout, biomes = wl_world.layout, wl_world.biomes
 local hash = wl_world.hash
-local floor, sqrt, max = math.floor, math.sqrt, math.max
+local floor, sqrt, min, max = math.floor, math.sqrt, math.min, math.max
 
 local terrain = {}
 wl_world.terrain = terrain
@@ -66,7 +66,10 @@ local function get_point_noise()
 	if not point_noise then
 		point_noise = {warp = {ValueNoise(warp_params[1]), ValueNoise(warp_params[2])}}
 		for b = 1, nbiomes do
-			point_noise[b] = {ValueNoise(form_params[b][1]), ValueNoise(form_params[b][2])}
+			point_noise[b] = {}
+			for k, params in ipairs(form_params[b]) do
+				point_noise[b][k] = ValueNoise(params)
+			end
 			for k, bend in pairs(bends[b]) do
 				point_noise[b]["bend" .. k] = {ValueNoise(bend.x), ValueNoise(bend.z)}
 			end
@@ -112,7 +115,8 @@ local function formula(x, z)
 		z + WARP * noise.warp[2]:get_2d(point_pos),
 		point_weights)
 	local height = mix(point_weights, function(b)
-		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos))
+		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos),
+			noise[b][3] and read(noise, b, 3, point_pos))
 	end)
 	return SEA + height, own, point_weights[own]
 end
@@ -152,9 +156,9 @@ end
 -- Buffers for one chunk, reused between chunks.
 local map_noise, map_size
 local warp_x, warp_z = {}, {}
-local form_a, form_b, share = {}, {}, {}
+local form_a, form_b, form_c, share = {}, {}, {}, {}
 for b = 1, nbiomes do
-	form_a[b], form_b[b], share[b] = {}, {}, {}
+	form_a[b], form_b[b], form_c[b], share[b] = {}, {}, {}, {}
 end
 local chunk_weights = {}
 local bend_x, bend_z = {}, {}
@@ -195,7 +199,10 @@ function terrain.chunk(minx, minz, size, heights, owners, levels)
 		local dim = {x = size, y = size, z = 1}
 		map_noise = {warp = {ValueNoiseMap(warp_params[1], dim), ValueNoiseMap(warp_params[2], dim)}}
 		for b = 1, nbiomes do
-			map_noise[b] = {ValueNoiseMap(form_params[b][1], dim), ValueNoiseMap(form_params[b][2], dim)}
+			map_noise[b] = {}
+			for k, params in ipairs(form_params[b]) do
+				map_noise[b][k] = ValueNoiseMap(params, dim)
+			end
 			for k, bend in pairs(bends[b]) do
 				map_noise[b]["bend" .. k] = {ValueNoiseMap(bend.x, dim), ValueNoiseMap(bend.z, dim)}
 			end
@@ -227,6 +234,9 @@ function terrain.chunk(minx, minz, size, heights, owners, levels)
 		if present[b] then
 			read_map(b, 1, origin, size, form_a[b])
 			read_map(b, 2, origin, size, form_b[b])
+			if map_noise[b][3] then
+				read_map(b, 3, origin, size, form_c[b])
+			end
 		end
 	end
 
@@ -237,7 +247,7 @@ function terrain.chunk(minx, minz, size, heights, owners, levels)
 			if w > 0 then
 				local biome = biomes[b]
 				height = height + w * biome.base
-					+ w ^ FADE * biome.form(form_a[b][column], form_b[b][column])
+					+ w ^ FADE * biome.form(form_a[b][column], form_b[b][column], form_c[b][column])
 			end
 		end
 		local own = owners[column]
@@ -250,7 +260,7 @@ function terrain.chunk(minx, minz, size, heights, owners, levels)
 end
 
 -- Boulders: half sunken balls of stone, scattered over biomes that
--- ask for them. Each square of the grid holds at most one.
+-- ask for them, with the frequency, size and moss the biome names. Each square of the grid holds at most one.
 local GRID = 24
 local MAX_RADIUS = 4
 -- The centre of a boulder lies this share of its radius below the ground.
@@ -262,14 +272,14 @@ function terrain.boulders(minx, minz, maxx, maxz)
 	local list = {}
 	for gi = floor((minx - MAX_RADIUS) / GRID), floor((maxx + MAX_RADIUS) / GRID) do
 		for gj = floor((minz - MAX_RADIUS) / GRID), floor((maxz + MAX_RADIUS) / GRID) do
-			if hash(gi, gj, 21) < 0.3 then
-				local x = floor((gi + hash(gi, gj, 22)) * GRID)
-				local z = floor((gj + hash(gi, gj, 23)) * GRID)
-				local height, own, level = terrain.point(x, z)
-				if biomes[own].boulders and height > level + 1 then
-					local r = 1.4 + (MAX_RADIUS - 1.4) * hash(gi, gj, 24) ^ 2
-					list[#list + 1] = {x = x, y = floor(height + 0.5), z = z, r = r}
-				end
+			local x = floor((gi + hash(gi, gj, 22)) * GRID)
+			local z = floor((gj + hash(gi, gj, 23)) * GRID)
+			local height, own, level = terrain.point(x, z)
+			-- What the biome there says about boulders, see biomes.lua.
+			local want = biomes[own].boulders
+			if want and hash(gi, gj, 21) < want.chance and height > level + (want.above or 1) then
+				local r = 1.4 + (min(want.max, MAX_RADIUS) - 1.4) * hash(gi, gj, 24) ^ 2
+				list[#list + 1] = {x = x, y = floor(height + 0.5), z = z, r = r, moss = want.moss}
 			end
 		end
 	end
