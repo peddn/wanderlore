@@ -21,30 +21,50 @@ for _, biome in ipairs(wl_world.biomes) do
 	end
 end
 
--- One view per pair of biomes, across a border between them. The border is
--- searched on the line between the two places, by asking wl_world for the
--- biome only.
-for a = 1, #places do
-	for b = a + 1, #places do
-		local from, to = places[a], places[b]
-		local length = vector.distance(from.pos, to.pos)
-		local dir = vector.direction(from.pos, to.pos)
-		local previous
-		for step = 0, length, 8 do
-			local pos = vector.add(from.pos, vector.multiply(dir, step))
-			local here = wl_world.get_biome(pos)
-			if here == to.name and previous == from.name then
-				local camera = wl_world.find_safe_pos(
-					vector.subtract(pos, vector.multiply(dir, 110)))
-				if camera then
-					views[#views + 1] = {
-						name = "border_" .. from.name .. "_" .. to.name,
-						pos = vector.offset(camera, 0, 45, 0),
-						yaw = math.deg(core.dir_to_yaw(dir)), pitch = 24}
-				end
-				break
+-- One view per pair of biomes that lie side by side somewhere, across the
+-- border between them. The pairs come from the cells of the continent,
+-- nearest to the origin first; the border is searched on the line between
+-- the two cells, by asking wl_world for the biome only.
+local land, by_cell = {}, {}
+for _, site in ipairs(wl_world.layout.land) do
+	land[#land + 1] = site
+	by_cell[site.i .. "," .. site.j] = site
+end
+table.sort(land, function(a, b)
+	return a.x ^ 2 + a.z ^ 2 < b.x ^ 2 + b.z ^ 2
+end)
+local biomes, paired = wl_world.biomes, {}
+for _, site in ipairs(land) do
+	for _, step in ipairs({{1, 0}, {0, 1}}) do
+		local other = by_cell[(site.i + step[1]) .. "," .. (site.j + step[2])]
+		local low = other and math.min(site.biome, other.biome)
+		local high = other and math.max(site.biome, other.biome)
+		if other and low ~= high and not paired[low .. "," .. high] then
+			local from, to = site, other
+			if from.biome > to.biome then
+				from, to = to, from
 			end
-			previous = here
+			local from_name, to_name = biomes[from.biome].name, biomes[to.biome].name
+			local a, b = vector.new(from.x, 0, from.z), vector.new(to.x, 0, to.z)
+			local dir = vector.direction(a, b)
+			local previous
+			for along = 0, vector.distance(a, b), 8 do
+				local pos = vector.add(a, vector.multiply(dir, along))
+				local here = wl_world.get_biome(pos)
+				if here == to_name and previous == from_name then
+					local camera = wl_world.find_safe_pos(
+						vector.subtract(pos, vector.multiply(dir, 110)))
+					if camera then
+						paired[low .. "," .. high] = true
+						views[#views + 1] = {
+							name = "border_" .. from_name .. "_" .. to_name,
+							pos = vector.offset(camera, 0, 45, 0),
+							yaw = math.deg(core.dir_to_yaw(dir)), pitch = 24}
+					end
+					break
+				end
+				previous = here
+			end
 		end
 	end
 end
@@ -55,6 +75,30 @@ for _, place in ipairs(places) do
 	if lake then
 		views[#views + 1] = {name = place.name .. "_lake",
 			pos = vector.offset(lake, -30, 14, -30), yaw = -45, pitch = 22}
+	end
+end
+
+-- One view of a meadow, in the biomes that have them: the nearest marked
+-- place on dry land, seen from 60 nodes away.
+for _, place in ipairs(places) do
+	if wl_world.biome_by_name[place.name].meadow then
+		local found
+		for radius = 0, 600, 20 do
+			for angle = 0, 2 * math.pi, 0.3 do
+				local x = place.pos.x + radius * math.cos(angle)
+				local z = place.pos.z + radius * math.sin(angle)
+				local height, _, level, mark = wl_world.terrain.point(x, z)
+				if (mark == true or (mark or 0) >= 1) and height > level and wl_world.get_biome({x = x, z = z}) == place.name then
+					found = {x = x, y = height, z = z}
+					break
+				end
+			end
+			if found then break end
+		end
+		if found then
+			views[#views + 1] = {name = place.name .. "_meadow",
+				pos = vector.offset(found, -60, 30, -60), yaw = -45, pitch = 22}
+		end
 	end
 end
 
@@ -103,5 +147,6 @@ core.register_on_joinplayer(function(player)
 	player:set_properties({visual_size = {x = 0, y = 0}})
 	player:set_clouds({density = 0})
 	core.set_timeofday(0.5)
+	core.log("action", "[wl_dev] " .. #views .. " views")
 	core.after(1, show, player, 1)
 end)

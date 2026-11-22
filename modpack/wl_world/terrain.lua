@@ -120,11 +120,14 @@ local function formula(x, z)
 		x + WARP * noise.warp[1]:get_2d(point_pos) + RIPPLE * noise.warp[3]:get_2d(point_pos),
 		z + WARP * noise.warp[2]:get_2d(point_pos) + RIPPLE * noise.warp[4]:get_2d(point_pos),
 		point_weights)
+	local own_mark
 	local height = mix(point_weights, function(b)
-		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos),
-			noise[b][3] and read(noise, b, 3, point_pos))
+		local form, mark = biomes[b].form(read(noise, b, 1, point_pos),
+			read(noise, b, 2, point_pos), noise[b][3] and read(noise, b, 3, point_pos))
+		if b == own then own_mark = mark end
+		return form
 	end)
-	return SEA + height, own, point_weights[own]
+	return SEA + height, own, point_weights[own], own_mark
 end
 
 -- A biome with a water table has standing water in every hollow below a
@@ -151,12 +154,12 @@ end
 
 -- Returns the exact height of the ground at a single place, the index of
 -- the biome, and the level of the water that stands there if the ground is
--- lower. Does not know about boulders.
+-- lower, and the mark of the biome's form. Does not know about boulders.
 function terrain.point(x, z)
-	local height, own, share = formula(x, z)
+	local height, own, share, mark = formula(x, z)
 	local level
 	height, level = water_table(biomes[own], share, height)
-	return height, own, level
+	return height, own, level, mark
 end
 
 -- Buffers for one chunk, reused between chunks.
@@ -226,7 +229,9 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 	map_noise.warp[3]:get_2d_map_flat(origin, ripple_x)
 	map_noise.warp[4]:get_2d_map_flat(origin, ripple_z)
 
-	-- Which biome has which share of each column.
+	-- Which biome has which share of each column. Only the biomes of the
+	-- cells around the chunk are looked at.
+	local near, nnear = layout.biomes_near(minx, minz, minx + size - 1, minz + size - 1)
 	local present = {}
 	local weights = chunk_weights
 	local i = 0
@@ -234,9 +239,10 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 		for x = minx, minx + size - 1 do
 			i = i + 1
 			local own = layout.weights(x + WARP * warp_x[i] + RIPPLE * ripple_x[i],
-				z + WARP * warp_z[i] + RIPPLE * ripple_z[i], weights)
+				z + WARP * warp_z[i] + RIPPLE * ripple_z[i], weights, near, nnear)
 			owners[i] = own
-			for b = 1, nbiomes do
+			for k = 1, nnear do
+				local b = near[k]
 				local w = weights[b]
 				share[b][i] = w
 				if w > 0 then present[b] = true end
@@ -247,7 +253,8 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 			local cover = own
 			if weights[own] < 1 then
 				local best = -1
-				for b = 1, nbiomes do
+				for k = 1, nnear do
+					local b = near[k]
 					local w = weights[b]
 					if w > 0 then
 						local score = w + SPECKLE * (hash(x, z, 50 + b)
@@ -263,7 +270,8 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 	end
 
 	-- Only the biomes that occur in this chunk cost noise.
-	for b = 1, nbiomes do
+	for k = 1, nnear do
+		local b = near[k]
 		if present[b] then
 			read_map(b, 1, origin, size, form_a[b])
 			read_map(b, 2, origin, size, form_b[b])
@@ -276,7 +284,8 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 	for column = 1, size * size do
 		local height = 0
 		local own = owners[column]
-		for b = 1, nbiomes do
+		for k = 1, nnear do
+			local b = near[k]
 			local w = share[b][column]
 			if w > 0 then
 				local biome = biomes[b]

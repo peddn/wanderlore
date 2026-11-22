@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.9 · 22.11.2026 · Luanti 5.18, Minetest Game · Gebaut ist der Prototyp des Generators, vom Spiel selbst noch nichts
+Fassung 1.9 · 22.11.2026 · Luanti 5.18, Minetest Game · Gebaut sind der Prototyp des Generators und von der Weltkarte Zonen und Austeilen, vom Spiel selbst noch nichts
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -89,11 +89,11 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
-**Stand des Prototyps (G1):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Alle Zellen gehören zu Zone 1, und jede Zelle ist 1.000 Blöcke groß und bekommt eines der drei Biome per Zufall aus dem Startwert der Welt. Zonen, das Austeilen der Biome und das Meer kommen mit G2. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+**Stand (G2, erster von drei Teilen):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. Jenseits von Zone 3 liegt ein vorläufiges Meer: ein ebener Grund 30 unter dem Wasser, zu dem das Land ohne eigene Küstenform abfällt. Küsten, Inseln und Vulkaninseln kommen mit dem zweiten Teil, die Schwellen an den Zonengrenzen mit dem dritten. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
 
 ### Die Weltkarte
 
-Skizze und Verfahren: `docs/weltkarte/`.
+Skizze und Verfahren: `docs/weltkarte/skizze.py`. Daneben liegt `karte.png`: der Kontinent, wie ihn der Generator für den Startwert `wanderlore` berechnet, gezeichnet mit `scripts/map.sh world`.
 
 | | Zone 1 Startland | Zone 2 Wildnis | Zone 3 Ödland | Inseln |
 | --- | --- | --- | --- | --- |
@@ -106,7 +106,10 @@ Skizze und Verfahren: `docs/weltkarte/`.
 | Ein Biom-Land ist etwa | 1.000 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
 - **Eine Zelle gehört immer ganz zu einer Zone.** So zerschneidet keine Zonengrenze ein Biom.
-- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet noch mit 1.600; sie wird mit G2 angepasst, ebenso die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3.
+- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet seit G2 mit 1.000. Die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3 werden mit den Inseln neu beurteilt.
+- **Der Rand einer Zone schwingt.** Die Zone einer Zelle folgt aus dem Abstand ihrer Mitte zum Start; dieser Abstand wird mit einem weiten Rauschen um bis zu 22 % gestreckt oder gestaucht. Die Zahlen der Tabelle sind deshalb Mittelwerte.
+- **Die Heimatrichtungen hängen vom Startwert der Welt ab.** In jeder Welt liegt ein Biom der Zonen 2 und 3 in einer anderen Himmelsrichtung. Eine Zelle weicht von der Heimatrichtung ihres Bioms meist um weniger als 20 Grad ab, einzelne mehr; das sind die Ausreißer.
+- **Auf dem Meer ist die Zone 0.** Das Meer meldet sich als eigenes Biom `ocean`.
 - **An Land gibt es nur eine Zellgröße.** Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
 - **Biome werden fest ausgeteilt.** Alle Zellen einer Zone werden aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
 - **Zone 1 wird reihum ausgeteilt**, damit alle Grundzutaten nah am Start liegen.
@@ -131,7 +134,7 @@ Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle
 | --- | --- | --- | --- |
 | Blossom Downs | 12 | flache Hügel von ±10 zwischen Flüssen. Ein Fluss ist etwa 28 breit und bis 3 tief und mäandert in weiten Schwüngen. Neben ihm liegt eine ebene Aue, einen Block über dem Wasser und je Seite etwa 15 breit; erst dahinter steigt das Land langsam zu den Hügeln an. In den Flüssen liegen Kiesbänke und kleine Inseln | Gras, am Ufer Sand, am Flussgrund und auf den Bänken Kies. Nur in den obersten Lagen der Hügel, mehr als 16 über dem Wasser, Flecken aus blankem Stein und einzelne kleine Felsen |
 | Reed Meres | 1,6 | eben, das Land liegt 1 oder 2 über dem Wasser und nirgends höher. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Sumpfgras mit ebenen Flecken aus grünem und gelbem Sumpfmoos, am Ufer und im Wasser Torf |
-| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
+| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, auf den Hügelkuppen Waldgras mit Sprenkeln aus Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
 
 Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Flüsse von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Zur Biomgrenze hin laufen sie aus, weil sich dort die Höhe mit der des Nachbarn mischt. Gewässer, die einen Hang hinabfließen oder Biome verbinden, gehören zu den Flüssen in G3.
 
@@ -141,6 +144,8 @@ Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 2
 
 Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Die Höhenformel eines Bioms kann Stellen markieren, die an der Wasserlinie einen anderen Block bekommen; so entstehen die Kiesbänke. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern. Jedes Biom nennt, ob es Findlinge und Flecken hat, wie häufig und wie groß, und ab welcher Höhe über dem Wasser.
 
+Gras gibt es in Old Wood nur auf den Hügelkuppen, als Kappen von meist 20 bis 80 Blöcken Breite. Es ist leicht fleckig: Etwa jeder zehnte Block bleibt Nadelstreu, und den Hang hinab dünnt das Gras aus. Sein Block ist Waldgras: das Gras von Minetest Game in einem dunkleren, kühleren Grün. Die Farbe entsteht erst im Spiel aus dessen Textur, eine fremde Datei ist dafür nicht übernommen. Lage und Sprenkel hat der Autor am 22.11.2026 festgelegt und den Farbton bestätigt.
+
 Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und Torf, mit Texturen aus Extra Biomes. Die Farbe der Moose ist gegenüber der Vorlage dunkler und kräftiger, damit sich die Flecken vom Gras abheben. Der Torf ist ein fester Block. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
 
 ### Übergänge
@@ -148,8 +153,8 @@ Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfm
 - **Zwischen Biomen derselben Zone** werden die Grundhöhen weich gemischt, und die Form blendet zur Grenze hin aus.
 - **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug.
 - **Zwischen Varianten desselben Bioms** gleiten die Regler der Formel ineinander.
-- **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
-- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke. Für die Oberfläche ist das seit G1 gebaut: Nahe der Grenze trägt eine Stelle mal die Oberfläche des einen, mal die des anderen Bioms, teils Block für Block, teils in kleinen Gruppen.
+- **Die Mischzone ist schmal**, 60 Blöcke je Seite. Mit 120 war der Übergang dem Autor zu breit; er hat ihn am 22.11.2026 halbiert. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
+- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 20 Blöcke; die Breite hängt an der Mischzone und hat sich mit ihr halbiert. Für die Oberfläche ist das seit G1 gebaut: Nahe der Grenze trägt eine Stelle mal die Oberfläche des einen, mal die des anderen Bioms, teils Block für Block, teils in kleinen Gruppen.
 - **Die Grenzlinie ist unregelmäßig.** Eine zweite, feine Verschiebung von bis zu 24 Blöcken gibt ihr Buchten und Zungen.
 - **Küste:** je Biom Strand oder Steilküste.
 
@@ -195,6 +200,20 @@ Jedes Biom hat außerdem etwas, das es nur dort gibt:
 Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Holzarten, Feldfrüchte, Kochzutaten und Zutaten für die Alchemie.
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
+
+**Platzhalter.** Damit die Weltkarte gebaut werden kann, bevor es die äußeren Biome gibt, stehen im Generator Platzhalter: fünf für Zone 2 (`Zone 2 A` bis `E`) und vier für Zone 3 (`Zone 3 A` bis `D`). Jeder hat eine einfache Landschaftsform und eine Oberfläche aus Blöcken von Minetest Game, an der man ihn erkennt. Sie sind Vorschläge von Claude ohne Anspruch und halten nur den Platz frei. Der Autor arbeitet die echten Biome danach einzeln aus, wie bei Zone 1; die Skizzen der folgenden Tabelle sind dabei der Ausgangspunkt. Das hat der Autor am 22.11.2026 entschieden.
+
+| Platzhalter | Form | Oberfläche |
+| --- | --- | --- |
+| Zone 2 A | hohe, runde Hügel | Gras |
+| Zone 2 B | Terrassen in Stufen von 8 | Regenwaldboden |
+| Zone 2 C | Dünen | Wüstensand |
+| Zone 2 D | Hochland | Schnee auf Erde |
+| Zone 2 E | Ebene mit tiefen, runden Senken | Kies |
+| Zone 3 A | Hochfläche mit Schluchten | roter Wüstenstein |
+| Zone 3 B | Nadeln auf einer Eisfläche | Eis |
+| Zone 3 C | schroffes Gebirge | Dauerfrostboden mit Steinen |
+| Zone 3 D | Tafelberge mit steilen Flanken | Wüstensandstein |
 
 | Arbeitsname | Zone | Landschaft | Besonderheit |
 | --- | --- | --- | --- |
@@ -372,7 +391,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
 
-`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone, wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
+`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone (1 bis 3, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
 
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 
