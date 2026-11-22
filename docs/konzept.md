@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 9 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 10 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -13,7 +13,7 @@ Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt
 | Entwicklung | Unabhängig. Inhalte entscheidest du |
 | LEP | Wanderlore muss in Welten der Luanti Education Platform laufen können, hängt aber nicht von ihr ab |
 | Alleinstellungsmerkmal | Fortschritt durch Entdecken statt durch Abbauen |
-| Fremde Mods | Nur Assets übernehmen, nach deiner Auswahl. Ausnahme: Mobs Redo als Schnittstelle |
+| Fremde Mods | Nur Assets übernehmen, nach deiner Auswahl. Ausnahmen als Abhängigkeit: Mobs Redo und 3D Armor |
 | Vegan-Regel | Was Spieler anbauen, kochen oder brauen, ist pflanzlich. Tierisches nur als Beute |
 | Inhalts-Schalter | Keine. Was im Spiel ist, gehört dazu. Einstellbar sind nur Werte wie Dichte, Tempo, Schaden |
 | Monster | Gehören fest dazu, in Welt und Strongholds, jeweils andere. Später eigene |
@@ -53,7 +53,8 @@ Eine Wanderlore-Welt ist immer eine Welt mit Monstern. In LEP sind zwei kleine A
 | --- | --- | --- |
 | `wl_world` | Generator, Zonen, Biome, Verteilung von allem in der Welt, Abfrage „welches Biom, welche Zone“ | Minetest Game |
 | `wl_lore` | Lore sammeln, Lorebook, Lore Table, Freischaltungen | `wl_world` |
-| `wl_farming` | Feldfrüchte, Speisen, Kochstation, Mahlzeit-Boni, Essenz | `wl_world`, `farming` |
+| `wl_farming` | Feldfrüchte, Speisen, Kochstation, Nahrung nach Valheim-Prinzip, Essenz | `wl_world`, `farming` |
+| `wl_combat` | Waffen, Rüstungen, Schmiede, Aufwertungen, Fernkampf | 3D Armor |
 | `wl_alchemy` | Wildkräuter, Kessel, Tränke | `wl_world`, `vessels` |
 | `wl_monsters` | Monster für Welt und Strongholds | `wl_world`, Mobs Redo |
 | `wl_strongholds` | Baukasten, Platzierung, Beute, Spawner | `wl_world` |
@@ -252,7 +253,7 @@ Reife Feldfrüchte geben beim Ernten manchmal Lebensessenz, wilde Pflanzen öfte
 - **Feldfrüchte:** Auswahl aus den 42 von Farming Redo, nur die Texturen. Angebaut wird mit dem Farming aus Minetest Game. Vorschlag: Karotte, Chili, Mais, Gurke, Knoblauch, Salat, Zwiebel, Erbsen, Kartoffel, Reis, Soja, Tomate.
 - **Wildvorkommen** als Saatgutquelle, je Biom verschieden.
 - **Kochstation:** Herd mit vier Zutatenfächern, Brennstoff und Rezepte-Reiter.
-- **Bonus-Gerichte** entstehen nur am Herd. Vorschlag: Tomatensuppe, Erbsensuppe, Zwiebelsuppe, Salat, gebratener Tofu, Chili, Spaghetti, Paella, Bibimbap, Burger.
+- **Bessere Gerichte** entstehen nur am Herd. Vorschlag: Tomatensuppe, Erbsensuppe, Zwiebelsuppe, Salat, gebratener Tofu, Chili, Spaghetti, Paella, Bibimbap, Burger.
 - **Alle Rezepte sind pflanzlich.** Tofu ersetzt Fleisch.
 
 ## 8. Alchemie
@@ -294,24 +295,62 @@ Jedes Monster ist ein Eintrag in einer Tabelle. Eigene Monster entstehen zuerst 
 
 Die Zone bestimmt Stärke von Beute und Monstern. Platziert wird vom Generator.
 
-## 11. Powerups
+## 11. Nahrung und Tränke
 
-| | Mahlzeit | Trank |
+| | Nahrung | Trank |
 | --- | --- | --- |
-| Charakter | passiv, defensiv | aktiv, situativ |
-| Dauer | 5–10 Minuten | 1–3 Minuten, Heilung sofort |
-| Gleichzeitig | ein Bonus, per Lore zwei | verschiedene Tränke stapelbar |
+| Charakter | Grundlage: bestimmt, wie viel man aushält | Werkzeug für den Moment |
+| Dauer | lang, etwa 10 bis 20 Minuten | 1 bis 3 Minuten, Heilung sofort |
+| Gleichzeitig | drei verschiedene Gerichte | verschiedene Tränke stapelbar |
 | Quelle | Feldarbeit, erneuerbar | Kräuter aus Biomen, Wirkstufe II nur mit Beute |
 
-Mahlzeit-Boni: Regeneration, Zusatzherzen, Langer Atem, Zähigkeit, Leichtfuß, Sanfte Landung.
+Einzelheiten zur Nahrung stehen in Abschnitt 12.
 
 ## 12. Kampf und Überleben
 
-Neu aufgenommen am 22.11.2026, noch nicht ausgearbeitet.
+Stand 22.11.2026. Grundzüge festgelegt, Einzelheiten offen.
 
-- **Waffen und Rüstung** in Stufen, die den Erzen der Zonen folgen.
-- **Aufwertungen** für Waffen und Rüstung.
-- **Hunger.** Nahrung bekommt damit einen Grundzweck, die Mahlzeit-Boni bleiben die Belohnung für gutes Kochen. Auf langen Reisen wird Proviant wichtig.
+### Nahrung nach dem Prinzip von Valheim
+
+Es gibt keinen Hunger, der einen umbringt. Stattdessen bestimmt Nahrung, wie stark man ist:
+
+- Ohne Nahrung hat man nur eine kleine Grundausstattung an Leben.
+- Man kann drei verschiedene Gerichte gleichzeitig „im Magen“ haben, nie zweimal dasselbe.
+- Jedes Gericht erhöht für eine feste Zeit das Maximalleben und die Heilung. Die Wirkungen addieren sich.
+- Bessere Gerichte brauchen Zutaten aus mehreren Biomen und die höheren Stufen des Herds.
+
+Das ersetzt den früheren Entwurf mit einem einzelnen Mahlzeit-Bonus. Die dort genannten Wirkungen (Regeneration, Zusatzherzen, Langer Atem, Zähigkeit, Leichtfuß, Sanfte Landung) werden zu Eigenschaften einzelner Gerichte. Tränke bleiben getrennt: kurz, stark, aktiv.
+
+Offen: ob es dazu eine Ausdauer gibt, die Nahrung ebenfalls erhöht.
+
+### Rüstung
+
+3D Armor wird als Abhängigkeit zugelassen, als zweite Ausnahme von „nur Assets“ neben Mobs Redo. Geprüft am 22.11.2026:
+
+- Code LGPL 2.1, Medien CC BY-SA 3.0, letzter Commit Juli 2026.
+- Bringt Rüstungen aus Holz, Kaktus, Bronze, Stahl, Gold und Diamant mit, dazu Schilde. Das deckt die Erzstufen der Zonen bis auf Mese ab.
+- Eigene Rüstungen lassen sich anmelden, etwa aus Stoffen der Zwischenschicht.
+- Die Werte hängen am Gegenstandstyp, nicht am einzelnen Stück. Aufwertungen brauchen deshalb je Stufe einen eigenen Gegenstand.
+- Es arbeitet mit `player_monoids` zusammen. Tränke, die Tempo oder Sprungkraft ändern, müssen denselben Weg nutzen.
+
+### Aufwertungen
+
+An einer Schmiede, mit Monster-Beute und den besonderen Stoffen der Inseln. Lore begrenzt die höchste Stufe. Bei Waffen und Werkzeugen kann ein einzelnes Stück eigene Werte tragen; bei Rüstung braucht es je Stufe einen eigenen Gegenstand.
+
+### Fernkampf
+
+Recherche vom 22.11.2026, noch keine Entscheidung.
+
+| Quelle | Inhalt | Lizenz | Stand |
+| --- | --- | --- | --- |
+| [Bows](https://codeberg.org/tenplus1/bows) (AiTechEye, TenPlus1) | Bögen aus Holz, Bronze, Stahl, Pfeile, kleine Schnittstelle | Code LGPL 2.1, Texturen CC0 | November 2026 |
+| [X Bows](https://content.luanti.org/packages/SaKeL/x_bows) (SaKeL) | ein ausgearbeiteter Bogen mit Spannen, Köcher, Pfeilen je Material, 3D-Pfeil | LGPL 2.1 | November 2026 |
+| [Throwing](https://github.com/minetest-mods/throwing) mit [Throwing Arrows](https://github.com/minetest-mods/throwing_arrows) | Schnittstelle, Bögen je Material, Sonderpfeile | MPL 2.0 | August 2026 |
+| [Castle Weapons](https://github.com/minetest-mods/castle_weapons) | Armbrust, Streitaxt | MIT, Armbrust LGPL 2.1 | 2021 |
+| [Bweapons](https://content.luanti.org/packages/mt-mods/bweapons_modpack/) | Bögen, Armbrust, Zauberstäbe, Zauberbücher; braucht weitere Mods | nicht geprüft | nicht geprüft |
+| [Projectiles](https://content.luanti.org/packages/Noodlemire/projectile/) | Bögen und Schleudern, Aufladen per Rechtsklick | nicht geprüft | nicht geprüft |
+
+Ein eigenes kleines Geschoss-System ist machbar. Dann bleiben die Mods reine Asset-Quellen.
 
 ## 13. Reihenfolge
 
@@ -349,7 +388,7 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 1. Biome: entstehen mit der Zeit. Die Anzahl je Zone steht fest.
 2. Feldfrüchte und Speisen auswählen.
 3. Aufteilung der Monster prüfen.
-4. Kampf und Überleben ausarbeiten: Rüstung, Aufwertungen, Hunger.
+4. Kampf und Überleben: Fernkampf entscheiden, Ausdauer ja oder nein, Werte der Gerichte.
 5. Was Lore außer den Stationsstufen freischaltet.
 
 ## Quellen
