@@ -122,9 +122,22 @@ Festgelegt:
 - **Begehbarkeit nach Zone.** Zone 1 ist überall zu Fuß begehbar. Nach außen wird das Gelände sperriger, in Zone 3 bewusst so, dass man bauen, klettern oder einen Trank nutzen muss.
 - **Dreidimensionales Rauschen** nur dort, wo eine Form es braucht. Echte Nadeln, Bögen und Überhänge gehen mit einer Höhenformel nicht.
 
+### Übergänge
+
+Skizze und Skript: `docs/landschaft/skizze_uebergaenge.png`.
+
+Jede Höhenformel besteht aus zwei Teilen: einer **Grundhöhe** des Bioms und der **Form** (Stufen, Einschnitte, Nadeln).
+
+- **Zwischen Biomen derselben Zone** werden die Grundhöhen weich gemischt, und die Form blendet zur Grenze hin aus. Eine Schlucht läuft zum Rand flach aus, statt abzubrechen. Im Inneren bleibt jede Form unverfälscht.
+- **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug.
+- **Zwischen Varianten desselben Bioms** gibt es keinen eigenen Übergang. Die Regler der Formel gleiten ineinander.
+- **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite. Breiter wäre sanfter, kostet aber Fläche und Rechenzeit.
+- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke, nicht an einer Linie.
+- **Küste:** je Biom Strand oder Steilküste.
+
 ### Technische Knackpunkte
 
-- **Übergänge.** Nahe einer Biomgrenze werden die Höhen beider Biome gewichtet gemischt, damit keine Wände entstehen. Das ist der kniffligste Teil.
+- **Übergänge** sind der kniffligste Teil. Das Verfahren steht oben; ob es im Spiel überzeugt, zeigt erst G2.
 - **Überhänge und Bögen** brauchen dreidimensionales Rauschen, das deutlich teurer ist. Start mit Höhenformeln, 3D nur wo ein Biom es braucht.
 - **Große Bauwerke** reichen über mehrere Portionen. Ihr Ort muss vorab berechenbar sein, damit jede Portion ihren Teil zeichnet.
 - **Geschwindigkeit** ist erst nach einer Messung am Prototyp bekannt.
