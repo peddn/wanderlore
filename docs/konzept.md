@@ -203,11 +203,11 @@ Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die dr
 
 | Platzhalter | Form | Oberfläche |
 | --- | --- | --- |
-| Zone 2 A | hohe, runde Hügel | trockenes Gras |
+| Zone 2 A | hohe, runde Hügel | Gras |
 | Zone 2 B | Terrassen in Stufen von 8 | Regenwaldboden |
 | Zone 2 C | Dünen | Wüstensand |
 | Zone 2 D | Hochland | Schnee auf Erde |
-| Zone 2 E | Ebene mit tiefen, runden Senken | Savannenboden |
+| Zone 2 E | Ebene mit tiefen, runden Senken | Kies |
 | Zone 3 A | Hochfläche mit Schluchten | roter Wüstenstein |
 | Zone 3 B | Nadeln auf einer Eisfläche | Eis |
 | Zone 3 C | schroffes Gebirge | Dauerfrostboden mit Steinen |

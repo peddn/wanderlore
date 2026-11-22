@@ -133,7 +133,7 @@ wl_world.biomes = {
 		-- High rolling hills.
 		base = 28, spread = {220, 60},
 		form = function(a, b) return 22 * a + 6 * b end,
-		top = "default:dirt_with_dry_grass",
+		top = "default:dirt_with_grass",
 	}),
 	placeholder(2, "B", 1201, {
 		-- Terraces: level steps of 8 with short slopes between them.
@@ -161,7 +161,7 @@ wl_world.biomes = {
 		-- A plain with deep round hollows.
 		base = 20, spread = {280, 90},
 		form = function(a, b) return 8 * a - 16 * smooth((b - 0.15) / 0.4) end,
-		top = "default:dry_dirt_with_dry_grass", filler = "default:dry_dirt",
+		top = "default:gravel", filler = "default:gravel",
 	}),
 
 	-- Zone 3: so rugged that one has to build, climb or use a potion.
