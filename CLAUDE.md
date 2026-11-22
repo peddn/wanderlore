@@ -135,7 +135,7 @@ Stand 22.11.2026, für den Einstieg in M0 und M1:
 - Reed Meres: sehr flach, das Land liegt nur 1 oder 2 über dem Wasser. Sumpfgras als Deckschicht, Torf (der trockene, Nummer 6 der Tafel) am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos, deren Farbe gegenüber der Vorlage dunkler und kräftiger ist. Die Werte hat der Autor an einer Tafel gewählt; sie stehen in `docs/medien.md`.
 - Biomübergänge sollen nicht künstlich wirken: keine gerade Linie, kein harter Wechsel der Oberfläche. Gebaut sind eine unregelmäßige Grenzlinie und ein gesprenkelter Wechsel der Oberfläche; ob das dem Autor reicht, ist offen.
 - Der Übergang zwischen zwei Biomen war mit 120 Blöcken je Seite zu breit und ist auf 60 halbiert.
-- Old Wood hat Gras nur auf den Hügelkuppen, leicht fleckig mit Sprenkeln des normalen Bodens. Es ist ein eigenes Waldgras; dessen Farbton ist ein Vorschlag von Claude und vom Autor noch nicht bestätigt.
+- Old Wood hat Gras nur auf den Hügelkuppen, leicht fleckig mit Sprenkeln des normalen Bodens. Es ist ein eigenes Waldgras, das Gras von Minetest Game mit `#7fae8e` eingefärbt; den Farbton hat der Autor bestätigt.
 - M1 bekommt keinen zweiten Teil mit Bewuchs. Der Bewuchs kommt mit M4.
 - M2 wird in drei Pull Requests gebaut: Zonen und Austeilen, dann Meer und Inseln, dann Schwellen an den Zonengrenzen.
 - Die Biome der Zonen 2 und 3 und der Inseln sind in M2 Platzhalter aus Blöcken von Minetest Game. Der Autor arbeitet die echten Biome danach einzeln aus.
