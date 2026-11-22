@@ -34,12 +34,12 @@ core.after(1, function()
 		local line = {}
 		for col = 0, size - 1 do
 			local x = centre.x - half + col * step
-			local height = terrain.point(x, z)
+			local height, _, level = terrain.point(x, z)
 			local biome = wl_world.get_biome({x = x, z = z})
 			local low, high, t
-			if height < sea + 0.5 then
+			if height < level - 0.5 then
 				low, high = water[1], water[2]
-				t = 1 + (height - sea) / 8
+				t = 1 + (height - level) / 8
 			else
 				local pair = colours[biome] or {{80, 80, 80}, {220, 220, 220}}
 				low, high = pair[1], pair[2]

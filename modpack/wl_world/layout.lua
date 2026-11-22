@@ -10,7 +10,7 @@ local floor, sqrt = math.floor, math.sqrt
 local layout = {}
 wl_world.layout = layout
 
-layout.CELL = 1600   -- size of a cell in nodes
+layout.CELL = 1000   -- size of a cell in nodes
 layout.WARP = 170    -- how far noise shifts a position before the lookup
 layout.BLEND = 120   -- width of the blend on each side of a biome border
 

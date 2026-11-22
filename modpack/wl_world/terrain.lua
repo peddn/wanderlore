@@ -7,7 +7,8 @@
 
 local layout, biomes = wl_world.layout, wl_world.biomes
 local hash = wl_world.hash
-local floor, sqrt = math.floor, math.sqrt
+local floor, sqrt, min, max = math.floor, math.sqrt, math.min, math.max
+local sin, cos, atan2, pi = math.sin, math.cos, math.atan2, math.pi
 
 local terrain = {}
 wl_world.terrain = terrain
@@ -102,9 +103,9 @@ local function read(noise, b, k, pos)
 end
 
 -- Returns the exact height of the ground and the index of the biome at a
--- single place. Does not know about boulders.
+-- single place, as the height formulas give it: without lakes and boulders.
 local point_weights, point_pos = {}, {x = 0, y = 0}
-function terrain.point(x, z)
+local function formula(x, z)
 	local noise = get_point_noise()
 	point_pos.x, point_pos.y = x, z
 	local own = layout.weights(
@@ -115,6 +116,118 @@ function terrain.point(x, z)
 		return biomes[b].form(read(noise, b, 1, point_pos), read(noise, b, 2, point_pos))
 	end)
 	return SEA + height, own
+end
+
+-- Lakes above sea level: still water in a basin of its own. Biomes that
+-- ask for them get one where the ground around a spot is level enough,
+-- so that no dam is needed. Each square of the grid holds at most one.
+local LAKE_GRID = 64
+local LAKE_CHANCE = 0.9
+local LAKE_MIN, LAKE_MAX = 8, 20   -- radius
+local LAKE_LEVEL = 3               -- the ground around may differ this much
+local LAKE_BANK = 12               -- width of the bank that is reshaped
+local LAKE_REACH = LAKE_MAX * 1.4 + LAKE_BANK
+
+-- lake_cache[key] is the lake of a grid square, or false if it has none.
+local lake_cache = {}
+local function lake_of(gi, gj)
+	local key = gi * 65536 + gj
+	local lake = lake_cache[key]
+	if lake ~= nil then
+		return lake
+	end
+	lake = false
+	if hash(gi, gj, 31) < LAKE_CHANCE then
+		local x = floor((gi + hash(gi, gj, 32)) * LAKE_GRID)
+		local z = floor((gj + hash(gi, gj, 33)) * LAKE_GRID)
+		local r = LAKE_MIN + (LAKE_MAX - LAKE_MIN) * hash(gi, gj, 34)
+		local lowest, own = formula(x, z)
+		local highest, fits = lowest, biomes[own].lakes
+		-- Look at the ground on two rings around the lake.
+		for ring = 1, 2 do
+			for step = 0, 7 do
+				if fits then
+					local angle = step * pi / 4
+					local distance = r * (ring == 1 and 0.7 or 1.4) + (ring - 1) * 3
+					local height
+					height, own = formula(floor(x + distance * cos(angle) + 0.5),
+						floor(z + distance * sin(angle) + 0.5))
+					lowest, highest = min(lowest, height), max(highest, height)
+					fits = biomes[own].lakes and highest - lowest <= LAKE_LEVEL
+				end
+			end
+		end
+		if fits then
+			lake = {
+				x = x, z = z, r = r,
+				-- The water stands one node below the lowest bank.
+				level = floor(lowest + 0.5) - 1,
+				depth = 2 + 2 * hash(gi, gj, 35),
+				-- Two waves along the shore make it irregular.
+				phase2 = 2 * pi * hash(gi, gj, 36),
+				phase3 = 2 * pi * hash(gi, gj, 37),
+			}
+		end
+	end
+	lake_cache[key] = lake
+	return lake
+end
+
+-- Returns the lakes that can reach into the given square.
+function terrain.lakes(minx, minz, maxx, maxz)
+	local list = {}
+	for gi = floor((minx - LAKE_REACH) / LAKE_GRID), floor((maxx + LAKE_REACH) / LAKE_GRID) do
+		for gj = floor((minz - LAKE_REACH) / LAKE_GRID), floor((maxz + LAKE_REACH) / LAKE_GRID) do
+			local lake = lake_of(gi, gj)
+			if lake then
+				list[#list + 1] = lake
+			end
+		end
+	end
+	return list
+end
+
+-- Reshapes the ground at one place for one lake. Returns the new height,
+-- and true if the place lies in the basin of the lake.
+local function carve(lake, x, z, height)
+	local dx, dz = x - lake.x, z - lake.z
+	local distance = sqrt(dx * dx + dz * dz)
+	if distance > LAKE_REACH then
+		return height, false
+	end
+	local angle = atan2(dz, dx)
+	local r = lake.r * (1 + 0.25 * sin(2 * angle + lake.phase2) + 0.15 * sin(3 * angle + lake.phase3))
+	if distance < r then
+		-- A shallow bowl that meets the water level at its rim.
+		local share = distance / r
+		return min(height, lake.level - lake.depth * (1 - share * share)), true
+	end
+	local out = distance - r
+	if out < LAKE_BANK then
+		-- The bank: one node above the water at the rim, then rising
+		-- gently until it meets the land as it was.
+		height = min(height, lake.level + 1 + max(0, out - 3) * 0.4)
+		if out < 3 then
+			height = max(height, lake.level + 1)
+		end
+	end
+	return height, false
+end
+
+-- Returns the exact height of the ground at a single place, the index of
+-- the biome, and the level of the water that stands there if the ground is
+-- lower. Does not know about boulders.
+function terrain.point(x, z)
+	local height, own = formula(x, z)
+	local level = SEA
+	for _, lake in ipairs(terrain.lakes(x, z, x, z)) do
+		local inside
+		height, inside = carve(lake, x, z, height)
+		if inside then
+			level = lake.level
+		end
+	end
+	return height, own, level
 end
 
 -- Buffers for one chunk, reused between chunks.
@@ -154,10 +267,11 @@ local function read_map(b, k, origin, size, buffer)
 	end
 end
 
--- Fills heights[] and owners[] for the square of the given size that starts
--- at (minx, minz): the y of the topmost ground node and the biome index of
--- each column, row by row along z.
-function terrain.chunk(minx, minz, size, heights, owners)
+-- Fills heights[], owners[] and levels[] for the square of the given size
+-- that starts at (minx, minz): the y of the topmost ground node, the biome
+-- index and the y of the water surface of each column, row by row along z.
+-- Water stands where the ground is lower than the water surface.
+function terrain.chunk(minx, minz, size, heights, owners, levels)
 	if map_size ~= size then
 		local dim = {x = size, y = size, z = 1}
 		map_noise = {warp = {ValueNoiseMap(warp_params[1], dim), ValueNoiseMap(warp_params[2], dim)}}
@@ -207,7 +321,27 @@ function terrain.chunk(minx, minz, size, heights, owners)
 					+ w ^ FADE * biome.form(form_a[b][column], form_b[b][column])
 			end
 		end
-		heights[column] = floor(SEA + height + 0.5)
+		heights[column] = SEA + height
+		levels[column] = SEA
+	end
+
+	local maxx, maxz = minx + size - 1, minz + size - 1
+	for _, lake in ipairs(terrain.lakes(minx, minz, maxx, maxz)) do
+		for z = max(minz, floor(lake.z - LAKE_REACH)), min(maxz, floor(lake.z + LAKE_REACH) + 1) do
+			local column = (z - minz) * size + max(minx, floor(lake.x - LAKE_REACH)) - minx
+			for x = max(minx, floor(lake.x - LAKE_REACH)), min(maxx, floor(lake.x + LAKE_REACH) + 1) do
+				column = column + 1
+				local inside
+				heights[column], inside = carve(lake, x, z, heights[column])
+				if inside then
+					levels[column] = lake.level
+				end
+			end
+		end
+	end
+
+	for column = 1, size * size do
+		heights[column] = floor(heights[column] + 0.5)
 	end
 end
 
@@ -227,8 +361,8 @@ function terrain.boulders(minx, minz, maxx, maxz)
 			if hash(gi, gj, 21) < 0.3 then
 				local x = floor((gi + hash(gi, gj, 22)) * GRID)
 				local z = floor((gj + hash(gi, gj, 23)) * GRID)
-				local height, own = terrain.point(x, z)
-				if biomes[own].boulders and height > SEA + 1 then
+				local height, own, level = terrain.point(x, z)
+				if biomes[own].boulders and height > level + 1 then
 					local r = 1.4 + (MAX_RADIUS - 1.4) * hash(gi, gj, 24) ^ 2
 					list[#list + 1] = {x = x, y = floor(height + 0.5), z = z, r = r}
 				end
@@ -239,9 +373,9 @@ function terrain.boulders(minx, minz, maxx, maxz)
 end
 
 -- Returns the y of the topmost solid node at a single place, boulders
--- included, and the index of the biome.
+-- included, the index of the biome and the y of the water surface there.
 function terrain.surface(x, z)
-	local height, own = terrain.point(x, z)
+	local height, own, level = terrain.point(x, z)
 	local top = floor(height + 0.5)
 	for _, boulder in ipairs(terrain.boulders(x, z, x, z)) do
 		local dx, dz = x - boulder.x, z - boulder.z
@@ -250,5 +384,5 @@ function terrain.surface(x, z)
 			top = math.max(top, floor(boulder.y - boulder.r * terrain.BOULDER_SUNK + sqrt(rest)))
 		end
 	end
-	return top, own
+	return top, own, level
 end

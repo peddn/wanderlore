@@ -88,7 +88,7 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
-**Stand des Prototyps (G1):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Alle Zellen gehören zu Zone 1, und jede Zelle bekommt eines der drei Biome per Zufall aus dem Startwert der Welt. Zonen, das Austeilen der Biome und das Meer kommen mit G2. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+**Stand des Prototyps (G1):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Alle Zellen gehören zu Zone 1, und jede Zelle ist 1.000 Blöcke groß und bekommt eines der drei Biome per Zufall aus dem Startwert der Welt. Zonen, das Austeilen der Biome und das Meer kommen mit G2. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
 
 ### Die Weltkarte
 
@@ -99,12 +99,13 @@ Skizze und Verfahren: `docs/weltkarte/`.
 | Charakter | freundlich, Grundzutaten | abwechslungsreich | karg, gefährlich | Sonderzone, nur über Wasser |
 | Äußerer Rand ab Start | 4.000 Blöcke | 7.500 | 11.500 | 14.000 bis 17.500 |
 | Fußweg bis zum Rand | ca. 16 Minuten | ca. 31 | ca. 48 | – |
-| Zellgröße | 1.600 | 1.600 | 1.600 | 800 |
+| Zellgröße | 1.000 | 1.000 | 1.000 | 800 |
 | Biome | 3 | 5 | 4 | 3, dazu Vulkaninseln |
 | Austeilen der Biome | reihum | nach Richtung | nach Richtung | nach Richtung |
-| Ein Biom-Land ist etwa | 1.600 breit | 4.500 breit | 7.000 breit | Inselgruppen |
+| Ein Biom-Land ist etwa | 1.000 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
 - **Eine Zelle gehört immer ganz zu einer Zone.** So zerschneidet keine Zonengrenze ein Biom.
+- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet noch mit 1.600; sie wird mit G2 angepasst, ebenso die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3.
 - **An Land gibt es nur eine Zellgröße.** Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
 - **Biome werden fest ausgeteilt.** Alle Zellen einer Zone werden aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
 - **Zone 1 wird reihum ausgeteilt**, damit alle Grundzutaten nah am Start liegen.
@@ -129,11 +130,13 @@ Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle
 | --- | --- | --- | --- |
 | Blossom Downs | 12 | flache Hügel von ±10. Zu einem Bach hin senkt sich das Land über etwa 50 Blöcke auf eine ebene Wiese 3 über dem Wasser. Der Bach ist eine flache Rinne darin, etwa 6 breit und 2 tief, und er mäandert in weiten Schwüngen | Gras, im Wasser Sand |
 | Reed Meres | 2 | fast eben, 1 bis 3 über dem Wasser. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Gras, am Ufer Sand, im Wasser Erde |
-| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50 | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
+| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu kleine Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
 
-Alles Wasser des Prototyps steht auf Meereshöhe, auch die Bäche von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Bäche, die einen Hang hinabfließen, gehören zu den Flüssen in G3.
+Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Bäche von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Bäche, die einen Hang hinabfließen, gehören zu den Flüssen in G3.
 
 Die Bäche mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschobenen Stelle gelesen wird. Dabei schließt sich gelegentlich ein Bogen zu einem Ring um eine kleine Insel.
+
+Die Waldseen von Old Wood sind stehendes Wasser in einem eigenen Becken, 16 bis 40 Blöcke breit und 2 bis 4 tief. Ein See entsteht nur, wo der Boden ringsum fast gleich hoch ist, damit er keinen Damm braucht. Sein Wasser steht einen Block unter dem niedrigsten Ufer, und das Ufer steigt von dort flach an. Am Wasser gilt in Reed Meres und Old Wood: höchstens ein Block hinab. In Blossom Downs liegt die Wiese am Bach 3 über dem Wasser.
 
 Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken.
 
@@ -365,7 +368,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
 
-`wl_world` beantwortet bisher vier Fragen: welches Biom, welche Zone, wo ein sicherer Ort an der Oberfläche liegt und wo die nächste Zelle eines Bioms liegt.
+`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone, wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
 
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 

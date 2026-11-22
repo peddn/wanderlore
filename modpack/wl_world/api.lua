@@ -27,8 +27,8 @@ function wl_world.find_safe_pos(pos)
 	-- Walk outwards in a square spiral, in steps of 4 nodes.
 	local x, z, dx, dz = 0, 0, 0, -1
 	for _ = 1, 100 * 100 do
-		local top = terrain.surface(x0 + x * 4, z0 + z * 4)
-		if top > terrain.SEA then
+		local top, _, level = terrain.surface(x0 + x * 4, z0 + z * 4)
+		if top > level then
 			return {x = x0 + x * 4, y = top + 1, z = z0 + z * 4}
 		end
 		if x == z or (x < 0 and x == -z) or (x > 0 and x == 1 - z) then
@@ -62,4 +62,18 @@ function wl_world.find_biome(pos, name)
 		end
 	end
 	return best and wl_world.find_safe_pos({x = best.x, z = best.z})
+end
+
+-- Returns the centre of the lake nearest to a position, at the height of
+-- its water, or nil if none lies within the given distance.
+function wl_world.find_lake(pos, distance)
+	local best, best_distance
+	for _, lake in ipairs(terrain.lakes(pos.x - distance, pos.z - distance,
+			pos.x + distance, pos.z + distance)) do
+		local d = (lake.x - pos.x) ^ 2 + (lake.z - pos.z) ^ 2
+		if d <= distance * distance and (not best or d < best_distance) then
+			best, best_distance = lake, d
+		end
+	end
+	return best and {x = best.x, y = best.level, z = best.z}
 end

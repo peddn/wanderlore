@@ -32,7 +32,7 @@ for b, biome in ipairs(biomes) do
 	}
 end
 
-local data, heights, owners = {}, {}, {}
+local data, heights, owners, levels = {}, {}, {}, {}
 
 local function generate(vmanip, minp, maxp)
 	-- The sky stays empty.
@@ -60,7 +60,7 @@ local function generate(vmanip, minp, maxp)
 	end
 
 	local size = maxp.x - minp.x + 1
-	terrain.chunk(minp.x, minp.z, size, heights, owners)
+	terrain.chunk(minp.x, minp.z, size, heights, owners, levels)
 	local boulders = terrain.boulders(minp.x, minp.z, maxp.x, maxp.z)
 
 	-- Most chunks above the land hold nothing but air. Leaving them
@@ -87,7 +87,7 @@ local function generate(vmanip, minp, maxp)
 	for z = minp.z, maxp.z do
 		for x = minp.x, maxp.x do
 			column = column + 1
-			local height = heights[column]
+			local height, level = heights[column], levels[column]
 			local skin = skins[owners[column]]
 			local vi = area:index(x, miny, z)
 
@@ -103,17 +103,17 @@ local function generate(vmanip, minp, maxp)
 				vi = vi + ystride
 			end
 			if height >= miny and height <= maxy then
-				if height > SEA then
+				if height > level then
 					data[vi] = skin.top
-				elseif height >= SEA - 1 then
+				elseif height >= level - 1 then
 					data[vi] = skin.shore
 				else
 					data[vi] = skin.bed
 				end
 				vi = vi + ystride
 			end
-			-- Water up to sea level.
-			for _ = max(miny, height + 1), min(SEA, maxy) do
+			-- Water up to the sea or to the surface of a lake.
+			for _ = max(miny, height + 1), min(level, maxy) do
 				data[vi] = c_water
 				vi = vi + ystride
 			end

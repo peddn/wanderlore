@@ -49,6 +49,15 @@ for a = 1, #places do
 	end
 end
 
+-- One view of a lake above sea level, in the biomes that have them.
+for _, place in ipairs(places) do
+	local lake = wl_world.find_lake(place.pos, 300)
+	if lake then
+		views[#views + 1] = {name = place.name .. "_lake",
+			pos = vector.offset(lake, -30, 14, -30), yaw = -45, pitch = 22}
+	end
+end
+
 -- wl_dev_shot_filter = <text> keeps only the views with that text in their
 -- name.
 local filter = core.settings:get("wl_dev_shot_filter") or ""
