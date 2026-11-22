@@ -14,7 +14,7 @@ local at = core.settings:get("wl_dev_map_at") or "origin"
 -- Colour of the land at sea level and at 50 above, per biome.
 local colours = {
 	blossom_downs = {{96, 150, 70}, {200, 225, 140}},
-	reed_meres = {{70, 120, 80}, {150, 190, 130}},
+	reed_meres = {{84, 106, 40}, {150, 170, 90}},
 	old_wood = {{90, 70, 45}, {190, 160, 110}},
 }
 local water = {{40, 80, 150}, {90, 150, 215}}

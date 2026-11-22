@@ -14,6 +14,7 @@
 -- top, filler:       surface node and the three nodes below it
 -- shore:             surface node at sea level and one node below
 -- bed:               surface node under water
+-- patches:           nodes that replace the surface node in scattered spots
 
 local smooth = wl_world.smooth
 local abs = math.abs
@@ -58,10 +59,12 @@ wl_world.biomes = {
 			local pond = smooth((hollow - 0.25) / 0.2)
 			return 1.5 * plain * (1 - near) - near - 3.5 * pond
 		end,
-		top = "default:dirt_with_grass",
+		top = "wl_world:swamp_grass",
 		filler = "default:dirt",
-		shore = "default:sand",
-		bed = "default:dirt",
+		shore = "wl_world:peat_wet",
+		bed = "wl_world:peat_wet",
+		-- Level patches of moss in the grass, see terrain.lua.
+		patches = {"wl_world:swamp_moss_green", "wl_world:swamp_moss_yellow"},
 	},
 	{
 		name = "old_wood",

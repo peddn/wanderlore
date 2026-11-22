@@ -13,6 +13,7 @@ dofile(path .. "/biomes.lua")
 dofile(path .. "/layout.lua")
 dofile(path .. "/terrain.lua")
 dofile(path .. "/api.lua")
+dofile(path .. "/nodes.lua")
 
 core.register_mapgen_script(path .. "/mapgen.lua")
 

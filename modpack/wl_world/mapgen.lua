@@ -30,6 +30,12 @@ for b, biome in ipairs(biomes) do
 		shore = core.get_content_id(biome.shore),
 		bed = core.get_content_id(biome.bed),
 	}
+	if biome.patches then
+		skins[b].patches = {}
+		for k, name in ipairs(biome.patches) do
+			skins[b].patches[k] = core.get_content_id(name)
+		end
+	end
 end
 
 local data, heights, owners, levels = {}, {}, {}, {}
@@ -116,6 +122,26 @@ local function generate(vmanip, minp, maxp)
 			for _ = max(miny, height + 1), min(level, maxy) do
 				data[vi] = c_water
 				vi = vi + ystride
+			end
+		end
+	end
+
+	-- Patches: another node in place of the surface node, on dry land.
+	for _, patch in ipairs(terrain.patches(minp.x, minp.z, maxp.x, maxp.z)) do
+		local reach = floor(patch.r)
+		for z = max(minp.z, patch.z - reach), min(maxp.z, patch.z + reach) do
+			for x = max(minp.x, patch.x - reach), min(maxp.x, patch.x + reach) do
+				local index = (z - minp.z) * size + x - minp.x + 1
+				local height = heights[index]
+				local nodes = skins[owners[index]].patches
+				if nodes and height > levels[index] and height >= miny and height <= maxy then
+					-- A ragged edge instead of a circle.
+					local dx, dz = x - patch.x, z - patch.z
+					local limit = patch.r * (0.6 + 0.4 * wl_world.hash(x, z, 46))
+					if dx * dx + dz * dz <= limit * limit then
+						data[area:index(x, height, z)] = nodes[floor(patch.pick * #nodes) + 1]
+					end
+				end
 			end
 		end
 	end

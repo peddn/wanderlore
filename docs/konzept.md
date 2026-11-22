@@ -129,7 +129,7 @@ Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle
 | Biom | Grundhöhe | Form | Oberfläche |
 | --- | --- | --- | --- |
 | Blossom Downs | 12 | flache Hügel von ±10. Zu einem Bach hin senkt sich das Land über etwa 50 Blöcke auf eine ebene Wiese 3 über dem Wasser. Der Bach ist eine flache Rinne darin, etwa 6 breit und 2 tief, und er mäandert in weiten Schwüngen | Gras, im Wasser Sand |
-| Reed Meres | 2 | fast eben, 1 bis 3 über dem Wasser. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Gras, am Ufer Sand, im Wasser Erde |
+| Reed Meres | 2 | fast eben, 1 bis 3 über dem Wasser. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Sumpfgras mit ebenen Flecken aus grünem und gelbem Sumpfmoos, am Ufer und im Wasser nasser Torf |
 | Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
 
 Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Bäche von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Bäche, die einen Hang hinabfließen, gehören zu den Flüssen in G3.
@@ -138,7 +138,9 @@ Die Bäche mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschobe
 
 Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 24 über dem Meer: Jede Mulde, die tiefer liegt, füllt sich bis dorthin. So liegen die Seen in Gruppen in den Niederungen, und die höheren Gegenden bleiben trocken. Das Ufer liegt von selbst einen Block über dem Wasser. Zur Biomgrenze hin fällt das Land zum Nachbarn ab; deshalb hält der Generator den äußersten Streifen des Bioms als natürlichen Rand über dem Wasserspiegel, und jenseits davon gibt es dieses Wasser nicht. Am Wasser gilt in Reed Meres und Old Wood: höchstens ein Block hinab. In Blossom Downs liegt die Wiese am Bach 3 über dem Wasser.
 
-Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken.
+Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern.
+
+Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und nassen Torf, mit Texturen aus Extra Biomes. Der nasse Torf ist ein fester Block; in Extra Biomes ist er ein zäher Morast, in dem man einsinkt. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
 
 ### Übergänge
 
@@ -417,6 +419,7 @@ Noch zu entscheiden:
 2. **Der Preis für das Umentscheiden** bei Lore.
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
+5. **Die Sprache der Texte im Spiel.** Die vier Sumpfblöcke haben englische Namen im Code, über Luantis Übersetzungssystem, noch ohne deutsche Übersetzung. Das folgt dem Vorschlag aus der `CLAUDE.md` und ist vom Autor noch nicht bestätigt.
 
 5. **Welche Biome der äußeren Zonen welches Erz bekommen.** Das folgt, sobald es diese Biome gibt.
 6. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.

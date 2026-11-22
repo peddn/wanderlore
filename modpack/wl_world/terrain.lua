@@ -276,6 +276,31 @@ function terrain.boulders(minx, minz, maxx, maxz)
 	return list
 end
 
+-- Patches: level spots where another node replaces the surface node of a
+-- biome that asks for them. Each square of the grid holds at most one.
+local PATCH_GRID = 20
+local PATCH_CHANCE = 0.55
+local PATCH_MIN, PATCH_MAX = 2, 6   -- radius
+
+-- Returns the patches that can reach into the given square, as a list of
+-- {x, z, r, pick}. pick is a number in [0, 1) to choose the node with.
+function terrain.patches(minx, minz, maxx, maxz)
+	local list = {}
+	for gi = floor((minx - PATCH_MAX) / PATCH_GRID), floor((maxx + PATCH_MAX) / PATCH_GRID) do
+		for gj = floor((minz - PATCH_MAX) / PATCH_GRID), floor((maxz + PATCH_MAX) / PATCH_GRID) do
+			if hash(gi, gj, 41) < PATCH_CHANCE then
+				list[#list + 1] = {
+					x = floor((gi + hash(gi, gj, 42)) * PATCH_GRID),
+					z = floor((gj + hash(gi, gj, 43)) * PATCH_GRID),
+					r = PATCH_MIN + (PATCH_MAX - PATCH_MIN) * hash(gi, gj, 44),
+					pick = hash(gi, gj, 45),
+				}
+			end
+		end
+	end
+	return list
+end
+
 -- Returns the y of the topmost solid node at a single place, boulders
 -- included, the index of the biome and the y of the water surface there.
 function terrain.surface(x, z)

@@ -21,7 +21,7 @@ Verwandte Repositories:
 
 ## Stand
 
-Stand 22.11.2026: Das Konzept steht, M0 ist gebaut, und von M1 der erste Teil: der Prototyp des Generators. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt die drei Biome von Zone 1 mit eigener Landschaftsform, Oberfläche und Übergängen, noch ohne Bewuchs, Erze, Höhlen, Zonen und Meer. Offen ist, ob M1 einen zweiten Teil mit vorläufigem Bewuchs bekommt; das entscheidet der Autor. Danach kommt M2, die Weltkarte.
+Stand 22.11.2026: Das Konzept steht, M0 ist gebaut, und von M1 der erste Teil: der Prototyp des Generators. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt die drei Biome von Zone 1 mit eigener Landschaftsform, Oberfläche und Übergängen, noch ohne Bewuchs, Erze, Höhlen, Zonen und Meer. Er bringt die ersten eigenen Blöcke mit, vier Sumpfblöcke für Reed Meres in `nodes.lua`, mit sieben Texturen aus Extra Biomes. Offen ist, ob M1 einen zweiten Teil mit vorläufigem Bewuchs bekommt; das entscheidet der Autor. Danach kommt M2, die Weltkarte.
 
 - `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein.
 - `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt, lässt den Generator die Portionen um den Startpunkt erzeugen und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
@@ -132,6 +132,7 @@ Stand 22.11.2026, für den Einstieg in M0 und M1:
 - Reed Meres: kleine Tümpel, und vom Ufer geht es höchstens einen Block hinab zum Wasser. Wasser, das tief unter dem Ufer sitzt, will der Autor nicht.
 - Old Wood hat Waldseen über dem Meeresspiegel. Sie entstehen aus einem eigenen Wasserspiegel des Bioms, bis zu dem alle Mulden gefüllt werden; das war die Idee des Autors. Auch dort höchstens ein Block hinab zum Wasser. In Blossom Downs sind 3 Blöcke von der Wiese zum Bach in Ordnung.
 - Zellgröße 1.000 statt 1.600, als Versuch: Mit 1.600 wirkten die Biome sehr groß.
+- Reed Meres: Sumpfgras als Deckschicht, nasser Torf am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos.
 - M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.
