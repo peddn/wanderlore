@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 16 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 17 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -287,7 +287,7 @@ Grundstock sind die Monster aus Mobs Monster, über Mobs Redo gesteuert.
 
 ### Lebensräume und Bedarf
 
-Stand 22.11.2026, Vorschlag. Mit Höhlen, Dungeons, Inseln und Zwischenschicht reichen die elf Monster nicht mehr.
+Stand 22.11.2026. Mit Höhlen, Dungeons, Inseln und Zwischenschicht reichen die elf Monster nicht mehr.
 
 | Lebensraum | Bedarf | Gedanke |
 | --- | --- | --- |
@@ -300,7 +300,9 @@ Stand 22.11.2026, Vorschlag. Mit Höhlen, Dungeons, Inseln und Zwischenschicht r
 | Inseln | 3 | einer je Inselgruppe |
 | Zwischenschicht | 5 und ein Endgegner | Dinosaurier, Drache |
 
-Zusammen etwa 30 bis 35 Monster.
+Zusammen etwa 30 bis 35 Monster. Diese Größenordnung ist bestätigt.
+
+**Friedliche Tiere** gehören ebenfalls dazu und beleben die Welt. Nach der Vegan-Regel sind ihre Erzeugnisse nur Beute; züchten oder melken kann man sie nicht.
 
 ### Quellen für Modelle
 
