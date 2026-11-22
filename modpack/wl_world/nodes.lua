@@ -33,9 +33,9 @@ covered_dirt("wl_world:swamp_moss_green", S("Dirt with Green Swamp Moss"),
 covered_dirt("wl_world:swamp_moss_yellow", S("Dirt with Yellow Swamp Moss"),
 	"wl_world_swamp_moss_yellow", {crumbly = 3, soil = 1})
 
-core.register_node("wl_world:peat_wet", {
-	description = S("Wet Peat"),
-	tiles = {"wl_world_peat_wet.png"},
+core.register_node("wl_world:peat", {
+	description = S("Peat"),
+	tiles = {"wl_world_peat.png"},
 	groups = {crumbly = 3, soil = 1},
 	sounds = default.node_sound_dirt_defaults(),
 })

@@ -48,21 +48,20 @@ wl_world.biomes = {
 		name = "reed_meres",
 		title = "Reed Meres",
 		zone = 1,
-		base = 2,
+		base = 1.6,
 		noises = {{120, 3, 201}, {18, 2, 202}},
-		-- Almost level, 1 to 3 above the water. Many small hollows sink
-		-- below the water table. Towards a pond the land eases down, so
-		-- that the bank is one node high and no more. Ponds are about 3
-		-- deep.
+		-- Level: the land lies 1 or 2 above the water and nowhere higher.
+		-- Many small hollows sink below the water table. Next to a pond
+		-- the land is always 1 above the water. Ponds are about 3 deep.
 		form = function(plain, hollow)
 			local near = smooth((hollow - 0.1) / 0.15)
 			local pond = smooth((hollow - 0.25) / 0.2)
-			return 1.5 * plain * (1 - near) - near - 3.5 * pond
+			return 0.6 * plain * (1 - near) - 0.6 * near - 3.5 * pond
 		end,
 		top = "wl_world:swamp_grass",
 		filler = "default:dirt",
-		shore = "wl_world:peat_wet",
-		bed = "wl_world:peat_wet",
+		shore = "wl_world:peat",
+		bed = "wl_world:peat",
 		-- Level patches of moss in the grass, see terrain.lua.
 		patches = {"wl_world:swamp_moss_green", "wl_world:swamp_moss_yellow"},
 	},

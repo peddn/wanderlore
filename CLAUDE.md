@@ -45,7 +45,7 @@ Wer diese Datei liest und etwas anderes vorfindet, etwa weitere Mods unter `modp
 4. **Widersprechen, wenn etwas das Projekt beschädigt**, etwa durch Doppelentwicklung oder große Verkomplizierung. Erst begründen, dann die Entscheidung des Autors umsetzen.
 5. **Ehrlich über Geprüftes und Ungeprüftes.** Was nur im Code gelesen und nicht im Spiel gesehen wurde, wird so benannt. Schätzungen ohne Messung heißen Schätzung.
 6. **Keine Rücksicht auf bereits erstellte Welten.** Das Projekt ist in Entwicklung und wird von niemandem sonst genutzt. Jede Änderung am Generator darf eine neue Welt verlangen.
-7. **Sprache:** Code, Bezeichner, Kommentare und Commit-Nachrichten auf Englisch. Dokumentation und Gespräch auf Deutsch. Für Texte im Spiel ist noch nichts entschieden; der Vorschlag ist Englisch im Code mit deutscher Übersetzung über Luantis Übersetzungssystem. Vor dem ersten Text im Spiel nachfragen.
+7. **Sprache:** Code, Bezeichner, Kommentare und Commit-Nachrichten auf Englisch. Dokumentation und Gespräch auf Deutsch. Texte im Spiel stehen auf Englisch im Code, über `core.get_translator`, und bekommen eine deutsche Übersetzung über Luantis Übersetzungssystem. Das hat der Autor am 22.11.2026 bestätigt. Eine Übersetzungsdatei gibt es noch nicht.
 8. **Dateien für den Autor als Markdown oder Bild.** Dokumente in Claudes eigenem Dokumentenformat ließen sich bei ihm nicht öffnen.
 
 ## Regeln aus dem Konzept, die jeden Code betreffen
@@ -132,7 +132,7 @@ Stand 22.11.2026, für den Einstieg in M0 und M1:
 - Reed Meres: kleine Tümpel, und vom Ufer geht es höchstens einen Block hinab zum Wasser. Wasser, das tief unter dem Ufer sitzt, will der Autor nicht.
 - Old Wood hat Waldseen über dem Meeresspiegel. Sie entstehen aus einem eigenen Wasserspiegel des Bioms, bis zu dem alle Mulden gefüllt werden; das war die Idee des Autors. Auch dort höchstens ein Block hinab zum Wasser. In Blossom Downs sind 3 Blöcke von der Wiese zum Bach in Ordnung.
 - Zellgröße 1.000 statt 1.600, als Versuch: Mit 1.600 wirkten die Biome sehr groß.
-- Reed Meres: Sumpfgras als Deckschicht, nasser Torf am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos.
+- Reed Meres: sehr flach, das Land liegt nur 1 oder 2 über dem Wasser. Sumpfgras als Deckschicht, Torf (der hellere, nicht der nasse) am Ufer und am Gewässergrund, Wasser aus Minetest Game, dazu ebene Flecken aus grünem und gelbem Sumpfmoos.
 - M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.

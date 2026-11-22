@@ -22,6 +22,7 @@ Diese Fassung bündelt alle Entscheidungen bis zum 22.11.2026. Woher Assets komm
 | Reihenfolge | Der Kartengenerator wird zuerst gebaut |
 | Namen | Spiel: Wanderlore. Mod-Kürzel: `wl_`. Was man sammelt: Lore |
 | Lizenz | Eigener Code unter LGPL 3.0. Übernommene Medien behalten ihre Lizenzen |
+| Texte im Spiel | Englisch im Code, deutsche Übersetzung über Luantis Übersetzungssystem |
 
 ## 2. Ziel und Ablauf
 
@@ -129,7 +130,7 @@ Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle
 | Biom | Grundhöhe | Form | Oberfläche |
 | --- | --- | --- | --- |
 | Blossom Downs | 12 | flache Hügel von ±10. Zu einem Bach hin senkt sich das Land über etwa 50 Blöcke auf eine ebene Wiese 3 über dem Wasser. Der Bach ist eine flache Rinne darin, etwa 6 breit und 2 tief, und er mäandert in weiten Schwüngen | Gras, im Wasser Sand |
-| Reed Meres | 2 | fast eben, 1 bis 3 über dem Wasser. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Sumpfgras mit ebenen Flecken aus grünem und gelbem Sumpfmoos, am Ufer und im Wasser nasser Torf |
+| Reed Meres | 1,6 | eben, das Land liegt 1 oder 2 über dem Wasser und nirgends höher. Viele kleine Mulden von 10 bis 40 Breite sinken unter den Wasserspiegel und werden Tümpel, etwa 3 tief. Zum Tümpel hin senkt sich das Land, sodass das Ufer höchstens einen Block über dem Wasser liegt | Sumpfgras mit ebenen Flecken aus grünem und gelbem Sumpfmoos, am Ufer und im Wasser Torf |
 | Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50. Dazu Waldseen über dem Meeresspiegel | Nadelstreu, dazu Findlinge aus Stein, etwa ein Drittel der Blöcke bemoost |
 
 Bis auf die Waldseen steht alles Wasser des Prototyps auf Meereshöhe, auch die Bäche von Blossom Downs. Deshalb liegen sie alle gleich hoch, und die Hügel steigen von ihnen aus an. Bäche, die einen Hang hinabfließen, gehören zu den Flüssen in G3.
@@ -140,7 +141,7 @@ Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 2
 
 Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern.
 
-Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und nassen Torf, mit Texturen aus Extra Biomes. Der nasse Torf ist ein fester Block; in Extra Biomes ist er ein zäher Morast, in dem man einsinkt. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
+Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfmoose und Torf, mit Texturen aus Extra Biomes. Der Torf ist ein fester Block. Das Wasser bleibt das von Minetest Game. Ein eigenes Sumpfwasser kommt frühestens mit dem Bewuchs.
 
 ### Übergänge
 
@@ -419,7 +420,6 @@ Noch zu entscheiden:
 2. **Der Preis für das Umentscheiden** bei Lore.
 3. **Wo man Essenz gegen Saatgut tauscht.**
 4. **`wl_vitals`** als eigener Mod.
-5. **Die Sprache der Texte im Spiel.** Die vier Sumpfblöcke haben englische Namen im Code, über Luantis Übersetzungssystem, noch ohne deutsche Übersetzung. Das folgt dem Vorschlag aus der `CLAUDE.md` und ist vom Autor noch nicht bestätigt.
 
 5. **Welche Biome der äußeren Zonen welches Erz bekommen.** Das folgt, sobald es diese Biome gibt.
 6. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.

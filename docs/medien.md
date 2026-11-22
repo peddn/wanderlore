@@ -20,7 +20,7 @@ Stand 22.11.2026: sieben Texturen für Reed Meres aus Extra Biomes. Alle liegen 
 | --- | --- | --- | --- | --- |
 | `wl_world_swamp_grass.png` | CowboyLv | CC BY-SA 3.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_grass_swamp.png` | nein, nur umbenannt |
 | `wl_world_swamp_grass_side.png` | CowboyLv | CC BY-SA 3.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_grass_swamp_side.png` | nein, nur umbenannt |
-| `wl_world_peat_wet.png` | CowboyLv | CC BY-SA 4.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_peat_wet.png` | nein, nur umbenannt |
+| `wl_world_peat.png` | CowboyLv | CC BY-SA 4.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_peat.png` | nein, nur umbenannt |
 | `wl_world_swamp_moss_green.png` | CowboyLv | CC BY-SA 4.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_swamp_moss_green.png` | nein, nur umbenannt |
 | `wl_world_swamp_moss_green_side.png` | CowboyLv | CC BY-SA 4.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_swamp_moss_green_side.png` | nein, nur umbenannt |
 | `wl_world_swamp_moss_yellow.png` | CowboyLv | CC BY-SA 4.0 | [Extra Biomes](https://github.com/CowboyLva/ebiomes), Commit `67623c25b5449c0f821fde70211ba2f88aa9e724`, dort `textures/ebiomes_swamp_moss_yellow.png` | nein, nur umbenannt |
