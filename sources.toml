@@ -1,0 +1,14 @@
+# Sources Wanderlore needs to run.
+#
+# Nothing listed here is copied into this repository. scripts/setup.sh
+# fetches each source at exactly the commit given here into .dev/.
+#
+# role:    game = the game the world runs on
+# license: as stated by the source, checked on 2026-11-22
+
+[minetest_game]
+title = "Minetest Game"
+role = "game"
+repo = "https://github.com/luanti-org/minetest_game"
+commit = "9e895af6e9feb98332fa1a778001442f5669bc20"
+license = "LGPL-2.1-or-later (code), CC-BY-SA-3.0 and others (media)"

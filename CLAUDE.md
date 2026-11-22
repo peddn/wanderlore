@@ -21,9 +21,16 @@ Verwandte Repositories:
 
 ## Stand
 
-Stand 22.11.2026: Das Konzept steht. Vom Spiel selbst ist nichts gebaut. Als Nächstes kommt Meilenstein M0 aus dem Arbeitsplan, das Grundgerüst.
+Stand 22.11.2026: Das Konzept steht, und Meilenstein M0 ist gebaut: das Grundgerüst. Das Modpack unter `modpack/` enthält nur `wl_world`, und der Mod schreibt bisher nur eine Zeile ins Log. Die Welt ist leer. Als Nächstes kommt M1 aus dem Arbeitsplan, der Prototyp des Generators.
 
-Wer diese Datei liest und etwas anderes vorfindet, etwa vorhandene Mods unter `mods/`, richtet sich nach dem Repository und nicht nach diesem Absatz, und bringt ihn auf den neuen Stand.
+- `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein.
+- `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
+- `scripts/run.sh` startet den Client, mit `--new` auf frischer Welt.
+- Jeder Mod schreibt am Ende seiner `init.lua` die Zeile `[<Name>] loaded` ins Log. `check.sh` wartet darauf.
+- Ein neuer Mod kommt mit dem Meilenstein, der ihn braucht, nicht vorher als leere Hülle. Dasselbe gilt für Mobs Redo und 3D Armor in `sources.toml`.
+- Fremde Dateien werden in [`docs/medien.md`](docs/medien.md) eingetragen.
+
+Wer diese Datei liest und etwas anderes vorfindet, etwa weitere Mods unter `modpack/`, richtet sich nach dem Repository und nicht nach diesem Absatz, und bringt ihn auf den neuen Stand.
 
 ## Arbeitsregeln
 
@@ -70,7 +77,9 @@ curl -sS -O "https://ppa.launchpadcontent.net/minetestdevs/stable/ubuntu/pool/ma
 apt-get install -y ./minetest_5.18.0*.deb xvfb xdotool libgl1-mesa-dri imagemagick
 ```
 
-Das Paket bringt das Programm `luanti` mit. Selbst kompilieren war nicht nötig.
+Das Paket bringt das Programm `luanti` mit. Selbst kompilieren war nicht nötig. Fehlen dem Paket Abhängigkeiten, hilft vorher `apt-get update`.
+
+Der Host `ppa.launchpadcontent.net` muss im Netzwerk der Cloud-Umgebung erlaubt sein. In der Umgebung „wanderlore“ ist er das, in der Standardumgebung nicht.
 
 **Erreichbar** waren GitHub und Codeberg per `git clone`. ContentDB (`content.luanti.org`) war aus der Shell nicht erreichbar, nur über das Werkzeug zum Abrufen von Webseiten.
 
@@ -100,7 +109,7 @@ DISPLAY=:9 import -window root bild.png
 
 **Fallstricke**
 
-- Luantis Mod-Sicherheit folgt keinen Verknüpfungen, die aus einem Mod-Ordner hinausführen. Ein ganzer Mod-Ordner darf eine Verknüpfung sein, einzelne Dateien darin nicht.
+- Luantis Mod-Sicherheit folgt keinen Verknüpfungen, die aus einem Mod-Ordner hinausführen. Ein ganzer Mod-Ordner darf eine Verknüpfung sein, einzelne Dateien darin nicht. Auch ein ganzer Modpack-Ordner darf eine Verknüpfung sein; so bindet `setup.sh` das Modpack ein.
 - Ein Mod mit dem Namen eines Mods aus dem Spiel ersetzt diesen.
 - Alte Mods scheitern unter Luanti 5.18 teils an strengeren Prüfungen. Der Katalog zeigt in `mods/wl_catalog/compat.lua`, wie sich das ohne Eingriff in die Quelle ausgleichen lässt.
 - Die Einstellungen des Generators stehen in der Welt, sobald sie einmal gestartet wurde. Wer sie ändert, braucht eine neue Welt.
