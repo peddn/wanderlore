@@ -43,13 +43,13 @@ Gemessen am 22.11.2026 mit `scripts/measure.sh` in Claudes Arbeitsumgebung in de
 
 | | Zeit je Portion |
 | --- | --- |
-| Wanderlore, alles zusammen, wie der Server es erlebt | 15 bis 20 ms |
-| Luantis Generator v7 mit Minetest Game, dieselbe Menge | 56 bis 67 ms |
-| Wanderlore, nur der eigene Code, Portion mit Oberfläche | 32 bis 40 ms im Mittel, höchstens 56 ms |
+| Wanderlore, alles zusammen, wie der Server es erlebt | 15 bis 19 ms |
+| Luantis Generator v7 mit Minetest Game, dieselbe Menge | 53 bis 60 ms |
+| Wanderlore, nur der eigene Code, Portion mit Oberfläche | 33 bis 39 ms im Mittel, höchstens 59 ms |
 | Wanderlore, nur der eigene Code, Portion aus reinem Stein | 28 bis 32 ms im Mittel, höchstens 49 ms |
 | Wanderlore, nur der eigene Code, Portion aus reiner Luft | 3 ms im Mittel |
 
-Die Zahlen gelten für den Stand am Ende des ersten Teils von M1, mit mäandernden Flüssen, Kiesbänken, Waldseen, Flecken und Findlingen. Zwischen zwei Läufen schwanken die Werte um mehrere Millisekunden, auch die von v7 und die der Portionen aus reinem Stein, an denen sich nichts geändert hat. Ein früherer Lauf am selben Tag ergab 13 bis 16 ms für Wanderlore und 52 bis 55 ms für v7. Ob die Ergänzungen seit dem ersten Stand etwas kosten, lässt sich daraus nicht ablesen; viel ist es nicht.
+Die Zahlen gelten für den Stand am Ende des ersten Teils von M1, mit mäandernden Flüssen, Kiesbänken, Waldseen, Flecken, Findlingen und gesprenkelten Biomgrenzen. Zwischen zwei Läufen schwanken die Werte um mehrere Millisekunden, auch die von v7 und die der Portionen aus reinem Stein, an denen sich nichts geändert hat. Ein früherer Lauf am selben Tag ergab 13 bis 16 ms für Wanderlore und 52 bis 55 ms für v7. Ob die Ergänzungen seit dem ersten Stand etwas kosten, lässt sich daraus nicht ablesen; viel ist es nicht.
 
 - Die erste Zeile ist kleiner als die dritte, weil Luanti mehrere Portionen gleichzeitig erzeugt.
 - Von den rund 30 ms einer Portion mit Oberfläche entfallen etwa 18 ms auf das Übergeben der Blöcke zwischen Luanti und Lua, 8 ms auf das Licht und 4 ms auf die Rechnung der Landschaft. Diese Aufteilung stammt aus einem einzelnen Lauf während der Entwicklung.
