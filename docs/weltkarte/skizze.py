@@ -33,7 +33,7 @@ def cells(wx,wz,CELL,salt):
     return bi,bj,bx,bz
 xs=np.linspace(-R,R,N); px,pz=np.meshgrid(xs,xs[::-1])
 wx=px+WARP*fbm(px,pz,600,11); wz=pz+WARP*fbm(px,pz,600,23)
-# coarse cells (1600) decide the zone; zone 1 and the sea are subdivided into fine cells (800)
+# coarse cells (1600) decide the zone; only the sea and the islands use fine cells (800)
 Ci,Cj,Cx,Cz=cells(wx,wz,1600,0)
 Fi,Fj,Fx,Fz=cells(wx,wz,800,50)
 dist=np.hypot(Cx,Cz)*(1+0.22*fbm(Cx,Cz,5500,31))
