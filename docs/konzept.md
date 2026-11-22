@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 10 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 11 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -321,7 +321,7 @@ Es gibt keinen Hunger, der einen umbringt. Stattdessen bestimmt Nahrung, wie sta
 
 Das ersetzt den früheren Entwurf mit einem einzelnen Mahlzeit-Bonus. Die dort genannten Wirkungen (Regeneration, Zusatzherzen, Langer Atem, Zähigkeit, Leichtfuß, Sanfte Landung) werden zu Eigenschaften einzelner Gerichte. Tränke bleiben getrennt: kurz, stark, aktiv.
 
-Offen: ob es dazu eine Ausdauer gibt, die Nahrung ebenfalls erhöht.
+**Ausdauer** gibt es als zweite Leiste neben dem Leben. Nahrung erhöht beide, je nach Gericht eher das eine oder das andere. Wofür Ausdauer verbraucht wird, ist offen; vorgeschlagen sind Rennen und das Spannen des Bogens.
 
 ### Rüstung
 
@@ -339,18 +339,32 @@ An einer Schmiede, mit Monster-Beute und den besonderen Stoffen der Inseln. Lore
 
 ### Fernkampf
 
-Recherche vom 22.11.2026, noch keine Entscheidung.
+Festgelegt am 22.11.2026: Bogen und Armbrust, mit eigenem Geschoss-System. Bestehende Mods dienen nur als Quelle für Assets und Ideen.
 
 | Quelle | Inhalt | Lizenz | Stand |
 | --- | --- | --- | --- |
-| [Bows](https://codeberg.org/tenplus1/bows) (AiTechEye, TenPlus1) | Bögen aus Holz, Bronze, Stahl, Pfeile, kleine Schnittstelle | Code LGPL 2.1, Texturen CC0 | November 2026 |
-| [X Bows](https://content.luanti.org/packages/SaKeL/x_bows) (SaKeL) | ein ausgearbeiteter Bogen mit Spannen, Köcher, Pfeilen je Material, 3D-Pfeil | LGPL 2.1 | November 2026 |
-| [Throwing](https://github.com/minetest-mods/throwing) mit [Throwing Arrows](https://github.com/minetest-mods/throwing_arrows) | Schnittstelle, Bögen je Material, Sonderpfeile | MPL 2.0 | August 2026 |
+| [Bows](https://codeberg.org/tenplus1/bows) (AiTechEye, TenPlus1) | Bögen aus Holz, Bronze, Stahl, Pfeile | Code LGPL 2.1, Texturen CC0 | November 2026 |
+| [X Bows](https://content.luanti.org/packages/SaKeL/x_bows) (SaKeL) | ein ausgearbeiteter Bogen mit Spannen, Köcher, Pfeilen je Material | LGPL 2.1 | November 2026 |
+| [Throwing](https://github.com/minetest-mods/throwing) mit [Throwing Arrows](https://github.com/minetest-mods/throwing_arrows) | Bögen je Material, Sonderpfeile | MPL 2.0 | August 2026 |
 | [Castle Weapons](https://github.com/minetest-mods/castle_weapons) | Armbrust, Streitaxt | MIT, Armbrust LGPL 2.1 | 2021 |
-| [Bweapons](https://content.luanti.org/packages/mt-mods/bweapons_modpack/) | Bögen, Armbrust, Zauberstäbe, Zauberbücher; braucht weitere Mods | nicht geprüft | nicht geprüft |
-| [Projectiles](https://content.luanti.org/packages/Noodlemire/projectile/) | Bögen und Schleudern, Aufladen per Rechtsklick | nicht geprüft | nicht geprüft |
 
-Ein eigenes kleines Geschoss-System ist machbar. Dann bleiben die Mods reine Asset-Quellen.
+Techniken aus Schusswaffen-Mods, angesehen in [Shooter](https://github.com/stujones11/shooter), [rawf](https://github.com/LoneWolfHT/rawf) (Grundlage des Fernkampfs in [Capture the Flag](https://github.com/MT-CTF/capturetheflag)) und [Gunslinger](https://github.com/ClobberXD/gunslinger):
+
+| Technik | Was sie tut | Für Wanderlore |
+| --- | --- | --- |
+| Strahl statt Geschoss | Der Treffer wird mit einem Strahl vom Auge in Blickrichtung berechnet, sofort und genau | Grundlage der Trefferprüfung |
+| Strahl in Schritten | Ein unsichtbares Geschoss rückt jeden Takt ein Stück vor und prüft die Strecke per Strahl | ergibt Flugzeit und, mit Schwerkraft je Schritt, eine Flugbahn, ohne dass ein Pfeil durch Gegner hindurchfliegt |
+| Streuung | zufällige Abweichung je Schuss | klein beim Bogen, größer bei wenig Ausdauer |
+| Munition als Abnutzung | der Ladezustand steckt im Gegenstand | geladene oder ungeladene Armbrust |
+| Nachladezeit | Sperre nach dem Schuss | Armbrust lädt langsam |
+| Zoom | Sichtfeld wird weich verengt | leichtes Zielen beim gespannten Bogen |
+| Treffer als Schlag | der Treffer zählt wie ein Hieb mit Werkzeugwerten | Rüstung und Monster rechnen ihn ohne Sonderfall |
+
+Entwurf: Die Flugbahn wird mit Strahlen in Schritten berechnet. Der sichtbare Pfeil ist nur Zierde und folgt der berechneten Bahn.
+
+- **Bogen:** Spannen kostet Ausdauer und bestimmt Wucht und Reichweite. Schnell, beweglich.
+- **Armbrust:** Laden dauert, der Schuss selbst ist sofort da und stark. Kostet keine Ausdauer.
+- **Pfeile und Bolzen** je Erzstufe.
 
 ## 13. Reihenfolge
 
@@ -388,7 +402,7 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 1. Biome: entstehen mit der Zeit. Die Anzahl je Zone steht fest.
 2. Feldfrüchte und Speisen auswählen.
 3. Aufteilung der Monster prüfen.
-4. Kampf und Überleben: Fernkampf entscheiden, Ausdauer ja oder nein, Werte der Gerichte.
+4. Kampf und Überleben: wofür Ausdauer verbraucht wird, Werte der Gerichte, Einzelheiten zu Bogen und Armbrust.
 5. Was Lore außer den Stationsstufen freischaltet.
 
 ## Quellen
