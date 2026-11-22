@@ -93,6 +93,8 @@ Die Bogen-Mods schicken einen echten Pfeil als Objekt durch die Welt. Ein schnel
 - [Biome Generator](https://content.luanti.org/packages/Gael%20de%20Sailly/biomegen) bildet Luantis Biom-System in Lua nach, rund 830 Zeilen, LGPL 3.0. Angesehen wurde eine Kopie von 2020 auf [GitHub](https://github.com/gaelysam/biomegen).
 - In Minetest Game liegen Kohle und Eisen nahe der Oberfläche, die besseren Erze tiefer, und nach unten werden sie dichter.
 - Zum Testen unerreichbarer Orte reichen die Rechte `fly`, `fast` und `noclip` sowie der Befehl `/teleport`.
+- Ein Generator in Lua gibt je Portion alle Blöcke einmal an Lua und wieder zurück. Das kostete in der Messung zu M1 mehr als die ganze Rechnung der Landschaft. Portionen, in denen nichts zu tun ist, fasst der Generator deshalb nicht an.
+- Ab einer Entfernung von 4 Blöcken zu je 16 schickt der Server Blöcke aus reiner Luft nicht mehr an den Client (Einstellung `block_send_optimize_distance`). Liegt ebener Boden genau an einer Blockgrenze, zeichnet der Client ihn in der Ferne dann nicht, und man sieht eine Lücke in Himmelsfarbe. Auf dem Server ist der Boden vorhanden. In kahler Landschaft fällt das auf; mit Bewuchs dürfte es selten werden, geprüft ist das nicht. Die Testwelt setzt den Wert auf 32.
 
 ## Luanti Education Platform
 

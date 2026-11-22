@@ -21,10 +21,14 @@ Verwandte Repositories:
 
 ## Stand
 
-Stand 22.11.2026: Das Konzept steht, und Meilenstein M0 ist gebaut: das Grundgerüst. Das Modpack unter `modpack/` enthält nur `wl_world`, und der Mod schreibt bisher nur eine Zeile ins Log. Die Welt ist leer. Als Nächstes kommt M1 aus dem Arbeitsplan, der Prototyp des Generators.
+Stand 22.11.2026: Das Konzept steht, M0 ist gebaut, und von M1 der erste Teil: der Prototyp des Generators. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt die drei Biome von Zone 1 mit eigener Landschaftsform, Oberfläche und Übergängen, noch ohne Bewuchs, Erze, Höhlen, Zonen und Meer. Offen ist, ob M1 einen zweiten Teil mit vorläufigem Bewuchs bekommt; das entscheidet der Autor. Danach kommt M2, die Weltkarte.
 
 - `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein.
-- `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
+- `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt, lässt den Generator die Portionen um den Startpunkt erzeugen und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
+- `scripts/measure.sh` misst die Zeit des Generators je Portion, `scripts/measure.sh v7` zum Vergleich Luantis Generator v7. Nach jeder größeren Änderung am Generator neu messen und die Zahlen im Arbeitsplan nachtragen.
+- `scripts/shots.sh` macht Screenshots aller Biome und ihrer Grenzen nach `.dev/shots/`. Ein Durchlauf dauert in der Cloud etwa sieben Minuten.
+- `devmods/wl_dev` ist ein Hilfs-Mod außerhalb des Modpacks, den die Skripte nur in die Testwelten einbinden. Er stellt die Kamera, misst, setzt Tester auf die Oberfläche und bringt die Befehle `/wl_where` und `/wl_goto <biom>` mit.
+- Der Code des Generators läuft in zwei Umgebungen: `init.lua` lädt ihn für die Fragen der anderen Mods, `mapgen.lua` lädt dieselben Dateien in Luantis Generator-Umgebung. Gemeinsame Dateien dürfen deshalb nur nutzen, was es in beiden gibt.
 - `scripts/run.sh` startet den Client, mit `--new` auf frischer Welt.
 - Jeder Mod schreibt am Ende seiner `init.lua` die Zeile `[<Name>] loaded` ins Log. `check.sh` wartet darauf.
 - Ein neuer Mod kommt mit dem Meilenstein, der ihn braucht, nicht vorher als leere Hülle. Dasselbe gilt für Mobs Redo und 3D Armor in `sources.toml`.
@@ -113,10 +117,17 @@ DISPLAY=:9 import -window root bild.png
 - Ein Mod mit dem Namen eines Mods aus dem Spiel ersetzt diesen.
 - Alte Mods scheitern unter Luanti 5.18 teils an strengeren Prüfungen. Der Katalog zeigt in `mods/wl_catalog/compat.lua`, wie sich das ohne Eingriff in die Quelle ausgleichen lässt.
 - Die Einstellungen des Generators stehen in der Welt, sobald sie einmal gestartet wurde. Wer sie ändert, braucht eine neue Welt.
+- Lücken in Himmelsfarbe auf fernen, ebenen Flächen sind kein Fehler des Generators. Der Server schickt ferne Blöcke aus reiner Luft nicht an den Client. Abhilfe in der Testwelt: `block_send_optimize_distance = 32`. Näheres in der Recherche.
+- Ein Fehler in der Generator-Umgebung beendet den Server. Die Meldung steht in der Logdatei.
+- `ValueNoiseMap` verlangt für zweidimensionales Rauschen eine Größe mit `z = 1`, anders als die Dokumentation sagt.
+- Aus dem Rückruf von `core.emerge_area` nicht gleich die nächste Anfrage stellen, sondern erst mit `core.after(0, ...)` herausspringen. Ohne das blieb der Server in einem Lauf hängen, in dem zugleich der Generator scheiterte; die Ursache ist nicht einzeln geprüft.
 
 ## Was der Autor zuletzt entschieden hat
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
+
+- Blossom Downs ist flach: Grundhöhe 12, Hügel von ±10, Täler von 20 Tiefe.
+- M1 ist in zwei Pull Requests geteilt, der zweite mit Bewuchs nur bei Bedarf.
 
 - Der Prototyp beginnt mit den drei Biomen von Zone 1: Blossom Downs, Reed Meres, Old Wood. Das sind Arbeitsnamen.
 - Jedes Biom hat eine eigene Holzart, eine Feldfrucht, eine Kochzutat und eine Zutat für die Alchemie.

@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Fassung 1.8 · 22.11.2026 · Luanti 5.18, Minetest Game · Vom Spiel selbst ist noch nichts gebaut
+Fassung 1.9 · 22.11.2026 · Luanti 5.18, Minetest Game · Gebaut ist der Prototyp des Generators, vom Spiel selbst noch nichts
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit Rezepte frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -88,6 +88,8 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
+**Stand des Prototyps (G1):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Alle Zellen gehören zu Zone 1, und jede Zelle bekommt eines der drei Biome per Zufall aus dem Startwert der Welt. Zonen, das Austeilen der Biome und das Meer kommen mit G2. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+
 ### Die Weltkarte
 
 Skizze und Verfahren: `docs/weltkarte/`.
@@ -121,13 +123,23 @@ Jedes Biom hat eine Höhenformel aus zwei Teilen: einer **Grundhöhe** und der *
 - **Begehbarkeit nach Zone.** Zone 1 ist überall zu Fuß begehbar. Nach außen wird das Gelände sperriger, in Zone 3 so, dass man bauen, klettern oder einen Trank nutzen muss.
 - **Dreidimensionales Rauschen** nur dort, wo eine Form es braucht, etwa für Bögen und Überhänge.
 
+Die Formeln der drei Biome von Zone 1, in Blöcken über dem Meeresspiegel. Alle Zahlen sind Startwerte:
+
+| Biom | Grundhöhe | Form | Oberfläche |
+| --- | --- | --- | --- |
+| Blossom Downs | 12 | weite Hügel von ±10, darin Täler von 20 Tiefe. Die Täler reichen unter den Meeresspiegel und führen deshalb Wasser | Gras, im Wasser Sand |
+| Reed Meres | 3 | fast eben, ±2. Viele Mulden von 6 Tiefe sinken unter den Wasserspiegel und werden Tümpel | Gras, am Ufer Sand, im Wasser Erde |
+| Old Wood | 30 | lange Wellen von ±10, darauf enge Kuppen und Mulden von ±8 im Abstand von etwa 50 | Nadelstreu, dazu Findlinge aus bemoostem Stein |
+
+Das Wasser in den Tälern von Blossom Downs steht auf Meereshöhe. Fließende Bäche gehören zu den Flüssen in G3.
+
 ### Übergänge
 
 - **Zwischen Biomen derselben Zone** werden die Grundhöhen weich gemischt, und die Form blendet zur Grenze hin aus.
 - **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug.
 - **Zwischen Varianten desselben Bioms** gleiten die Regler der Formel ineinander.
-- **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite.
-- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke.
+- **Die Mischzone ist schmal**, zum Start 120 Blöcke je Seite. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
+- **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 40 Blöcke. Im Prototyp wechselt die Oberfläche noch hart an der Grenze.
 - **Küste:** je Biom Strand oder Steilküste.
 
 ### Erze und Tiefe
@@ -347,6 +359,10 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 `wl_vitals` ist ein Vorschlag aus dieser Fassung und noch nicht bestätigt.
 
+Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
+
+`wl_world` beantwortet bisher vier Fragen: welches Biom, welche Zone, wo ein sicherer Ort an der Oberfläche liegt und wo die nächste Zelle eines Bioms liegt.
+
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 
 ### Stufen des Generators
@@ -371,7 +387,7 @@ Grober Umfang: 7.000 bis 10.000 Zeilen Lua, davon etwa ein Drittel für den Gene
 
 ## 11. Risiken
 
-- **Der Generator ist zu langsam** für viele gleichzeitige Spieler. Wird in G1 gemessen.
+- **Der Generator ist zu langsam** für viele gleichzeitige Spieler. In G1 gemessen: Der Prototyp braucht etwa ein Viertel der Zeit von Luantis Generator v7, hat aber noch keinen Bewuchs, keine Erze und keine Höhlen. Die Zahlen stehen im [Arbeitsplan](arbeitsplan.md). Jede weitere Stufe wird neu gemessen.
 - **Übergänge zwischen Biomen** sehen unnatürlich aus. Wird in G2 sichtbar.
 - **Feinschliff ohne Ende.** Jede Generator-Stufe hat deshalb ein festes Ende.
 - **Assets aus vielen Quellen passen optisch nicht zusammen.** Bei den Monstern ist das im Katalog schon zu sehen.

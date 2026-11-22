@@ -32,6 +32,28 @@ Es gibt keinen Zeitplan. Die Reihenfolge zählt, nicht das Datum.
 | M13 | Generator G5: Zwischenschicht und Ziel | Siegel, Werkzeug aus den vier Elementen, die zweite Welt, der Drache | man öffnet einen Vulkan, steigt ab und besiegt den Drachen | Wesen der Urzeit auswählen, Lizenz von Paleotest klären |
 | M14 | Hülle und LEP | Spiel-Hülle für Einzelspieler, Anbindung an LEP | Wanderlore startet als Spiel und läuft in einer LEP-Welt | die zwei Anpassungen in LEP |
 
+## Stand
+
+- **M0** ist zusammengeführt.
+- **M1** ist in zwei Pull Requests geteilt. Der erste bringt Landschaftsform und Oberfläche der drei Biome, die Übergänge zwischen ihnen, die Messung und die Screenshots. Ob ein zweiter mit vorläufigem Bewuchs aus Minetest Game nötig ist, entscheidet der Autor an den Bildern und im Spiel.
+
+### Messung zu M1
+
+Gemessen am 22.11.2026 mit `scripts/measure.sh` in Claudes Arbeitsumgebung in der Cloud, vier Prozessorkerne, Luanti 5.18.0. Je Biom wurden 108 Portionen von 80×80×80 Blöcken erzeugt.
+
+| | Zeit je Portion |
+| --- | --- |
+| Wanderlore, alles zusammen, wie der Server es erlebt | 15 bis 18 ms |
+| Luantis Generator v7 mit Minetest Game, dieselbe Menge | 58 bis 65 ms |
+| Wanderlore, nur der eigene Code, Portion mit Oberfläche | 30 bis 36 ms im Mittel, höchstens 53 ms |
+| Wanderlore, nur der eigene Code, Portion aus reinem Stein | 28 bis 29 ms im Mittel |
+| Wanderlore, nur der eigene Code, Portion aus reiner Luft | 2 bis 3 ms im Mittel |
+
+- Die erste Zeile ist kleiner als die dritte, weil Luanti mehrere Portionen gleichzeitig erzeugt.
+- Von den rund 30 ms einer Portion mit Oberfläche entfallen etwa 18 ms auf das Übergeben der Blöcke zwischen Luanti und Lua, 8 ms auf das Licht und 4 ms auf die Rechnung der Landschaft. Diese Aufteilung stammt aus einem einzelnen Lauf während der Entwicklung.
+- Der Vergleich mit v7 ist nicht gerecht: v7 erzeugt dabei auch Höhlen, Erze und Bewuchs. Er zeigt nur die Größenordnung.
+- Wie es sich mit vielen Spielern verhält, ist nicht gemessen.
+
 ## Wegmarken
 
 | Wegmarke | Nach | Was dann möglich ist |
