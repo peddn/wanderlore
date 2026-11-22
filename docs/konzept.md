@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 15 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 16 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -285,6 +285,38 @@ Grundstock sind die Monster aus Mobs Monster, über Mobs Redo gesteuert.
 | Landwächter | 65 | 12 | Stronghold, Endgegner | 3 |
 | Dungeon Master | 75 | 6 | Stronghold, Endgegner | 3 |
 
+### Lebensräume und Bedarf
+
+Stand 22.11.2026, Vorschlag. Mit Höhlen, Dungeons, Inseln und Zwischenschicht reichen die elf Monster nicht mehr.
+
+| Lebensraum | Bedarf | Gedanke |
+| --- | --- | --- |
+| Welt, Zone 1 | 2 | schwach, nur nachts |
+| Welt, Zone 2 | 3 | mittel |
+| Welt, Zone 3 | 3 | stark, auch tags |
+| Höhlen | 3 bis 6 | ein bis zwei je Höhlentyp |
+| Dungeons | 4 und ein Endgegner | nach unten härter |
+| Strongholds | 4 und zwei Endgegner | Wächter je Zone |
+| Inseln | 3 | einer je Inselgruppe |
+| Zwischenschicht | 5 und ein Endgegner | Dinosaurier, Drache |
+
+Zusammen etwa 30 bis 35 Monster.
+
+### Quellen für Modelle
+
+Geprüft am 22.11.2026 im Code und in den Lizenzdateien.
+
+| Quelle | Inhalt | Lizenz der Medien | Stand | Schnittstelle |
+| --- | --- | --- | --- | --- |
+| [Mobs Monster](https://codeberg.org/tenplus1/mobs_monster) | 11 Monster | überwiegend CC0 | Oktober 2026 | Mobs Redo |
+| [Not So Simple Mobs](https://github.com/NPXcoot/nssm) | 59 Modelle: Spinnen, Ameisen, Sandwurm, Krake, Lavatitan, Mese-Drache, Phönix, Werwolf, Eisschlange, Krokodil und mehr | CC BY-SA 4.0 | 2017 | Mobs Redo |
+| [dmobs](https://github.com/D00Med/dmobs) | 26 Modelle: Ork, Oger, Golem, Skelett, Baummensch, Ratte, Wespen, mehrere Drachen | CC BY-SA 3.0 | 2019 | Mobs Redo |
+| [Draconis](https://github.com/ElCeejo/draconis) | Feuerdrache, Eisdrache, Dschungel-Wyvern | MIT | Februar 2026 | Creatura |
+| [Paleotest](https://github.com/ElCeejo/paleotest) | 19 Urzeittiere: Tyrannosaurus, Velociraptor, Triceratops, Spinosaurus, Pteranodon, Mosasaurus, Mammut, Säbelzahntiger und mehr | nur GPL 3 für das Ganze, keine eigene Medienlizenz | 2020 | mobkit |
+| [Goblins](https://github.com/FreeLikeGNU/goblins) | Goblins | CC BY-SA 3.0 | 2022 | Mobs Redo |
+
+Modelle aus Mods mit anderer Schnittstelle lassen sich übernehmen, ihre Animationen müssen dann neu zugeordnet werden. Bei Paleotest ist die Lizenz vor einer Übernahme zu klären.
+
 Jedes Monster ist ein Eintrag in einer Tabelle. Eigene Monster entstehen zuerst als neue Textur auf einem vorhandenen Modell; neue Modelle brauchen Blender oder Blockbench.
 
 ## 10. Strongholds
@@ -412,7 +444,7 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 
 1. Biome: entstehen mit der Zeit. Die Anzahl je Zone steht fest.
 2. Feldfrüchte und Speisen auswählen.
-3. Aufteilung der Monster prüfen.
+3. Monster: Auswahl je Lebensraum aus den Quellen.
 4. Kampf und Überleben: Werte der Gerichte, Waffen- und Rüstungsstufen im Einzelnen.
 5. Lore: Preis für das Umentscheiden, die Ketten im Einzelnen, Kosten je Rezept.
 
