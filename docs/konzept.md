@@ -197,7 +197,7 @@ Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die dr
 
 | Arbeitsname | Zone | Landschaft | Besonderheit |
 | --- | --- | --- | --- |
-| Blossom Downs | 1 | weite, runde Hügel mit eingeschnittenen Bachtälern | blühende Bäume, Riesenbäume als Wegmarken |
+| Blossom Downs | 1 | flache, runde Hügel zwischen breiten, mäandernden Flüssen mit ebenen Auen | blühende Bäume, Riesenbäume als Wegmarken |
 | Reed Meres | 1 | flaches Tiefland mit vielen kleinen Seen und Tümpeln | Schilf, Weiden, Seerosen |
 | Old Wood | 1 | buckliger Waldboden aus Kuppen und Mulden, Lichtungen | sehr hohe alte Bäume, Moos, Findlinge |
 | Bamboo Terraces | 2 | gestufte Terrassen mit Wasserbecken | Reis wächst wild |
