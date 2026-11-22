@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 8 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 9 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -88,7 +88,7 @@ Stand der Diskussion vom 22.11.2026. Die Skizze dazu liegt unter `docs/weltkarte
 | Fußweg bis zum Rand | ca. 16 Minuten | ca. 31 | ca. 48 | – |
 | Zellgröße | 1.600 | 1.600 | 1.600 | 800 |
 | Zellen in der Skizze | 23 | 49 | 92 | 82 |
-| Biome | 3 | 6 | 5 | 3 |
+| Biome | 3 | 5 | 4 | 3, dazu die Vulkaninseln |
 | Austeilen der Biome | reihum | nach Richtung | nach Richtung | nach Richtung |
 | Ein Biom-Land ist etwa | 1.600 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
@@ -144,9 +144,9 @@ Für ein Erz braucht es drei Dinge: die richtige Zone, das richtige Biom und die
 
 ### Höhlen, Dungeons, Zwischenschicht
 
-- **Höhlen** sind wichtig und sollen hohe Qualität bekommen: Hallen, Gänge, Schächte, unterirdische Seen, je Biom verschieden.
-- **Dungeons** kommen unter der Erde vor. Idee: einzelne Räume und Gänge als gebaute Bausteine, die der Generator zu immer anderen Anlagen zusammensetzt.
-- **Die Zwischenschicht** ist eine durchgehende zweite Welt etwa 360 bis 460 Blöcke unter dem Meer, im Sinn von „Reise zum Mittelpunkt der Erde“. Sie ist vor allem eine Zone für das späte Spiel und kann später auch ein Reiseweg zu weiteren Kontinenten sein.
+- **Höhlen** sind wichtig und sollen hohe Qualität bekommen. Das heißt: gut zu erforschen, also ohne Rundwege und nicht zu lang, schön beleuchtet, mit eigenen Gegnern und schöner Dekoration. Vorschlag: drei Höhlentypen.
+- **Dungeons** kommen unter der Erde vor und entstehen aus Bausteinen: Du baust einzelne Räume und Gänge, der Generator setzt sie zu immer anderen Anlagen zusammen, ähnlich wie in Diablo 1. Sie ergänzen die Strongholds, die als ganze Bauwerke an der Oberfläche stehen. Beide nutzen denselben Baukasten und dieselben Marker.
+- **Die Zwischenschicht** ist eine durchgehende zweite Welt etwa 360 bis 460 Blöcke unter dem Meer, im Sinn von „Reise zum Mittelpunkt der Erde“. Thema ist die Urzeit, mit Dinosauriern und Drachen. Sie liefert die Rohstoffe für Gegenstände des späten Spiels und kann später auch ein Reiseweg zu weiteren Kontinenten sein.
 - **Über der Zwischenschicht liegt unzerstörbares Gestein.** Nur die Schlote von Vulkaninseln durchbrechen es. Man erreicht die Zwischenschicht also nur über eine Vulkaninsel.
 - **Vorerst bleibt die Zwischenschicht leer**, das heißt als gesperrter Raum angelegt.
 - **Vier Vulkaninseln** als Startwert, in verschiedenen Himmelsrichtungen, damit die Zwischenschicht von jeder Seite erreichbar ist, aber nie nah. Bis G5 ist ihr Schlot verschlossen.
@@ -241,7 +241,7 @@ Am **Lore Table** gibt man Lore aus. Vier Äste:
 
 ### Stationsstufen
 
-Herd und Kessel haben drei Stufen und werden mit Material aufgewertet. Das Material für Stufe 2 stammt aus Zone 2, für Stufe 3 aus Zone 3 und aus Strongholds. Die Stufe bestimmt, was technisch möglich ist; Lore bestimmt, welche Rezepte man davon kennt.
+Stationen haben Stufen. Lore erhöht die Stufe, die eine Station höchstens erreichen darf; das Aufwerten selbst kostet Material. Das Material für Stufe 2 stammt aus Zone 2, für Stufe 3 aus Zone 3 und aus Strongholds.
 
 ### Essenz
 
@@ -305,7 +305,15 @@ Die Zone bestimmt Stärke von Beute und Monstern. Platziert wird vom Generator.
 
 Mahlzeit-Boni: Regeneration, Zusatzherzen, Langer Atem, Zähigkeit, Leichtfuß, Sanfte Landung.
 
-## 12. Reihenfolge
+## 12. Kampf und Überleben
+
+Neu aufgenommen am 22.11.2026, noch nicht ausgearbeitet.
+
+- **Waffen und Rüstung** in Stufen, die den Erzen der Zonen folgen.
+- **Aufwertungen** für Waffen und Rüstung.
+- **Hunger.** Nahrung bekommt damit einen Grundzweck, die Mahlzeit-Boni bleiben die Belohnung für gutes Kochen. Auf langen Reisen wird Proviant wichtig.
+
+## 13. Reihenfolge
 
 | Schritt | Inhalt |
 | --- | --- |
@@ -326,7 +334,7 @@ Schritt 3 kommt früh, weil sich erst dort zeigt, ob Entdecken als Fortschritt t
 
 Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Generator. Er ist der größte und unsicherste Posten.
 
-## 13. Risiken
+## 14. Risiken
 
 - **Der Generator ist zu langsam** für eine Klasse gleichzeitiger Spieler. Wird in G1 gemessen.
 - **Übergänge zwischen Biomen** sehen unnatürlich aus. Wird in G2 sichtbar.
@@ -336,11 +344,13 @@ Grober Umfang: 5.500 bis 7.500 Zeilen Lua, davon bis zur Hälfte für den Genera
 - **Mobs Redo als Abhängigkeit** widerspricht wörtlich „nur Assets“, ist aber als Schnittstelle bewusst ausgenommen.
 - **Ich sehe die Welt nur in Screenshots.** Wie sie sich beim Herumlaufen anfühlt, musst du prüfen.
 
-## 14. Offen
+## 15. Offen
 
-1. Biome: welche Skizzen, welche weiteren.
+1. Biome: entstehen mit der Zeit. Die Anzahl je Zone steht fest.
 2. Feldfrüchte und Speisen auswählen.
 3. Aufteilung der Monster prüfen.
+4. Kampf und Überleben ausarbeiten: Rüstung, Aufwertungen, Hunger.
+5. Was Lore außer den Stationsstufen freischaltet.
 
 ## Quellen
 
