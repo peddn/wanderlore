@@ -1,6 +1,6 @@
 # Wanderlore: Konzept
 
-Stand: 22.11.2026 · Version 5 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
+Stand: 22.11.2026 · Version 6 · Luanti 5.18, Minetest Game · Status: Konzept, noch nichts gebaut
 
 Wanderlore ist ein Modpack für Luanti, in dem man durch Entdecken wächst statt durch Graben. Man zieht durch eine in Zonen gegliederte Welt, sammelt dabei Lore und schaltet damit neue Möglichkeiten frei. Was man selbst herstellt, kommt aus dem eigenen Garten und ist pflanzlich; das Seltene gibt nur die Wildnis her.
 
@@ -69,15 +69,39 @@ Die Welt entsteht in Portionen von 80×80×80 Würfeln, erst wenn ein Spieler in
 
 Die Reihenfolge wird umgedreht:
 
-1. **Zone** aus der Position: grob die Entfernung vom Start, mit Rauschen verformt. Eine Land-Meer-Maske legt Küsten und Inseln fest.
-2. **Biom** aus unregelmäßigen Zellen von einigen hundert Würfeln Größe. Jede Zelle bekommt ein Biom aus der Liste ihrer Zone. Die Grenzen werden mit Rauschen verbogen.
+1. **Zelle.** Die Position wird mit Rauschen leicht verschoben und dann der nächstgelegenen Zelle zugeordnet. Zellen sind unregelmäßige Flächen von etwa 1.600 Blöcken Breite.
+2. **Zone und Biom der Zelle.** Die Zone ergibt sich aus der Entfernung der Zelle vom Start, das Biom aus dem Austeilen (siehe „Die Weltkarte“).
 3. **Landschaftsform** aus der Höhenformel des Bioms: Terrassen, Schluchten, Felsnadeln, Senken, Atolle.
 4. **Oberfläche, Bewuchs, Landmarken** nach dem Biom.
 5. **Höhlen, Erze, Strongholds.**
 
-Zellen statt Klima haben den Vorteil, dass wir die Größe der Gebiete bestimmen und garantieren können, dass jede Zone jedes ihrer Biome enthält.
-
 Weil Zone und Biom nur berechnet werden, kennt `wl_world` sie auch für Gegenden, die noch nicht erzeugt sind. Ein Kompass zum nächsten Stronghold ist damit einfach.
+
+### Die Weltkarte
+
+Stand der Diskussion vom 22.11.2026. Die Skizze dazu liegt unter `docs/weltkarte/skizze.png`, das Verfahren als Python-Skript daneben. Es ist eine Diskussionshilfe, kein Spielcode.
+
+| | Zone 1 | Zone 2 | Zone 3 | Inseln |
+| --- | --- | --- | --- | --- |
+| Äußerer Rand ab Start | 4.000 Blöcke | 7.500 | 11.500 | 14.000 bis 17.500 |
+| Fußweg bis zum Rand | ca. 16 Minuten | ca. 31 | ca. 48 | – |
+| Zellgröße | 1.600 | 1.600 | 1.600 | 800 |
+| Zellen in der Skizze | 23 | 49 | 92 | 82 |
+| Austeilen der Biome | reihum | nach Richtung | nach Richtung | nach Richtung |
+| Ein Biom-Land ist etwa | 1.600 breit | 4.500 breit | 7.000 breit | Inselgruppen |
+
+Die Regeln:
+
+- **Eine Zelle gehört immer ganz zu einer Zone.** Die Zone wird für den Mittelpunkt der Zelle bestimmt. So zerschneidet keine Zonengrenze ein Biom.
+- **An Land gibt es nur eine Zellgröße.** Zwei Größen an einer Zonengrenze schneiden Zellen ab. Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
+- **Biome werden fest ausgeteilt.** Beim Anlegen der Welt werden alle Zellen jeder Zone aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
+- **Zone 1 wird reihum ausgeteilt**, damit alle Grundzutaten nah am Start liegen.
+- **Zone 2, 3 und die Inseln werden nach Richtung ausgeteilt.** Jedes Biom hat eine Heimatrichtung, mit einzelnen Ausreißern. Wer alle Zutaten will, muss in verschiedene Richtungen reisen.
+- **Die Größe eines Bioms hängt am Austeilen, nicht an der Zellgröße.** Regler sind der Zusammenhang gleicher Biome, die Zahl der Biome je Zone und die Größe der Zone.
+- **Die Zelle ist die Spielart des Bioms.** Jede Zelle bekommt eine Variante, etwa dicht, licht, mit See oder mit Landmarke.
+- **Die Welt speichert ihre Verteilung** beim Anlegen und rechnet sie nie neu. Neue Biome erscheinen nur in neuen Welten oder neuen Zonen.
+- **Weites Reisen soll kosten.** Es gibt keine Wegsteine. Portale kommen vielleicht später. Betten setzen den Wiedereinstiegspunkt.
+- **Hinter dem Meer ist Platz.** Die Welt reicht bis etwa 31.000 Blöcke; dort können später weitere Kontinente mit neuen Zonen liegen.
 
 ### Technische Knackpunkte
 
@@ -246,9 +270,10 @@ Grober Umfang: 4.000 bis 5.000 Zeilen Lua. Der unsicherste Posten ist der Genera
 
 ## 14. Offen
 
-1. Biome: welche Skizzen, welche weiteren.
-2. Feldfrüchte und Speisen auswählen.
-3. Aufteilung der Monster prüfen.
+1. Drei oder vier Biome im Startland.
+2. Biome: welche Skizzen, welche weiteren.
+3. Feldfrüchte und Speisen auswählen.
+4. Aufteilung der Monster prüfen.
 
 ## Quellen
 
