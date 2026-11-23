@@ -40,7 +40,11 @@ layout.ISLAND_SPREAD = 1700
 layout.VOLCANOES = 4
 layout.ISLAND_ZONE = 4
 
-local CELL, BLEND = layout.CELL, layout.BLEND
+-- How far from a border between two zones its threshold reaches, see
+-- terrain.lua. Not less than BLEND.
+layout.REACH = 70
+
+local CELL, BLEND, REACH = layout.CELL, layout.BLEND, layout.REACH
 local ISLAND_CELL, ISLAND_ZONE = layout.ISLAND_CELL, layout.ISLAND_ZONE
 local ZONE_EDGE = layout.ZONE_EDGE
 local nbiomes = #wl_world.biomes
@@ -257,14 +261,17 @@ for b = 1, nbiomes do all[b] = b end
 -- The shares of the biomes on one grid: writes them into weights[] for
 -- the biomes of list[1..count] (they add up to 1) and returns the index of
 -- the biome of the nearest cell and the distance to the centre of that
--- cell.
+-- cell. Two more values tell about the nearest border to a cell of another
+-- zone, if it is nearer than REACH: about how far it is, and the zones on
+-- its two sides as 10 * own zone + other zone. Without such a border they
+-- are math.huge and 0.
 --
 -- Far from a border the nearest cell has everything. Towards a border the
 -- neighbour gains, up to equal shares on the border itself.
 local dist = {}
 local function shares(wx, wz, cell, lookup, weights, list, count)
 	local ci, cj = floor(wx / cell), floor(wz / cell)
-	local nearest, n = math.huge, 0
+	local nearest, n, own_zone = math.huge, 0, 0
 	for di = -1, 1 do
 		for dj = -1, 1 do
 			local s = lookup(ci + di, cj + dj)
@@ -272,11 +279,12 @@ local function shares(wx, wz, cell, lookup, weights, list, count)
 			local d = sqrt(dx * dx + dz * dz)
 			n = n + 1
 			dist[n] = d
-			if d < nearest then nearest = d end
+			if d < nearest then nearest, own_zone = d, s.zone end
 		end
 	end
 	for k = 1, count do weights[list[k]] = 0 end
 	local own
+	local edge, sides = math.huge, 0
 	n = 0
 	for di = -1, 1 do
 		for dj = -1, 1 do
@@ -284,11 +292,17 @@ local function shares(wx, wz, cell, lookup, weights, list, count)
 			-- Half the difference of the two distances is about the
 			-- distance to the border between the two cells.
 			local gap = (dist[n] - nearest) * 0.5
-			if gap < BLEND then
-				local b = lookup(ci + di, cj + dj).biome
-				local k = smooth(1 - gap / BLEND)
-				if k > weights[b] then weights[b] = k end
-				if gap == 0 then own = b end
+			if gap < REACH then
+				local s = lookup(ci + di, cj + dj)
+				if gap < edge and s.zone ~= own_zone then
+					edge, sides = gap, 10 * own_zone + s.zone
+				end
+				if gap < BLEND then
+					local b = s.biome
+					local k = smooth(1 - gap / BLEND)
+					if k > weights[b] then weights[b] = k end
+					if gap == 0 then own = b end
+				end
 			end
 		end
 	end
@@ -298,7 +312,7 @@ local function shares(wx, wz, cell, lookup, weights, list, count)
 		local b = list[k]
 		weights[b] = weights[b] / sum
 	end
-	return own, nearest
+	return own, nearest, edge, sides
 end
 
 -- The biomes of the islands, and the sea around them.
@@ -314,9 +328,16 @@ end
 -- nearest cell and the distance to the centre of that cell. With a list
 -- from layout.biomes_near only the shares of those biomes are written,
 -- which saves time.
+--
+-- Two more values tell about the threshold between two zones of the
+-- continent, if one is near: about how far the border is, and the lower of
+-- the two zones, 1 or 2. Otherwise the last value is 0.
 function layout.weights(wx, wz, weights, list, count)
 	list, count = list or all, count or nbiomes
-	local own, nearest = shares(wx, wz, CELL, site, weights, list, count)
+	local own, nearest, edge, sides = shares(wx, wz, CELL, site, weights, list, count)
+	-- Only the borders between zones 1 and 2 and between 2 and 3 have a
+	-- threshold. A coast is none.
+	local lower = (sides == 12 or sides == 21) and 1 or (sides == 23 or sides == 32) and 2 or 0
 	-- Where the continent leaves room for the sea, the islands have their
 	-- say: they take their part of the share of the sea.
 	-- A list from layout.biomes_near may leave the sea out.
@@ -334,5 +355,5 @@ function layout.weights(wx, wz, weights, list, count)
 			end
 		end
 	end
-	return own, nearest
+	return own, nearest, edge, lower
 end

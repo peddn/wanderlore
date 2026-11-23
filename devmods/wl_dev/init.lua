@@ -45,20 +45,56 @@ if has_world then
 		end,
 	})
 
+	-- Finds the border between two zones by walking away from the origin
+	-- in a direction and asking wl_world for the zone only. Returns the
+	-- first place of the outer zone and the direction walked.
+	wl_dev = {}
+	function wl_dev.find_zone_border(inner, angle)
+		local dir = vector.new(math.cos(angle), 0, math.sin(angle))
+		local previous
+		for along = 0, 20000, 8 do
+			local pos = vector.multiply(dir, along)
+			local zone = wl_world.get_zone(pos)
+			if previous == inner and zone ~= inner then
+				return pos, dir
+			end
+			previous = zone
+		end
+	end
+	local thresholds = {river = 1, range = 2, coast = 3}
+
 	local names = {}
 	for _, biome in ipairs(wl_world.biomes) do
 		names[#names + 1] = biome.name
 	end
+	for name in pairs(thresholds) do
+		names[#names + 1] = name
+	end
 	core.register_chatcommand("wl_goto", {
 		params = "<biome>",
-		description = "Jump to the nearest cell of a biome: " .. table.concat(names, ", "),
+		description = "Jump to the nearest cell of a biome, or to the river, the range "
+			.. "or the coast in the direction you are in, seen from the start: "
+			.. table.concat(names, ", "),
 		privs = {teleport = true},
 		func = function(name, param)
 			local player = core.get_player_by_name(name)
 			if not player then
 				return false, "No player."
 			end
-			local pos = wl_world.find_biome(player:get_pos(), param)
+			local pos
+			if thresholds[param] then
+				local here = player:get_pos()
+				local border, dir = wl_dev.find_zone_border(thresholds[param],
+					math.atan2(here.z, here.x))
+				-- Stand a little before the border and above the ground.
+				pos = border and wl_world.find_safe_pos(
+					vector.subtract(border, vector.multiply(dir, 90)))
+				if pos then
+					pos.y = pos.y + 20
+				end
+			else
+				pos = wl_world.find_biome(player:get_pos(), param)
+			end
 			if not pos then
 				return false, "Unknown biome. Known: " .. table.concat(names, ", ")
 			end

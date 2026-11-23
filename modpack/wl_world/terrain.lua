@@ -113,6 +113,31 @@ end
 -- Up to this height above the water a beach is sand.
 local BEACH_SAND = 2.5
 
+-- The thresholds between the zones of the continent: a river between
+-- zones 1 and 2, a range of hills between zones 2 and 3. They follow the
+-- borders of the cells.
+--
+-- land is the height above sea level without the threshold, edge about
+-- the distance to the border, lower the lower one of the two zones, and
+-- wave a wide noise within -1..1 that makes the range higher and lower
+-- along its length.
+local RIVER_HALF = 28     -- half the width of the water
+local RIVER_BANK = 36     -- over this distance the land comes down to it
+local RIVER_BED = -3.5
+local RANGE_HALF = 70     -- half the width of the range
+local RANGE_HEIGHT = 36   -- of its highest stretches; passes are lower
+local RANGE_PASS = 0.2    -- share of that height at the lowest passes
+-- Neither may reach further than the layout looks for a border.
+assert(RIVER_HALF + RIVER_BANK <= layout.REACH and RANGE_HALF <= layout.REACH)
+local function threshold(land, edge, lower, wave)
+	if lower == 1 then
+		local k = smooth((RIVER_HALF + RIVER_BANK - edge) / RIVER_BANK)
+		return land + (RIVER_BED - land) * k
+	end
+	local crest = RANGE_HEIGHT * (RANGE_PASS + (1 - RANGE_PASS) * smooth(0.5 + wave))
+	return math.min(land + crest * smooth(1 - edge / RANGE_HALF), terrain.MAX_Y - SEA - 2)
+end
+
 local ocean = wl_world.biome_by_name.ocean.index
 local cliffs = {}
 for b, biome in ipairs(biomes) do
@@ -139,8 +164,9 @@ local function formula(x, z)
 	local noise = get_point_noise()
 	point_pos.x, point_pos.y = x, z
 	local weights = point_weights
-	local own, distance = layout.weights(
-		x + WARP * noise.warp[1]:get_2d(point_pos) + RIPPLE * noise.warp[3]:get_2d(point_pos),
+	local wave = noise.warp[1]:get_2d(point_pos)
+	local own, distance, edge, lower = layout.weights(
+		x + WARP * wave + RIPPLE * noise.warp[3]:get_2d(point_pos),
 		z + WARP * noise.warp[2]:get_2d(point_pos) + RIPPLE * noise.warp[4]:get_2d(point_pos),
 		weights)
 	local sea_share = weights[ocean]
@@ -162,6 +188,9 @@ local function formula(x, z)
 			end
 			if b == own then own_mark = mark end
 		end
+	end
+	if lower > 0 then
+		land = threshold(land, edge, lower, wave)
 	end
 	local height = sea_share <= 0 and land or sea_share >= 1 and sea
 		or coast(land, sea, sea_share, cliff)
@@ -204,7 +233,7 @@ end
 local map_noise, map_size
 local warp_x, warp_z, ripple_x, ripple_z = {}, {}, {}, {}
 local form_a, form_b, form_c, share = {}, {}, {}, {}
-local dists = {}
+local dists, edges, lowers = {}, {}, {}
 for b = 1, nbiomes do
 	form_a[b], form_b[b], form_c[b], share[b] = {}, {}, {}, {}
 end
@@ -277,10 +306,11 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 	for z = minz, minz + size - 1 do
 		for x = minx, minx + size - 1 do
 			i = i + 1
-			local own, distance = layout.weights(x + WARP * warp_x[i] + RIPPLE * ripple_x[i],
+			local own, distance, edge, lower = layout.weights(
+				x + WARP * warp_x[i] + RIPPLE * ripple_x[i],
 				z + WARP * warp_z[i] + RIPPLE * ripple_z[i], weights, near, nnear)
 			owners[i] = own
-			dists[i] = distance
+			dists[i], edges[i], lowers[i] = distance, edge, lower
 			for k = 1, nnear do
 				local b = near[k]
 				local w = weights[b]
@@ -345,6 +375,9 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 					marks[column] = mark
 				end
 			end
+		end
+		if lowers[column] > 0 then
+			land = threshold(land, edges[column], lowers[column], warp_x[column])
 		end
 		local height = land
 		if sea_share >= 1 then

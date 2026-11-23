@@ -92,6 +92,25 @@ for _, place in ipairs(places) do
 	end
 end
 
+-- The thresholds between the zones, in three directions each: the river
+-- seen along its course, the range of hills seen from zone 2.
+for index, angle in ipairs({0.4, 2.5, 4.6}) do
+	local border, dir = wl_dev.find_zone_border(1, angle)
+	if border then
+		local pos = vector.subtract(border, vector.multiply(dir, 20))
+		pos.y = wl_world.terrain.SEA + 26
+		views[#views + 1] = {name = "river_" .. index, pos = pos,
+			yaw = math.deg(core.dir_to_yaw(dir)) + 75, pitch = 20}
+	end
+	border, dir = wl_dev.find_zone_border(2, angle)
+	local stand = border and wl_world.find_safe_pos(
+		vector.subtract(border, vector.multiply(dir, 170)))
+	if stand then
+		views[#views + 1] = {name = "range_" .. index, pos = vector.offset(stand, 0, 30, 0),
+			yaw = math.deg(core.dir_to_yaw(dir)) + 25, pitch = 8}
+	end
+end
+
 -- One view of a volcano island from the side.
 for _, place in ipairs(places) do
 	if place.name == "volcano" then
