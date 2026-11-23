@@ -221,12 +221,14 @@ end
 
 -- Returns the exact height of the ground at a single place, the index of
 -- the biome, and the level of the water that stands there if the ground is
--- lower, and the mark of the biome's form. Does not know about boulders.
+-- lower, the mark of the biome's form and the share of the biome, which
+-- is 1 inside it and less in the strip towards a neighbour. Does not know
+-- about boulders.
 function terrain.point(x, z)
 	local height, own, share, mark = formula(x, z)
 	local level
 	height, level = water_table(biomes[own], share, height)
-	return height, own, level, mark
+	return height, own, level, mark, share
 end
 
 -- Buffers for one chunk, reused between chunks.
