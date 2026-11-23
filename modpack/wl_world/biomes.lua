@@ -259,7 +259,7 @@ wl_world.biomes = {
 	-- The sea beyond zone 3 and between the islands.
 	{
 		name = "ocean",
-		title = "Ocean",
+		title = "Sea",
 		zone = 0,
 		base = -30,
 		noises = {{400, 3, 9001}, {80, 2, 9002}},

@@ -250,7 +250,15 @@ Lore gibt es für alles, was man zum ersten Mal tut. Jeder Spieler hat sein eige
 | Höhlentyp, Dungeon oder Stronghold-Typ betreten | 3 |
 | Endgegner besiegt | 5 |
 
-Das **Lorebook** zeigt, was gefunden ist und wie viel noch fehlt, ohne das Fehlende zu verraten. Es ist kein Gegenstand, sondern ein Reiter im Inventar. So kann man es weder ablegen noch verlieren.
+Das **Lorebook** zeigt, was gefunden ist und wie viel noch fehlt, ohne das Fehlende zu verraten. Es ist kein Gegenstand, sondern ein Reiter im Inventar. So kann man es weder ablegen noch verlieren. Der Reiter hängt in `sfinv`, dem Inventar von Minetest Game; das nutzt auch LEP. Das Lorebook ordnet die Biome nach Zone 1 bis 3, Inseln und Meer.
+
+Wann ein Biom als betreten gilt, hat der Autor am 23.11.2026 entschieden:
+
+- **Erst hinter dem Übergangsstreifen.** Im gesprenkelten Rand zwischen zwei Biomen, am Fluss und am Höhenzug zwischen den Zonen und am Strand gibt es noch keine Lore.
+- **Das Meer ist ein Biom** und zählt wie die anderen, sobald man im offenen Wasser hinter dem Strand ist. Es gehört zu keiner Zone.
+- **Die Vulkaninseln sind ein eigenes Biom.**
+- **Die Platzhalter zählen vorerst mit** und heißen im Lorebook „Zone 2 A“ und so weiter, bis die echten Biome sie ersetzen.
+- **Im Himmel oberhalb der Landschaft** betritt man kein Biom. Dort liegen bei LEP Lobby und Lernräume.
 
 Mit Lore schaltet man **Rezepte** frei, die dann an den Stationen zur Verfügung stehen. Ausgegeben wird sie an einer eigenen, baubaren Station:
 
@@ -387,7 +395,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 | Mod | Aufgabe | braucht |
 | --- | --- | --- |
 | `wl_world` | Generator, Zonen, Biome, Verteilung von allem in der Welt | Minetest Game |
-| `wl_lore` | Lore sammeln, Lorebook, Lore-Station, Freischalten von Rezepten | `wl_world` |
+| `wl_lore` | Lore sammeln, Lorebook, Lore-Station, Freischalten von Rezepten | `wl_world`, `sfinv` |
 | `wl_vitals` | Leben, Ausdauer, Wirkung von Nahrung | – |
 | `wl_farming` | Feldfrüchte, Speisen, Herd, Essenz | `wl_world`, `farming` |
 | `wl_alchemy` | Wildkräuter, Kessel, Tränke, Wurftränke | `wl_world`, `vessels` |
@@ -399,7 +407,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom oder an Fluss, Höhenzug und Küste, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
 
-`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone (1 bis 3, auf den Inseln 4, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
+`wl_world` beantwortet bisher sechs Fragen: welches Biom, welches Biom als betreten gilt, welche Zone (1 bis 3, auf den Inseln 4, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
 
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 
@@ -451,8 +459,7 @@ Noch zu entscheiden:
 
 5. **Welche Biome der äußeren Zonen welches Erz bekommen.** Das folgt, sobald es diese Biome gibt.
 6. **Biome für Erde und Luft** in Zone 3. Für Feuer und Wasser gibt es Skizzen: Ember Scar und Frost Spires.
-7. **Das Lorebook als Reiter im Inventar** ist mit dem Inventar von LEP abzugleichen.
 
 Später:
 
-8. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.
+7. **Anzeige und Bedienung.** Leisten für Leben und Ausdauer, Magen, Fenster der Stationen.

@@ -12,10 +12,26 @@ function wl_world.get_biome(pos)
 end
 
 -- Returns the number of the zone at a position: 1 to 3 on the continent,
--- 0 on the sea.
+-- 4 on the islands, 0 on the sea.
 function wl_world.get_zone(pos)
 	local _, own = terrain.point(floor(pos.x + 0.5), floor(pos.z + 0.5))
 	return biomes[own].zone
+end
+
+-- Returns the name of the biome someone at this position has entered, or
+-- nil if they have entered none: in the strip where two biomes blend, at
+-- the river and the range between the zones, on a beach, and in the sky
+-- above the landscape, which belongs to others. The sea counts as a biome
+-- from where the open water begins.
+function wl_world.get_entered_biome(pos)
+	if pos.y > terrain.MAX_Y then
+		return nil
+	end
+	local _, own, _, _, share = terrain.point(floor(pos.x + 0.5), floor(pos.z + 0.5))
+	if share < 1 then
+		return nil
+	end
+	return biomes[own].name
 end
 
 -- Returns a place to stand on dry land at or near a position: the lowest

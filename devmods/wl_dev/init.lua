@@ -104,6 +104,20 @@ if has_world then
 	})
 end
 
+if core.global_exists("wl_lore") then
+	core.register_chatcommand("wl_lore_reset", {
+		description = "Forget all your finds and lose all your lore",
+		func = function(name)
+			local player = core.get_player_by_name(name)
+			if not player then
+				return false, "No player."
+			end
+			wl_lore.reset(player)
+			return true, "Your lorebook is empty again."
+		end,
+	})
+end
+
 -- For scripts/check.sh: generate the chunks around the origin once, so that
 -- errors in the generator show up in the log.
 if core.settings:get_bool("wl_dev_generate") then

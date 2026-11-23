@@ -40,7 +40,8 @@ Es gibt keinen Zeitplan. Die Reihenfolge zählt, nicht das Datum.
   1. Zonen und Austeilen der Biome, mit Platzhaltern für die neun Biome der Zonen 2 und 3 und einem vorläufigen Meer.
   2. Meer und Inseln: Küsten, Inselgruppen, Vulkaninseln als Form.
   3. Schwellen an den Zonengrenzen, Reisen über weite Strecken in der Testwelt, Messung und Screenshots.
-- Danach kommt **M3**, Lore in einfacher Form.
+- **M3** ist gebaut: der Mod `wl_lore` mit Lore für betretene Biome und dem Lorebook als Reiter im Inventar. Geprüft am 23.11.2026 in Claudes Arbeitsumgebung: Ein Tester, der nacheinander in fünf Biome gesetzt wurde, bekam fünf Lore, und das Lorebook zeigte sie an. Ob Entdecken als Antrieb trägt, kann nur der Autor im Spiel beurteilen. Nicht geprüft ist der Lauf in einer Welt von LEP; dort wurde nur im Code nachgelesen, dass LEP dasselbe Inventar nutzt.
+- Danach kommt **M4**, der Ausbau des Generators.
 
 ### Messung zu M1
 

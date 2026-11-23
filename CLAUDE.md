@@ -21,14 +21,16 @@ Verwandte Repositories:
 
 ## Stand
 
-Stand 23.11.2026: Das Konzept steht, M0, M1 und M2, die Weltkarte, sind gebaut. Als Nächstes kommt M3, Lore in einfacher Form. Das Modpack unter `modpack/` enthält nur `wl_world`. Der Mod erzeugt einen Kontinent aus drei Zonen und teilt die Biome auf dessen Zellen aus: in Zone 1 die drei ausgearbeiteten Biome mit eigener Landschaftsform, Oberfläche und Übergängen, in Zone 2 und 3 neun Platzhalter (`zone2_a` bis `zone3_d`), dahinter das Meer mit Stränden und Steilküsten und weit draußen Inselgruppen aus drei Platzhaltern (`island_a` bis `island_c`) und vier Vulkaninseln (`volcano`), auf einem eigenen Raster mit Zellen von 800. An den Zonengrenzen liegen Schwellen: ein Fluss um Zone 1, ein Höhenzug zwischen Zone 2 und 3. Bewuchs, Erze und Höhlen gibt es noch nicht. Er bringt die ersten eigenen Blöcke mit: vier Sumpfblöcke für Reed Meres in `nodes.lua`, mit sieben Texturen aus Extra Biomes, und Waldgras für Old Wood, das die Grastextur von Minetest Game im Spiel umfärbt.
+Stand 23.11.2026: Das Konzept steht, M0, M1, M2, die Weltkarte, und M3, Lore in einfacher Form, sind gebaut. Als Nächstes kommt M4, der Ausbau des Generators. Das Modpack unter `modpack/` enthält `wl_world` und `wl_lore`. `wl_world` erzeugt einen Kontinent aus drei Zonen und teilt die Biome auf dessen Zellen aus: in Zone 1 die drei ausgearbeiteten Biome mit eigener Landschaftsform, Oberfläche und Übergängen, in Zone 2 und 3 neun Platzhalter (`zone2_a` bis `zone3_d`), dahinter das Meer mit Stränden und Steilküsten und weit draußen Inselgruppen aus drei Platzhaltern (`island_a` bis `island_c`) und vier Vulkaninseln (`volcano`), auf einem eigenen Raster mit Zellen von 800. An den Zonengrenzen liegen Schwellen: ein Fluss um Zone 1, ein Höhenzug zwischen Zone 2 und 3. Bewuchs, Erze und Höhlen gibt es noch nicht. Er bringt die ersten eigenen Blöcke mit: vier Sumpfblöcke für Reed Meres in `nodes.lua`, mit sieben Texturen aus Extra Biomes, und Waldgras für Old Wood, das die Grastextur von Minetest Game im Spiel umfärbt.
+
+`wl_lore` gibt jedem Spieler 1 Lore für jedes Biom, das er zum ersten Mal betritt, und zeigt das Lorebook als Reiter in `sfinv`. Das Konto steht in den Metadaten des Spielers. Andere Mods melden ihre Funde später mit `wl_lore.register_find` an und melden sie mit `wl_lore.find`. Ausgeben lässt sich Lore noch nicht; Lore-Station und Rezepte kommen mit M11.
 
 - `scripts/setup.sh` richtet unter `.dev/` Spiel, Modpack und Testwelt ein. Die Testwelt hat den festen Startwert `wanderlore`, denselben wie `map.sh` und `shots.sh`; so passen Karten, Bilder und Koordinaten zur Welt des Autors.
 - `scripts/check.sh` startet einen Server ohne Bildschirm auf frischer Welt, lässt den Generator die Portionen um den Startpunkt erzeugen und scheitert bei Fehlern oder Warnungen im Log. Es läuft vor jedem Pull Request.
 - `scripts/measure.sh` misst die Zeit des Generators je Portion, `scripts/measure.sh v7` zum Vergleich Luantis Generator v7. Nach jeder größeren Änderung am Generator neu messen und die Zahlen im Arbeitsplan nachtragen.
 - `scripts/shots.sh [text]` macht Screenshots aller Biome und ihrer Grenzen nach `.dev/shots/`, mit einem Text nur die Ansichten, deren Name ihn enthält, etwa `_above` oder `zone2_b`. Eine Ansicht dauert in der Cloud knapp eine Minute; alle zusammen sind es seit den Platzhaltern weit über fünfzig.
 - `scripts/map.sh [biom] [blöcke je bildpunkt]` zeichnet in wenigen Sekunden eine Karte von oben mit Relief nach `.dev/map.png`. Das ist der schnellste Weg, eine Änderung an einer Höhenformel zu beurteilen, bevor man Screenshots macht. `scripts/map.sh world` zeichnet Kontinent und Inseln mit Zonengrenzen und einer Liste der Biome.
-- `devmods/wl_dev` ist ein Hilfs-Mod außerhalb des Modpacks, den die Skripte nur in die Testwelten einbinden. Er stellt die Kamera, misst, setzt Tester auf die Oberfläche und bringt die Befehle `/wl_where` und `/wl_goto <biom>` mit; `/wl_goto river`, `range` und `coast` springen an die Schwelle in der Richtung, in der man vom Start aus steht.
+- `devmods/wl_dev` ist ein Hilfs-Mod außerhalb des Modpacks, den die Skripte nur in die Testwelten einbinden. Er stellt die Kamera, misst, setzt Tester auf die Oberfläche und bringt die Befehle `/wl_where`, `/wl_goto <biom>` und `/wl_lore_reset` mit, das das eigene Lorebook leert; `/wl_goto river`, `range` und `coast` springen an die Schwelle in der Richtung, in der man vom Start aus steht.
 - Der Code des Generators läuft in zwei Umgebungen: `init.lua` lädt ihn für die Fragen der anderen Mods, `mapgen.lua` lädt dieselben Dateien in Luantis Generator-Umgebung. Gemeinsame Dateien dürfen deshalb nur nutzen, was es in beiden gibt.
 - `scripts/run.sh` startet den Client, mit `--new` auf frischer Welt.
 - Jeder Mod schreibt am Ende seiner `init.lua` die Zeile `[<Name>] loaded` ins Log. `check.sh` wartet darauf.
@@ -125,6 +127,13 @@ DISPLAY=:9 import -window root bild.png
 - Aus dem Rückruf von `core.emerge_area` nicht gleich die nächste Anfrage stellen, sondern erst mit `core.after(0, ...)` herausspringen. Ohne das blieb der Server in einem Lauf hängen, in dem zugleich der Generator scheiterte; die Ursache ist nicht einzeln geprüft.
 
 ## Was der Autor zuletzt entschieden hat
+
+Am 23.11.2026, für M3:
+
+- Ein Biom gilt erst hinter dem Übergangsstreifen als betreten.
+- Das Meer ist ein Biom und gibt Lore. Die Vulkaninseln sind ein eigenes Biom.
+- Die Platzhalter zählen vorerst mit und heißen im Lorebook „Zone 2 A“ und so weiter.
+- Das Lorebook hängt als Reiter in `sfinv`. LEP nutzt dasselbe Inventar.
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
 
