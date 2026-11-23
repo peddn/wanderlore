@@ -23,8 +23,14 @@ local c_boulder_moss = core.get_content_id("default:mossycobble")
 local MEADOW = 0.8
 local hash = wl_world.hash
 
--- Depth of the filler below the surface node.
+-- Depth of the filler below the surface node on level ground.
 local FILLER = 3
+-- On a steep slope the filler reaches down as far as the slope drops to
+-- the next column, at most this deep, so that the side of the slope shows
+-- filler. In this share of the clumps of ROCK x ROCK columns it stays
+-- thin, and the stone below shows.
+local FILLER_MAX = 48
+local ROCK, ROCK_SHARE = 5, 0.2
 
 local skins = {}
 for b, biome in ipairs(biomes) do
@@ -104,14 +110,28 @@ local function generate(vmanip, minp, maxp)
 			local skin = skins[covers[column]]
 			local vi = area:index(x, miny, z)
 
+			-- How far the ground drops to the lowest of the four columns
+			-- next to this one. At the edge of the chunk the column on
+			-- the other side stands in for the unknown one.
+			local west = heights[x > minp.x and column - 1 or column + 1]
+			local east = heights[x < maxp.x and column + 1 or column - 1]
+			local north = heights[z > minp.z and column - size or column + size]
+			local south = heights[z < maxp.z and column + size or column - size]
+			local depth = height - min(west, east, north, south)
+			if depth <= FILLER or hash(floor(x / ROCK), floor(z / ROCK), 49) < ROCK_SHARE then
+				depth = FILLER
+			elseif depth > FILLER_MAX then
+				depth = FILLER_MAX
+			end
+
 			-- Stone, then filler, then the surface node.
-			local stone_top = min(height - FILLER - 1, maxy)
+			local stone_top = min(height - depth - 1, maxy)
 			for _ = miny, stone_top do
 				data[vi] = c_stone
 				vi = vi + ystride
 			end
 			local filler_top = min(height - 1, maxy)
-			for _ = max(miny, height - FILLER), filler_top do
+			for _ = max(miny, height - depth), filler_top do
 				data[vi] = skin.filler
 				vi = vi + ystride
 			end

@@ -12,7 +12,9 @@
 -- form:    function(a, b, c, distance) -> height added to the base; a, b
 --          and c are the values of the noises at this place, each within
 --          -1..1, and distance is how far the centre of the cell is
--- top, filler:       surface node and the three nodes below it
+-- top, filler:       surface node and the nodes below it: three on level
+--                    ground, more on a steep slope, so that the side of
+--                    the slope shows the filler and not the stone
 --          The form may return a second value. If that is true, the place
 --          is marked, and the biome's `bar` node is used at the water line
 --          instead of `shore`.
@@ -237,13 +239,21 @@ wl_world.biomes = {
 		zone = 4,
 		base = 4,
 		noises = {{120, 3, 3401}, {30, 2, 3402}},
+		-- In some sectors the flank is a smooth ramp, in others it breaks
+		-- into walls of rock 16 high with ledges between them. The first
+		-- noise says where, so a climber has to look for a way up.
 		form = function(a, b, _, distance)
 			local cone = math.max(0, 1 - distance / 270)
 			local crater = math.max(0, 1 - distance / 34)
-			return 95 * cone ^ 1.4 - 45 * smooth(crater) + (4 * a + 3 * b) * (1 - crater)
+			local height = 95 * cone ^ 1.4
+			local level = height / 16
+			local ledge = floor(level)
+			local walls = 16 * (ledge + smooth((level - ledge - 0.82) / 0.18))
+			height = height + (walls - height) * smooth((a + 0.15) / 0.3)
+			return height - 45 * smooth(crater) + 3 * b * (1 - crater)
 		end,
 		top = "default:obsidian",
-		filler = "default:stone",
+		filler = "default:obsidian",
 		shore = "default:gravel",
 		bed = "default:gravel",
 	},

@@ -136,6 +136,9 @@ Stand 22.11.2026, für den Einstieg in M0 und M1:
 - Biomübergänge sollen nicht künstlich wirken: keine gerade Linie, kein harter Wechsel der Oberfläche. Gebaut sind eine unregelmäßige Grenzlinie und ein gesprenkelter Wechsel der Oberfläche; ob das dem Autor reicht, ist offen.
 - Der Übergang zwischen zwei Biomen war mit 120 Blöcken je Seite zu breit und ist auf 60 halbiert.
 - Old Wood hat Gras nur auf den Hügelkuppen, leicht fleckig mit Sprenkeln des normalen Bodens. Es ist ein eigenes Waldgras, das Gras von Minetest Game mit `#7fae8e` eingefärbt; den Farbton hat der Autor bestätigt.
+- Küstenart je Platzhalter, Dichte der Inseln und der Strand unter hohen Biomen passen vorerst.
+- Vulkane müssen schwer zu besteigen sein: stellenweise Felswände in der Flanke.
+- An steilen Wänden soll der Stein unter der Deckschicht nur an manchen Stellen herausschauen, nicht in Streifen.
 - M1 bekommt keinen zweiten Teil mit Bewuchs. Der Bewuchs kommt mit M4.
 - M2 wird in drei Pull Requests gebaut: Zonen und Austeilen, dann Meer und Inseln, dann Schwellen an den Zonengrenzen.
 - Die Biome der Zonen 2 und 3 und der Inseln sind in M2 Platzhalter aus Blöcken von Minetest Game. Der Autor arbeitet die echten Biome danach einzeln aus.
