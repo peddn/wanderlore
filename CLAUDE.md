@@ -134,6 +134,8 @@ Am 23.11.2026, für M3:
 - Das Meer ist ein Biom und gibt Lore. Die Vulkaninseln sind ein eigenes Biom.
 - Die Platzhalter zählen vorerst mit und heißen im Lorebook „Zone 2 A“ und so weiter.
 - Das Lorebook hängt als Reiter in `sfinv`. LEP nutzt dasselbe Inventar.
+- Entdecken trägt als Antrieb: Es hat dem Autor im Spiel Spaß gemacht.
+- Zellgröße 700 statt 1.000, als Versuch: Die Gebiete in Zone 1 waren ihm beim Wandern zu groß.
 
 Stand 22.11.2026, für den Einstieg in M0 und M1:
 

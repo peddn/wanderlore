@@ -89,7 +89,7 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
-**Stand (G2, alle drei Teile):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. An den Zonengrenzen liegen die Schwellen: ein Fluss um Zone 1, ein Höhenzug zwischen Zone 2 und 3. Jenseits von Zone 3 liegt das Meer mit einem Grund etwa 30 unter dem Wasser, und in einem Ring weit draußen liegen die Inseln mit vier Vulkaninseln. Jedes Biom endet am Meer mit Strand oder Steilküste. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+**Stand (G2, alle drei Teile):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 700 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. An den Zonengrenzen liegen die Schwellen: ein Fluss um Zone 1, ein Höhenzug zwischen Zone 2 und 3. Jenseits von Zone 3 liegt das Meer mit einem Grund etwa 30 unter dem Wasser, und in einem Ring weit draußen liegen die Inseln mit vier Vulkaninseln. Jedes Biom endet am Meer mit Strand oder Steilküste. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
 
 ### Die Weltkarte
 
@@ -100,13 +100,13 @@ Skizze und Verfahren: `docs/weltkarte/skizze.py`. Daneben liegt `karte.png`: der
 | Charakter | freundlich, Grundzutaten | abwechslungsreich | karg, gefährlich | Sonderzone, nur über Wasser |
 | Äußerer Rand ab Start | 4.000 Blöcke | 7.500 | 11.500 | 14.000 bis 17.500 |
 | Fußweg bis zum Rand | ca. 16 Minuten | ca. 31 | ca. 48 | – |
-| Zellgröße | 1.000 | 1.000 | 1.000 | 800 |
+| Zellgröße | 700 | 700 | 700 | 800 |
 | Biome | 3 | 5 | 4 | 3, dazu Vulkaninseln |
 | Austeilen der Biome | reihum | nach Richtung | nach Richtung | nach Richtung |
-| Ein Biom-Land ist etwa | 1.000 breit | 4.500 breit | 7.000 breit | Inselgruppen |
+| Ein Biom-Land ist etwa | 700 breit, wo gleiche Zellen aneinanderliegen mehr | 4.500 breit | 7.000 breit | Inselgruppen |
 
 - **Eine Zelle gehört immer ganz zu einer Zone.** So zerschneidet keine Zonengrenze ein Biom.
-- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet seit G2 mit 1.000. Die Inseln sind mit Zellen von 800 gebaut; ob das passt, und die Breite der Biom-Länder in Zone 2 und 3, beurteilt der Autor an Karte und Spiel.
+- **Die Zellgröße 700 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß, mit 1.000 beim Wandern in Zone 1 immer noch; am 23.11.2026 hat er 700 gewählt. Die Skizze in `docs/weltkarte/` rechnet weiter mit 1.000, `karte.png` zeigt den Stand mit 700. In Zone 1 liegen öfter Zellen desselben Bioms nebeneinander und bilden dann ein größeres Gebiet. Die Inseln sind mit Zellen von 800 gebaut; ob das passt, und die Breite der Biom-Länder in Zone 2 und 3, beurteilt der Autor an Karte und Spiel.
 - **Der Rand einer Zone schwingt.** Die Zone einer Zelle folgt aus dem Abstand ihrer Mitte zum Start; dieser Abstand wird mit einem weiten Rauschen um bis zu 22 % gestreckt oder gestaucht. Die Zahlen der Tabelle sind deshalb Mittelwerte.
 - **Die Heimatrichtungen hängen vom Startwert der Welt ab.** In jeder Welt liegt ein Biom der Zonen 2 und 3 in einer anderen Himmelsrichtung. Eine Zelle weicht von der Heimatrichtung ihres Bioms meist um weniger als 20 Grad ab, einzelne mehr; das sind die Ausreißer.
 - **Auf dem Meer ist die Zone 0, auf den Inseln die Zone 4.** Das Meer meldet sich als eigenes Biom `ocean`.
