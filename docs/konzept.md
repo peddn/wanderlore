@@ -89,7 +89,7 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
-**Stand (G2, zweiter von drei Teilen):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. Jenseits von Zone 3 liegt das Meer mit einem Grund etwa 30 unter dem Wasser, und in einem Ring weit draußen liegen die Inseln mit vier Vulkaninseln. Jedes Biom endet am Meer mit Strand oder Steilküste. Die Schwellen an den Zonengrenzen kommen mit dem dritten Teil. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+**Stand (G2, alle drei Teile):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. An den Zonengrenzen liegen die Schwellen: ein Fluss um Zone 1, ein Höhenzug zwischen Zone 2 und 3. Jenseits von Zone 3 liegt das Meer mit einem Grund etwa 30 unter dem Wasser, und in einem Ring weit draußen liegen die Inseln mit vier Vulkaninseln. Jedes Biom endet am Meer mit Strand oder Steilküste. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
 
 ### Die Weltkarte
 
@@ -110,7 +110,7 @@ Skizze und Verfahren: `docs/weltkarte/skizze.py`. Daneben liegt `karte.png`: der
 - **Der Rand einer Zone schwingt.** Die Zone einer Zelle folgt aus dem Abstand ihrer Mitte zum Start; dieser Abstand wird mit einem weiten Rauschen um bis zu 22 % gestreckt oder gestaucht. Die Zahlen der Tabelle sind deshalb Mittelwerte.
 - **Die Heimatrichtungen hängen vom Startwert der Welt ab.** In jeder Welt liegt ein Biom der Zonen 2 und 3 in einer anderen Himmelsrichtung. Eine Zelle weicht von der Heimatrichtung ihres Bioms meist um weniger als 20 Grad ab, einzelne mehr; das sind die Ausreißer.
 - **Auf dem Meer ist die Zone 0, auf den Inseln die Zone 4.** Das Meer meldet sich als eigenes Biom `ocean`.
-- **Die Inseln liegen auf einem eigenen, feineren Raster** in einem Ring von 14.000 bis 17.500 Blöcken um den Start, dessen Rand schwingt wie der der Zonen. Zwischen dem Kontinent und den nächsten Inseln liegen damit etwa 2.000 bis 3.000 Blöcke offenes Meer. Eine Zelle des Rings ist Insel, wo ein weites Rauschen hoch steht; so entstehen Inselgruppen mit offenem Meer dazwischen. Im Startwert `wanderlore` sind es gut 160 Inselzellen. Wie dicht die Inseln liegen, ist ein Regler und ein Vorschlag von Claude.
+- **Die Inseln liegen auf einem eigenen, feineren Raster** in einem Ring von 14.000 bis 17.500 Blöcken um den Start, dessen Rand schwingt wie der der Zonen. Zwischen dem Kontinent und den nächsten Inseln liegen damit etwa 2.000 bis 3.000 Blöcke offenes Meer. Eine Zelle des Rings ist Insel, wo ein weites Rauschen hoch steht; so entstehen Inselgruppen mit offenem Meer dazwischen. Im Startwert `wanderlore` sind es gut 160 Inselzellen. Wie dicht die Inseln liegen, ist ein Regler; die Dichte hat der Autor am 23.11.2026 für passend befunden.
 - **Vier Inselzellen sind Vulkaninseln,** in gleichen Abständen rund um den Ring verteilt, die erste an einer Stelle, die vom Startwert abhängt. Gebaut ist nur ihre Form: ein Kegel von knapp 100 Blöcken Höhe mit einem Krater. Das Besteigen soll schwierig sein: Auf einem Sockel, der 30 Blöcke ansteigt, steht ein glatter, steiler Kegel, der auf etwa 75 Blöcken Strecke weitere 65 gewinnt. Ein Rauschen macht ihn je nach Seite schmaler oder breiter; manche Flanken sind zu steil zum Hinauflaufen, andere lassen einen Weg. Stufen und Absätze hat der Kegel nicht; einen Aufbau in Stufen hat der Autor am 23.11.2026 verworfen. Schlot und Siegel kommen mit G5.
 - **An Land gibt es nur eine Zellgröße.** Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
 - **Biome werden fest ausgeteilt.** Alle Zellen einer Zone werden aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
@@ -153,12 +153,14 @@ Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfm
 ### Übergänge
 
 - **Zwischen Biomen derselben Zone** werden die Grundhöhen weich gemischt, und die Form blendet zur Grenze hin aus.
-- **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug.
+- **An Zonengrenzen liegt eine sichtbare Schwelle:** zwischen Zone 1 und 2 ein Fluss, zwischen Zone 2 und 3 ein Höhenzug. Beide folgen den Grenzen der Zellen und umschließen ihre Zone ganz.
+- **Der Fluss** ist etwa 56 Blöcke breit und 3 bis 4 tief, auf Meereshöhe wie alles Wasser bisher. Zu beiden Seiten kommt das Land über etwa 36 Blöcke zu ihm herab. Man durchschwimmt ihn; eine Brücke oder Furt gibt es nicht. Breite und Tiefe sind Vorschläge von Claude.
+- **Der Höhenzug** ist etwa 140 Blöcke breit und hebt das Land an der Grenze um bis zu 36 Blöcke. Entlang seiner Länge ist er mal höher, mal niedriger; an den niedrigsten Stellen, den Pässen, sind es nur etwa 7. Er trägt die Oberfläche der Biome, die er trennt. Auch diese Zahlen sind Vorschläge von Claude.
 - **Zwischen Varianten desselben Bioms** gleiten die Regler der Formel ineinander.
 - **Die Mischzone ist schmal**, 60 Blöcke je Seite. Mit 120 war der Übergang dem Autor zu breit; er hat ihn am 22.11.2026 halbiert. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
 - **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 20 Blöcke; die Breite hängt an der Mischzone und hat sich mit ihr halbiert. Für die Oberfläche ist das seit G1 gebaut: Nahe der Grenze trägt eine Stelle mal die Oberfläche des einen, mal die des anderen Bioms, teils Block für Block, teils in kleinen Gruppen.
 - **Die Grenzlinie ist unregelmäßig.** Eine zweite, feine Verschiebung von bis zu 24 Blöcken gibt ihr Buchten und Zungen.
-- **Küste:** je Biom Strand oder Steilküste. Am Strand senkt sich das Land auf eine Stufe 1 bis 2 über dem Wasser, die auf knapp 40 Blöcken Breite flach ins Wasser ausläuft, etwa zur Hälfte trocken; sie ist aus Sand, über und unter Wasser. Dahinter sinkt der Grund zum Meeresboden. An der Steilküste hält das Land seine Höhe fast bis zur Grenze und fällt dann auf wenigen Blöcken ins tiefe Wasser. Wo ein Biom mit Strand und eines mit Steilküste am Meer zusammentreffen, gehen die beiden Formen ineinander über. Welcher Platzhalter welche Küste hat, steht in der Tabelle der Platzhalter und ist ein Vorschlag von Claude; die drei Biome von Zone 1 berühren das Meer nicht.
+- **Küste:** je Biom Strand oder Steilküste. Am Strand senkt sich das Land auf eine Stufe 1 bis 2 über dem Wasser, die auf knapp 40 Blöcken Breite flach ins Wasser ausläuft, etwa zur Hälfte trocken; sie ist aus Sand, über und unter Wasser. Dahinter sinkt der Grund zum Meeresboden. An der Steilküste hält das Land seine Höhe fast bis zur Grenze und fällt dann auf wenigen Blöcken ins tiefe Wasser. Wo ein Biom mit Strand und eines mit Steilküste am Meer zusammentreffen, gehen die beiden Formen ineinander über. Welcher Platzhalter welche Küste hat, steht in der Tabelle der Platzhalter; der Autor hat das am 23.11.2026 vorerst so angenommen. Die drei Biome von Zone 1 berühren das Meer nicht.
 
 ### Erze und Tiefe
 
@@ -395,7 +397,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 `wl_vitals` ist ein Vorschlag aus dieser Fassung und noch nicht bestätigt.
 
-Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
+Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom oder an Fluss, Höhenzug und Küste, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
 
 `wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone (1 bis 3, auf den Inseln 4, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
 
