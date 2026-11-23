@@ -89,7 +89,7 @@ Luantis eigene Generatoren erzeugen zuerst die Landschaftsform und wählen danac
 
 Weil Zone und Biom nur berechnet werden, sind sie auch für Gegenden bekannt, die noch nicht erzeugt sind.
 
-**Stand (G2, erster von drei Teilen):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. Jenseits von Zone 3 liegt ein vorläufiges Meer: ein ebener Grund 30 unter dem Wasser, zu dem das Land ohne eigene Küstenform abfällt. Küsten, Inseln und Vulkaninseln kommen mit dem zweiten Teil, die Schwellen an den Zonengrenzen mit dem dritten. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
+**Stand (G2, zweiter von drei Teilen):** Die Schritte 1 bis 4 sind gebaut, Schritt 4 ohne Bewuchs und Landmarken. Jede Zelle ist 1.000 Blöcke groß, gehört zu einer Zone und bekommt ihr Biom beim Austeilen. Jenseits von Zone 3 liegt das Meer mit einem Grund etwa 30 unter dem Wasser, und in einem Ring weit draußen liegen die Inseln mit vier Vulkaninseln. Jedes Biom endet am Meer mit Strand oder Steilküste. Die Schwellen an den Zonengrenzen kommen mit dem dritten Teil. Der Meeresspiegel ist der von Luanti, in der Voreinstellung Höhe 1.
 
 ### Die Weltkarte
 
@@ -106,10 +106,12 @@ Skizze und Verfahren: `docs/weltkarte/skizze.py`. Daneben liegt `karte.png`: der
 | Ein Biom-Land ist etwa | 1.000 breit | 4.500 breit | 7.000 breit | Inselgruppen |
 
 - **Eine Zelle gehört immer ganz zu einer Zone.** So zerschneidet keine Zonengrenze ein Biom.
-- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet seit G2 mit 1.000. Die Zellgröße der Inseln und die Breite der Biom-Länder in Zone 2 und 3 werden mit den Inseln neu beurteilt.
+- **Die Zellgröße 1.000 ist ein Versuch.** Mit 1.600 wirkten die Biome dem Autor im Prototyp sehr groß. Die Skizze in `docs/weltkarte/` rechnet seit G2 mit 1.000. Die Inseln sind mit Zellen von 800 gebaut; ob das passt, und die Breite der Biom-Länder in Zone 2 und 3, beurteilt der Autor an Karte und Spiel.
 - **Der Rand einer Zone schwingt.** Die Zone einer Zelle folgt aus dem Abstand ihrer Mitte zum Start; dieser Abstand wird mit einem weiten Rauschen um bis zu 22 % gestreckt oder gestaucht. Die Zahlen der Tabelle sind deshalb Mittelwerte.
 - **Die Heimatrichtungen hängen vom Startwert der Welt ab.** In jeder Welt liegt ein Biom der Zonen 2 und 3 in einer anderen Himmelsrichtung. Eine Zelle weicht von der Heimatrichtung ihres Bioms meist um weniger als 20 Grad ab, einzelne mehr; das sind die Ausreißer.
-- **Auf dem Meer ist die Zone 0.** Das Meer meldet sich als eigenes Biom `ocean`.
+- **Auf dem Meer ist die Zone 0, auf den Inseln die Zone 4.** Das Meer meldet sich als eigenes Biom `ocean`.
+- **Die Inseln liegen auf einem eigenen, feineren Raster** in einem Ring von 14.000 bis 17.500 Blöcken um den Start, dessen Rand schwingt wie der der Zonen. Zwischen dem Kontinent und den nächsten Inseln liegen damit etwa 2.000 bis 3.000 Blöcke offenes Meer. Eine Zelle des Rings ist Insel, wo ein weites Rauschen hoch steht; so entstehen Inselgruppen mit offenem Meer dazwischen. Im Startwert `wanderlore` sind es gut 160 Inselzellen. Wie dicht die Inseln liegen, ist ein Regler und ein Vorschlag von Claude.
+- **Vier Inselzellen sind Vulkaninseln,** in gleichen Abständen rund um den Ring verteilt, die erste an einer Stelle, die vom Startwert abhängt. Gebaut ist nur ihre Form: ein Kegel von knapp 100 Blöcken Höhe mit einem Krater. Das Besteigen soll schwierig sein: Auf einem Sockel, der 30 Blöcke ansteigt, steht ein glatter, steiler Kegel, der auf etwa 75 Blöcken Strecke weitere 65 gewinnt. Ein Rauschen macht ihn je nach Seite schmaler oder breiter; manche Flanken sind zu steil zum Hinauflaufen, andere lassen einen Weg. Stufen und Absätze hat der Kegel nicht; einen Aufbau in Stufen hat der Autor am 23.11.2026 verworfen. Schlot und Siegel kommen mit G5.
 - **An Land gibt es nur eine Zellgröße.** Nur die Inseln haben kleinere Zellen, weil sie das Festland nie berühren.
 - **Biome werden fest ausgeteilt.** Alle Zellen einer Zone werden aufgezählt und die Biome wie Karten verteilt. Jedes Biom bekommt gleich viele Zellen, keines fehlt.
 - **Zone 1 wird reihum ausgeteilt**, damit alle Grundzutaten nah am Start liegen.
@@ -142,7 +144,7 @@ Die Flüsse mäandern, weil ihr Rauschen an einer um bis zu 100 Blöcke verschob
 
 Die Waldseen von Old Wood entstehen aus einem eigenen Wasserspiegel des Bioms, 24 über dem Meer: Jede Mulde, die tiefer liegt, füllt sich bis dorthin. So liegen die Seen in Gruppen in den Niederungen, und die höheren Gegenden bleiben trocken. Das Ufer liegt von selbst einen Block über dem Wasser. Zur Biomgrenze hin fällt das Land zum Nachbarn ab; deshalb hält der Generator den äußersten Streifen des Bioms als natürlichen Rand über dem Wasserspiegel, und jenseits davon gibt es dieses Wasser nicht. Am Wasser gilt in allen drei Biomen: höchstens ein Block hinab.
 
-Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Die Höhenformel eines Bioms kann Stellen markieren, die an der Wasserlinie einen anderen Block bekommen; so entstehen die Kiesbänke. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern. Jedes Biom nennt, ob es Findlinge und Flecken hat, wie häufig und wie groß, und ab welcher Höhe über dem Wasser.
+Jedes Biom hat im Prototyp eine Deckschicht aus einem Block, dazu je einen für Ufer und Gewässergrund. Unter der Deckschicht liegen auf ebenem Boden drei Blöcke Füllung, etwa Erde, darunter Stein. An einem steilen Hang reicht die Füllung so tief, wie der Hang zur nächsten Säule abfällt, damit die Wand nicht aus Streifen von blankem Stein besteht. Nur an manchen Stellen schaut der Stein heraus, in unregelmäßigen Flecken von einigen Blöcken Breite. Rechteckige Flecken wirkten künstlich. Die Höhenformel eines Bioms kann Stellen markieren, die an der Wasserlinie einen anderen Block bekommen; so entstehen die Kiesbänke. Findlinge sind eigene Körper aus anderen Blöcken, und Flecken ersetzen die Deckschicht an verstreuten Stellen, ohne die Höhe zu ändern. Jedes Biom nennt, ob es Findlinge und Flecken hat, wie häufig und wie groß, und ab welcher Höhe über dem Wasser.
 
 Gras gibt es in Old Wood nur auf den Hügelkuppen, als Kappen von meist 20 bis 80 Blöcken Breite. Es ist leicht fleckig: Etwa jeder zehnte Block bleibt Nadelstreu, und den Hang hinab dünnt das Gras aus. Sein Block ist Waldgras: das Gras von Minetest Game in einem dunkleren, kühleren Grün. Die Farbe entsteht erst im Spiel aus dessen Textur, eine fremde Datei ist dafür nicht übernommen. Lage und Sprenkel hat der Autor am 22.11.2026 festgelegt und den Farbton bestätigt.
 
@@ -156,7 +158,7 @@ Reed Meres hat die ersten eigenen Blöcke von Wanderlore: Sumpfgras, zwei Sumpfm
 - **Die Mischzone ist schmal**, 60 Blöcke je Seite. Mit 120 war der Übergang dem Autor zu breit; er hat ihn am 22.11.2026 halbiert. Das Mischen der Grundhöhen und das Ausblenden der Form sind seit G1 gebaut.
 - **Oberfläche und Bewuchs** wechseln gesprenkelt über etwa 20 Blöcke; die Breite hängt an der Mischzone und hat sich mit ihr halbiert. Für die Oberfläche ist das seit G1 gebaut: Nahe der Grenze trägt eine Stelle mal die Oberfläche des einen, mal die des anderen Bioms, teils Block für Block, teils in kleinen Gruppen.
 - **Die Grenzlinie ist unregelmäßig.** Eine zweite, feine Verschiebung von bis zu 24 Blöcken gibt ihr Buchten und Zungen.
-- **Küste:** je Biom Strand oder Steilküste.
+- **Küste:** je Biom Strand oder Steilküste. Am Strand senkt sich das Land auf eine Stufe 1 bis 2 über dem Wasser, die auf knapp 40 Blöcken Breite flach ins Wasser ausläuft, etwa zur Hälfte trocken; sie ist aus Sand, über und unter Wasser. Dahinter sinkt der Grund zum Meeresboden. An der Steilküste hält das Land seine Höhe fast bis zur Grenze und fällt dann auf wenigen Blöcken ins tiefe Wasser. Wo ein Biom mit Strand und eines mit Steilküste am Meer zusammentreffen, gehen die beiden Formen ineinander über. Welcher Platzhalter welche Küste hat, steht in der Tabelle der Platzhalter und ist ein Vorschlag von Claude; die drei Biome von Zone 1 berühren das Meer nicht.
 
 ### Erze und Tiefe
 
@@ -201,19 +203,23 @@ Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
 
-**Platzhalter.** Damit die Weltkarte gebaut werden kann, bevor es die äußeren Biome gibt, stehen im Generator Platzhalter: fünf für Zone 2 (`Zone 2 A` bis `E`) und vier für Zone 3 (`Zone 3 A` bis `D`). Jeder hat eine einfache Landschaftsform und eine Oberfläche aus Blöcken von Minetest Game, an der man ihn erkennt. Sie sind Vorschläge von Claude ohne Anspruch und halten nur den Platz frei. Der Autor arbeitet die echten Biome danach einzeln aus, wie bei Zone 1; die Skizzen der folgenden Tabelle sind dabei der Ausgangspunkt. Das hat der Autor am 22.11.2026 entschieden.
+**Platzhalter.** Damit die Weltkarte gebaut werden kann, bevor es die äußeren Biome gibt, stehen im Generator Platzhalter: fünf für Zone 2 (`Zone 2 A` bis `E`), vier für Zone 3 (`Zone 3 A` bis `D`) und drei für die Inseln (`Island A` bis `C`). Jeder hat eine einfache Landschaftsform und eine Oberfläche aus Blöcken von Minetest Game, an der man ihn erkennt. Sie sind Vorschläge von Claude ohne Anspruch und halten nur den Platz frei. Der Autor arbeitet die echten Biome danach einzeln aus, wie bei Zone 1; die Skizzen der folgenden Tabelle sind dabei der Ausgangspunkt. Das hat der Autor am 22.11.2026 entschieden.
 
-| Platzhalter | Form | Oberfläche |
-| --- | --- | --- |
-| Zone 2 A | hohe, runde Hügel | Gras |
-| Zone 2 B | Terrassen in Stufen von 8 | Regenwaldboden |
-| Zone 2 C | Dünen | Wüstensand |
-| Zone 2 D | Hochland | Schnee auf Erde |
-| Zone 2 E | Ebene mit tiefen, runden Senken | Kies |
-| Zone 3 A | Hochfläche mit Schluchten | roter Wüstenstein |
-| Zone 3 B | Nadeln auf einer Eisfläche | Eis |
-| Zone 3 C | schroffes Gebirge | Dauerfrostboden mit Steinen |
-| Zone 3 D | Tafelberge mit steilen Flanken | Wüstensandstein |
+| Platzhalter | Form | Oberfläche | Küste |
+| --- | --- | --- | --- |
+| Zone 2 A | hohe, runde Hügel | Gras | – |
+| Zone 2 B | Terrassen in Stufen von 8 | Regenwaldboden | – |
+| Zone 2 C | Dünen | Wüstensand | – |
+| Zone 2 D | Hochland | Schnee auf Erde | – |
+| Zone 2 E | Ebene mit tiefen, runden Senken | Kies | – |
+| Zone 3 A | Hochfläche mit Schluchten | roter Wüstenstein | Steilküste |
+| Zone 3 B | Nadeln auf einer Eisfläche | Eis | Strand |
+| Zone 3 C | schroffes Gebirge | Dauerfrostboden mit Steinen | Steilküste |
+| Zone 3 D | Tafelberge mit steilen Flanken | Wüstensandstein | Strand |
+| Island A | niedrig und eben, mit Dünen | Sand | Strand |
+| Island B | grüne Hügel | Regenwaldboden | Strand |
+| Island C | felsige Tafel | heller Sandstein | Steilküste |
+| Vulkaninsel | steiler Kegel mit Krater auf flachem Sockel | Obsidian | Strand |
 
 | Arbeitsname | Zone | Landschaft | Besonderheit |
 | --- | --- | --- | --- |
@@ -391,7 +397,7 @@ Klänge und Musik kommen zunächst als vorläufige Platzhalter ins Spiel. Die Mu
 
 Nicht zum Modpack gehört der Hilfs-Mod `wl_dev` unter `devmods/`. Er dient nur der Entwicklung: Er setzt Tester auf die Oberfläche, springt mit `/wl_goto` in ein Biom, misst den Generator und stellt die Kamera für Screenshots. Die Skripte binden ihn nur in die Testwelten ein. Auch er fragt `wl_world`, wo etwas liegt.
 
-`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone (1 bis 3, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
+`wl_world` beantwortet bisher fünf Fragen: welches Biom, welche Zone (1 bis 3, auf den Inseln 4, auf dem Meer 0), wo ein sicherer Ort an der Oberfläche liegt, wo die nächste Zelle eines Bioms liegt und wo der nächste Waldsee liegt.
 
 Regel für alle: Nur `wl_world` weiß, wo etwas liegt. Die anderen Mods melden ihre Kräuter, Erze, Monster und Bauwerke dort mit Biom und Zone an und fragen sonst nur „welches Biom, welche Zone?“.
 

@@ -2,7 +2,7 @@
 
 Ein Modpack für Luanti auf Basis von Minetest Game, in dem man durch Entdecken wächst statt durch Graben.
 
-Das Projekt ist in Entwicklung. Es gibt den Generator mit einem Kontinent aus drei Zonen: drei ausgearbeitete Biome im Startland, außen herum neun Platzhalter, noch ohne Bewuchs, Erze, Höhlen und Inseln. Vom Spiel selbst ist noch nichts gebaut.
+Das Projekt ist in Entwicklung. Es gibt den Generator mit einem Kontinent aus drei Zonen: drei ausgearbeitete Biome im Startland, außen herum neun Platzhalter, dahinter das Meer mit Inselgruppen und vier Vulkaninseln, noch ohne Bewuchs, Erze und Höhlen. Vom Spiel selbst ist noch nichts gebaut.
 
 - [Konzept](docs/konzept.md)
 - [Arbeitsplan](docs/arbeitsplan.md)

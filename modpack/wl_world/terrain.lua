@@ -6,7 +6,7 @@
 -- the forms fade out.
 
 local layout, biomes = wl_world.layout, wl_world.biomes
-local hash = wl_world.hash
+local hash, smooth = wl_world.hash, wl_world.smooth
 local floor, sqrt, min, max = math.floor, math.sqrt, math.min, math.max
 
 local terrain = {}
@@ -84,17 +84,39 @@ local function get_point_noise()
 	return point_noise
 end
 
--- Height above sea level from the shares of the biomes at one place.
--- form(b) returns the form of biome b there.
-local function mix(weights, form)
-	local height = 0
-	for b = 1, nbiomes do
-		local w = weights[b]
-		if w > 0 then
-			height = height + w * biomes[b].base + w ^ FADE * form(b)
-		end
+-- The coast. Where land and sea share a place, the height is not simply
+-- mixed: each land biome says whether it ends in a beach or in a cliff.
+--
+-- land and sea are the heights above sea level that the land and the sea
+-- would have alone, sea_share is the share of the sea at this place, and
+-- cliff says how much of the land wants a cliff, from 0 to 1.
+--
+-- Beach: the land comes down to a shelf just above the water, the shelf
+-- slopes into the water, and from there the ground sinks to the sea bed.
+-- Cliff: the land keeps its height almost to the border and then drops.
+local BEACH = 1.5       -- height of the shelf above the water
+local function coast(land, sea, sea_share, cliff)
+	local beach
+	if sea_share < 0.3 then
+		beach = land + (BEACH - land) * smooth(sea_share / 0.3)
+	elseif sea_share < 0.55 then
+		beach = BEACH - 2 * BEACH * (sea_share - 0.3) / 0.25
+	else
+		beach = -BEACH + (sea + BEACH) * smooth((sea_share - 0.55) / 0.4)
 	end
-	return height
+	if cliff <= 0 then
+		return beach
+	end
+	local steep = land + (sea - land) * smooth((sea_share - 0.3) / 0.1)
+	return beach + (steep - beach) * cliff
+end
+-- Up to this height above the water a beach is sand.
+local BEACH_SAND = 2.5
+
+local ocean = wl_world.biome_by_name.ocean.index
+local cliffs = {}
+for b, biome in ipairs(biomes) do
+	cliffs[b] = biome.coast == "cliff" and 1 or 0
 end
 
 -- Value of noise k of biome b at a single place, bent if the biome says so.
@@ -116,18 +138,34 @@ local point_weights, point_pos = {}, {x = 0, y = 0}
 local function formula(x, z)
 	local noise = get_point_noise()
 	point_pos.x, point_pos.y = x, z
-	local own = layout.weights(
+	local weights = point_weights
+	local own, distance = layout.weights(
 		x + WARP * noise.warp[1]:get_2d(point_pos) + RIPPLE * noise.warp[3]:get_2d(point_pos),
 		z + WARP * noise.warp[2]:get_2d(point_pos) + RIPPLE * noise.warp[4]:get_2d(point_pos),
-		point_weights)
-	local own_mark
-	local height = mix(point_weights, function(b)
-		local form, mark = biomes[b].form(read(noise, b, 1, point_pos),
-			read(noise, b, 2, point_pos), noise[b][3] and read(noise, b, 3, point_pos))
-		if b == own then own_mark = mark end
-		return form
-	end)
-	return SEA + height, own, point_weights[own], own_mark
+		weights)
+	local sea_share = weights[ocean]
+	local scale = sea_share < 1 and 1 / (1 - sea_share) or 0
+	local land, sea, cliff, own_mark = 0, 0, 0, nil
+	for b = 1, nbiomes do
+		local w = weights[b]
+		if w > 0 then
+			local biome = biomes[b]
+			local form, mark = biome.form(read(noise, b, 1, point_pos),
+				read(noise, b, 2, point_pos), noise[b][3] and read(noise, b, 3, point_pos),
+				distance)
+			if b == ocean then
+				sea = biome.base + form
+			else
+				w = w * scale
+				land = land + w * biome.base + w ^ FADE * form
+				cliff = cliff + w * cliffs[b]
+			end
+			if b == own then own_mark = mark end
+		end
+	end
+	local height = sea_share <= 0 and land or sea_share >= 1 and sea
+		or coast(land, sea, sea_share, cliff)
+	return SEA + height, own, weights[own], own_mark
 end
 
 -- A biome with a water table has standing water in every hollow below a
@@ -166,6 +204,7 @@ end
 local map_noise, map_size
 local warp_x, warp_z, ripple_x, ripple_z = {}, {}, {}, {}
 local form_a, form_b, form_c, share = {}, {}, {}, {}
+local dists = {}
 for b = 1, nbiomes do
 	form_a[b], form_b[b], form_c[b], share[b] = {}, {}, {}, {}
 end
@@ -238,9 +277,10 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 	for z = minz, minz + size - 1 do
 		for x = minx, minx + size - 1 do
 			i = i + 1
-			local own = layout.weights(x + WARP * warp_x[i] + RIPPLE * ripple_x[i],
+			local own, distance = layout.weights(x + WARP * warp_x[i] + RIPPLE * ripple_x[i],
 				z + WARP * warp_z[i] + RIPPLE * ripple_z[i], weights, near, nnear)
 			owners[i] = own
+			dists[i] = distance
 			for k = 1, nnear do
 				local b = near[k]
 				local w = weights[b]
@@ -281,19 +321,39 @@ function terrain.chunk(minx, minz, size, heights, owners, covers, levels, marks)
 		end
 	end
 
+	local sea_shares = present[ocean] and share[ocean]
 	for column = 1, size * size do
-		local height = 0
 		local own = owners[column]
+		local sea_share = sea_shares and sea_shares[column] or 0
+		local scale = sea_share < 1 and 1 / (1 - sea_share) or 0
+		local land, sea, cliff = 0, 0, 0
 		for k = 1, nnear do
 			local b = near[k]
 			local w = share[b][column]
 			if w > 0 then
 				local biome = biomes[b]
-				local form, mark = biome.form(form_a[b][column], form_b[b][column], form_c[b][column])
-				height = height + w * biome.base + w ^ FADE * form
+				local form, mark = biome.form(form_a[b][column], form_b[b][column],
+					form_c[b][column], dists[column])
+				if b == ocean then
+					sea = biome.base + form
+				else
+					w = w * scale
+					land = land + w * biome.base + w ^ FADE * form
+					cliff = cliff + w * cliffs[b]
+				end
 				if b == own then
 					marks[column] = mark
 				end
+			end
+		end
+		local height = land
+		if sea_share >= 1 then
+			height = sea
+		elseif sea_share > 0 then
+			height = coast(land, sea, sea_share, cliff)
+			-- A beach is sand, above the water and below it.
+			if cliff < 0.5 and height <= BEACH_SAND then
+				covers[column] = ocean
 			end
 		end
 		heights[column], levels[column] = water_table(biomes[own], share[own][column], SEA + height)
