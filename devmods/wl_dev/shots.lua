@@ -96,7 +96,7 @@ end
 for _, place in ipairs(places) do
 	if place.name == "volcano" then
 		views[#views + 1] = {name = "volcano_side",
-			pos = vector.offset(place.pos, -260, 40, -260), yaw = -45, pitch = 0}
+			pos = vector.offset(place.pos, -150, 20, -150), yaw = -45, pitch = -8}
 	end
 end
 

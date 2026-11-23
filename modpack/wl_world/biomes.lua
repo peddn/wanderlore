@@ -239,18 +239,16 @@ wl_world.biomes = {
 		zone = 4,
 		base = 4,
 		noises = {{120, 3, 3401}, {30, 2, 3402}},
-		-- In some sectors the flank is a smooth ramp, in others it breaks
-		-- into walls of rock 16 high with ledges between them. The first
-		-- noise says where, so a climber has to look for a way up.
+		-- A foot that rises 30 nodes, and on it a steep cone that rises 65
+		-- more over a run of about 75. The first noise narrows or widens
+		-- the cone, so some flanks are too steep to walk up and others
+		-- give a way.
 		form = function(a, b, _, distance)
-			local cone = math.max(0, 1 - distance / 270)
 			local crater = math.max(0, 1 - distance / 34)
-			local height = 95 * cone ^ 1.4
-			local level = height / 16
-			local ledge = floor(level)
-			local walls = 16 * (ledge + smooth((level - ledge - 0.82) / 0.18))
-			height = height + (walls - height) * smooth((a + 0.15) / 0.3)
-			return height - 45 * smooth(crater) + 3 * b * (1 - crater)
+			local run = distance * (1 + 0.3 * a)
+			local foot = 30 * math.max(0, math.min(1, (270 - run) / 150))
+			local cone = 65 * smooth((120 - run) / 75)
+			return foot + cone - 45 * smooth(crater) + 3 * b * (1 - crater)
 		end,
 		top = "default:obsidian",
 		filler = "default:obsidian",

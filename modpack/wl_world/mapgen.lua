@@ -21,16 +21,31 @@ local c_boulder_moss = core.get_content_id("default:mossycobble")
 
 -- The share of a meadow that is grass where the biome asks for all of it.
 local MEADOW = 0.8
-local hash = wl_world.hash
+local hash, smooth = wl_world.hash, wl_world.smooth
 
 -- Depth of the filler below the surface node on level ground.
 local FILLER = 3
 -- On a steep slope the filler reaches down as far as the slope drops to
 -- the next column, at most this deep, so that the side of the slope shows
--- filler. In this share of the clumps of ROCK x ROCK columns it stays
--- thin, and the stone below shows.
+-- filler. Here and there the stone below still shows, in irregular
+-- patches about ROCK nodes wide; a higher ROCK_LEVEL means fewer of them.
 local FILLER_MAX = 48
-local ROCK, ROCK_SHARE = 5, 0.2
+local ROCK, ROCK_LEVEL = 7, 0.6
+
+-- Smooth noise in space from the hash alone, with a little grain, to
+-- decide where the stone shows. Returns a number around 0..1.
+local function rock(x, y, z)
+	local gx, gy, gz = x / ROCK, y / ROCK, z / ROCK
+	local i, j, k = floor(gx), floor(gy), floor(gz)
+	local fx, fy, fz = smooth(gx - i), smooth(gy - j), smooth(gz - k)
+	local a, b = hash(i, k, 500 + j), hash(i + 1, k, 500 + j)
+	local c, d = hash(i, k + 1, 500 + j), hash(i + 1, k + 1, 500 + j)
+	local low = (a + (b - a) * fx) * (1 - fz) + (c + (d - c) * fx) * fz
+	a, b = hash(i, k, 501 + j), hash(i + 1, k, 501 + j)
+	c, d = hash(i, k + 1, 501 + j), hash(i + 1, k + 1, 501 + j)
+	local high = (a + (b - a) * fx) * (1 - fz) + (c + (d - c) * fx) * fz
+	return low + (high - low) * fy + 0.08 * (hash(x * 31 + y, z, 49) - 0.5)
+end
 
 local skins = {}
 for b, biome in ipairs(biomes) do
@@ -118,7 +133,7 @@ local function generate(vmanip, minp, maxp)
 			local north = heights[z > minp.z and column - size or column + size]
 			local south = heights[z < maxp.z and column + size or column - size]
 			local depth = height - min(west, east, north, south)
-			if depth <= FILLER or hash(floor(x / ROCK), floor(z / ROCK), 49) < ROCK_SHARE then
+			if depth <= FILLER then
 				depth = FILLER
 			elseif depth > FILLER_MAX then
 				depth = FILLER_MAX
@@ -131,8 +146,13 @@ local function generate(vmanip, minp, maxp)
 				vi = vi + ystride
 			end
 			local filler_top = min(height - 1, maxy)
-			for _ = max(miny, height - depth), filler_top do
-				data[vi] = skin.filler
+			for y = max(miny, height - depth), filler_top do
+				-- Deep filler is the side of a slope.
+				if y < height - FILLER and rock(x, y, z) > ROCK_LEVEL then
+					data[vi] = c_stone
+				else
+					data[vi] = skin.filler
+				end
 				vi = vi + ystride
 			end
 			if height >= miny and height <= maxy then
