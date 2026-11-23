@@ -30,6 +30,17 @@ Nicht aufgenommen sind Biome, die nur in bestimmten Höhen vorkommen: Sümpfe, M
 
 Der Eindruck aus dem Katalog war, dass viele Biome langweilig wirken. Grund: In Luantis Generatoren hat das Biom keinen Einfluss auf die Landschaftsform. Daraus entstand die Entscheidung für eigene Biome mit eigener Form.
 
+## Bäume und Pflanzen
+
+Am 23.11.2026 wurde ContentDB nach Mods mit Bäumen und Pflanzen durchsucht: 540 Treffer über Stichwörter und Schlagwörter, davon rund 50 mit Pflanzen. 26 sind im [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog) mit fester Version und Lizenz eingetragen und dort im Spiel zu sehen, mit 1.543 Blöcken und 487 Einträgen unter den Bäumen. Die Liste steht in dessen `sources.toml` und README.
+
+- Die größten Quellen: Extra Biomes, Ethereal, Everness, Wilhelmines Natural Biomes, Aotearoa, More Trees, Plantlife.
+- Nach dem Namen fallen etwa 200 Bäume in 20 Familien, darunter Kiefer (37), Dschungelbaum (22), Obstbaum (19), Palme (15), Buche (11); Birken sind es 6. Rund 100 Bäume tragen keinen bekannten Namen, fast die Hälfte davon aus Aotearoa.
+- Die Lizenzen im Katalog gelten für die Quelle als Ganzes, wie ContentDB sie nennt. Vor einer Übernahme ist jede Datei einzeln zu prüfen.
+- Aotearoa nennt in seiner README LGPL 2.0 oder später für den Code und CC BY-SA 3.0 für die Texturen. Seine Baumformen sind Dateien ohne eigene Angabe; ob sie als Code oder als Medien gelten, steht dort nicht.
+- Australia ist gestrichen: Der Autor will es nicht, und seine Lizenzangabe „AGPL-2.0“ gibt es so nicht.
+- Cool Trees steht nicht auf ContentDB und wurde nicht gefunden.
+
 ## Monster und Tiere
 
 Alle Quellen sind im [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog) mit fester Version eingetragen und dort im Spiel zu sehen.

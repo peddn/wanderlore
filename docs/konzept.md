@@ -196,12 +196,33 @@ Die Biome sind eigene, aus vorhandenem Material neu zusammengesetzt. Jedes ist e
 
 Jedes Biom hat außerdem etwas, das es nur dort gibt:
 
-- **eine eigene Holzart**
+- **eine eigene Holzart**, siehe „Bäume und Holz“
 - **eine Feldfrucht**
 - **eine Kochzutat**
 - **eine Zutat für die Alchemie**
 
 Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Holzarten, Feldfrüchte, Kochzutaten und Zutaten für die Alchemie.
+
+### Bäume und Holz
+
+Der Autor hat das am 23.11.2026 entschieden. Gebaut ist davon noch nichts.
+
+Ein Baum besteht aus Form und Material. Die Form ist eine Bauanleitung und kostet keinen Block; eine Holzart kann viele Formen haben, jung, alt, riesig. Das Material kostet Blöcke, und viele neue Blöcke sind die Hauptgefahr. Deshalb ist es knapp gehalten:
+
+- **Eine Holzart hat drei eigene Blöcke:** Stamm, Laub und Setzling.
+- **Bretter gehören nicht der Holzart, sondern einer Holzkategorie.** Jede Holzart gehört zu genau einer Kategorie. Wer Stämme zu Brettern verarbeitet, bekommt die Bretter der Kategorie.
+- **Alles aus Brettern hängt an der Kategorie,** nicht an der Holzart: Treppen, Platten, Zäune, Tore.
+- **Eine Kategorie ist vorerst nur eine Farbe.** Sie ändert keine Werte.
+- **Die Kategorien sind an die Zonen gebunden,** je zwei: Zone 1, Zone 2, Zone 3, Inseln und Unterwelt. Das sind zehn. Eine neue Kategorie ist damit selbst eine Entdeckung.
+- **Die Bretter kommen zuerst aus Minetest Game.** Es bringt fünf mit, jeweils schon mit Treppen, Platten, Zäunen und Toren. Bretter aus anderen Quellen kommen ebenfalls in Betracht; für zehn Kategorien braucht es ohnehin mindestens fünf weitere. Welche Bretter zu welcher Kategorie werden und wie die Kategorien heißen, ist offen.
+- **Alle Hölzer werden auf dieselbe Weise angemeldet,** mit denselben Gruppen, Klängen, Härten und Rezepten. So verhalten sich alle Bäume gleich: fällen, Laub zerfällt, Setzling.
+- **Von fremden Mods kommen nur Texturen und Formen.** Eine fremde Bauanleitung wird auf die eigenen Blöcke umgeschrieben; die Blöcke des fremden Mods kommen nicht ins Spiel.
+
+Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke. Mit eigenen Brettern und allem daraus je Holzart wären es etwa 180.
+
+Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu klären. Offen ist auch, ob Laub in mehreren Farbtönen aus einem Block entstehen kann, über eine Farbpalette; das ist nicht geprüft.
+
+Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert.
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
 

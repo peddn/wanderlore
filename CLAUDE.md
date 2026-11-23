@@ -16,7 +16,7 @@ Die Skizzen unter `docs/weltkarte/` und `docs/landschaft/` sind Diskussionshilfe
 
 Verwandte Repositories:
 
-- [`peddn/wanderlore-catalog`](https://github.com/peddn/wanderlore-catalog): zeigt 200 Monster und Tiere aus acht Mods in Luanti, zum Auswählen nach Nummer. Sein Aufbau mit `sources.toml`, `scripts/setup.sh` und `scripts/run.sh` ist das Vorbild für die Skripte hier.
+- [`peddn/wanderlore-catalog`](https://github.com/peddn/wanderlore-catalog): zeigt 200 Monster und Tiere aus acht Mods in Luanti, zum Auswählen nach Nummer. Seit dem 23.11.2026 hat er eine zweite Welt mit Pflanzen aus 26 Quellen, auf dem Zweig `catalog/plants`: Blöcke auf Tafeln, Bäume in Reihen je Quelle und nach Art, Bodenpflanzen als Beete. `scripts/run.sh plants` startet sie. Sein Aufbau mit `sources.toml`, `scripts/setup.sh` und `scripts/run.sh` ist das Vorbild für die Skripte hier.
 - [`peddn/luanti-education-platform`](https://github.com/peddn/luanti-education-platform) (LEP): Wanderlore muss in dessen Welten laufen können, hängt aber nicht davon ab. Die Vorgaben stehen im Konzept.
 
 ## Stand
@@ -89,7 +89,7 @@ Das Paket bringt das Programm `luanti` mit. Selbst kompilieren war nicht nötig.
 
 Der Host `ppa.launchpadcontent.net` muss im Netzwerk der Cloud-Umgebung erlaubt sein. In der Umgebung „wanderlore“ ist er das, in der Standardumgebung nicht.
 
-**Erreichbar** waren GitHub und Codeberg per `git clone`. ContentDB (`content.luanti.org`) war aus der Shell nicht erreichbar, nur über das Werkzeug zum Abrufen von Webseiten.
+**Erreichbar** waren GitHub und Codeberg per `git clone`. ContentDB (`content.luanti.org`) ist seit dem 23.11.2026 in der Umgebung „wanderlore“ freigegeben und aus der Shell erreichbar, auch über seine Schnittstelle unter `/api/packages/`.
 
 **Eigenes Benutzerverzeichnis.** Luanti legt alles unter `$HOME/.minetest` ab. Mit `HOME=<Ordner>` vor dem Aufruf bleibt eine Testumgebung für sich.
 
@@ -127,6 +127,14 @@ DISPLAY=:9 import -window root bild.png
 - Aus dem Rückruf von `core.emerge_area` nicht gleich die nächste Anfrage stellen, sondern erst mit `core.after(0, ...)` herausspringen. Ohne das blieb der Server in einem Lauf hängen, in dem zugleich der Generator scheiterte; die Ursache ist nicht einzeln geprüft.
 
 ## Was der Autor zuletzt entschieden hat
+
+Am 23.11.2026, für den Bewuchs in M4:
+
+- M4 beginnt mit dem Bewuchs. Vorher wählt der Autor Pflanzen und Bäume im Katalog aus; gebaut ist am Bewuchs noch nichts.
+- Eine Holzart hat drei Blöcke: Stamm, Laub, Setzling. Bretter und alles daraus gehören einer Holzkategorie. Zehn Kategorien, je zwei für Zone 1, 2, 3, Inseln und Unterwelt, vorerst nur als Farbe. Näheres im Konzept unter „Bäume und Holz“.
+- Die Bretter von Minetest Game sind die ersten Kategorien; Bretter anderer Quellen kommen auch in Betracht.
+- Australia ist als Quelle gestrichen. Aotearoa bleibt wegen seiner Formen.
+- ContentDB und Codeberg sind in der Umgebung „wanderlore“ freigegeben.
 
 Am 23.11.2026, für M3:
 
