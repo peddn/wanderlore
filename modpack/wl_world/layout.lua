@@ -13,7 +13,7 @@ local floor, sqrt, atan2, pi = math.floor, math.sqrt, math.atan2, math.pi
 local layout = {}
 wl_world.layout = layout
 
-layout.CELL = 1000   -- size of a cell in nodes
+layout.CELL = 700    -- size of a cell in nodes
 layout.WARP = 170    -- how far noise shifts a position before the lookup
 layout.RIPPLE = 24   -- a second, finer shift that makes borders irregular
 layout.SPECKLE = 0.06 -- how far the surfaces of two biomes mix at a border
