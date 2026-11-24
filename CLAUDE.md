@@ -137,6 +137,7 @@ Am 23.11.2026, für den Bewuchs in M4:
 - Zone 1 hat die Kategorien Weichholz, mit den Brettern `EB25` aus Extra Biomes, und Hartholz, mit den Brettern `EB33`. Skizze der Baumarten: Blossom Downs mit Birke und selten Buche; Old Wood mit Eiche häufig, Ahorn mäßig, Buche selten; Reed Meres mit Weide und Erle, beide Weichholz. Baumarten dürfen in mehreren Biomen stehen.
 - Der Autor wählt Stamm und Laub getrennt von den Formen und kombiniert sie. Der Katalog zeigt die Kombination in seinem Bereich „Auswahl“ (`/auswahl`), beschrieben in dessen `mods/wl_catalog/selection.lua`.
 - Beim Setzen wird jede Baumform leicht abgewandelt, berechnet statt gezeichnet. Baut man am aufrechten Stamm eine ganze Schicht ab, verschwindet alles darüber von unten nach oben, der Stumpf darunter bleibt; wo man schneidet, ist frei: Stamm 1 zu 1, Laub 1 zu 2 (auch hängendes Laub), Setzlinge mit 1 zu 20 je Laub-Block. Die Gegenstände fallen senkrecht von dort, wo der Block war. Beides steht im Konzept unter „Bäume und Holz“ und ist noch nicht gebaut.
+- Versuch seit dem 24.11.2026: jede Baumart mit eigenem Verfahren, von der Elder-Form zurück zum Jungbaum gebaut, statt übernommener Formen. Im Katalog an der Birke erprobt (`species.lua`, `treekit.lua`); ob das der Weg für alle Arten wird, ist offen. Das Bearbeiten von Formen im Spiel und einen einzigen Baukasten für alle Arten hat der Autor abgelehnt.
 - Australia ist als Quelle gestrichen. Aotearoa bleibt wegen seiner Formen.
 - ContentDB und Codeberg sind in der Umgebung „wanderlore“ freigegeben.
 
