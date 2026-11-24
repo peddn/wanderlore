@@ -222,7 +222,17 @@ Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke. Mit eigen
 
 Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu klären. Offen ist auch, ob Laub in mehreren Farbtönen aus einem Block entstehen kann, über eine Farbpalette; das ist nicht geprüft.
 
-Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert.
+**Gewählte Baumarten.** Die Nummern sind die des Katalogs.
+
+| Baumart | Biom | Stamm | Laub | Formen | Kategorie |
+| --- | --- | --- | --- | --- | --- |
+| Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | fünf: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder schlank (13 × 21) und Elder breit (17 × 20) | offen |
+
+Die beiden Elder-Formen der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein Stamm von zwei mal zwei Blöcken, der oben einfach wird, Äste mit je einer Krone und Laub, das vom Rand der Kronen herabhängt. Sie sind etwa anderthalbmal so groß wie die große Form; ein doppelt so großer erster Entwurf war dem Autor zu viel. Der Autor hat alle fünf Formen am 24.11.2026 gewählt. Beschrieben sind sie in `mods/wl_catalog/selection.lua` des Katalogs.
+
+Offen bei der Birke: ob sie einen vierten Block bekommt, hängendes Laub aus demselben Laub in Strähnen, und der Setzling.
+
+Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
 
