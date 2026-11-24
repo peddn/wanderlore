@@ -238,6 +238,7 @@ Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu 
 | Baumart | Biom | Stamm | Laub | Formen | Kategorie |
 | --- | --- | --- | --- | --- | --- |
 | Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | vier: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder (17 × 20) | Weichholz |
+| Buche | Blossom Downs und Old Wood, in beiden selten | Stamm von `EB-T10`, die Buche aus Extra Biomes | Laub von `EB-T10` | vier: klein nach `BB-T5` (7 × 13), mittel nach `BB-T6` (7 × 16), groß nach `BB-T7` (7 × 20), Elder nach `BB-T32` (16 × 20) | Hartholz |
 
 Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen geschnitten. Es sitzt dort, wo das Laub am Rand einer Krone frei herabhängt, in allen vier Formen. Das ist eine Ausnahme von den drei Blöcken je Holzart, die der Autor am 24.11.2026 für die Birke gewählt hat.
 
@@ -245,9 +246,11 @@ Die Elder-Form der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein
 
 Der Setzling der Birke ist `EB86`, der Birkensetzling aus Extra Biomes.
 
+Die Buche hat der Autor am 24.11.2026 gewählt. Ihre Formen stammen aus Better Biomes: die drei kleineren sind dort Espen, die Elder-Form ist dort eine Eiche; alle vier tragen Stamm und Laub der Buche. Ihr Setzling ist `MG24`, der Espensetzling aus Minetest Game. Hängendes Laub hat sie nicht.
+
 **Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Hartholz bekommt `EB33`, die Eichenbretter aus Extra Biomes.
 
-**Die Baumarten von Zone 1,** wie der Autor sie am 24.11.2026 skizziert hat. Ausgearbeitet ist davon bisher nur die Birke.
+**Die Baumarten von Zone 1,** wie der Autor sie am 24.11.2026 skizziert hat. Ausgearbeitet sind davon bisher Birke und Buche.
 
 | Biom | Baumart | Kategorie | Häufigkeit |
 | --- | --- | --- | --- |
@@ -259,7 +262,7 @@ Der Setzling der Birke ist `EB86`, der Birkensetzling aus Extra Biomes.
 | Reed Meres | Weide | Weichholz | – |
 | Reed Meres | Erle | Weichholz | – |
 
-Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Die Erle hat der Autor als zweiten Sumpfbaum gewählt, auf Vorschlag von Claude. Sie ist Weichholz; Reed Meres hat damit kein Hartholz. Als Nächstes arbeitet er die Buche aus.
+Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Die Erle hat der Autor als zweiten Sumpfbaum gewählt, auf Vorschlag von Claude. Sie ist Weichholz; Reed Meres hat damit kein Hartholz. Ausgearbeitet sind Birke und Buche; es fehlen Eiche, Ahorn, Weide und Erle.
 
 Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 
