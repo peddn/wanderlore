@@ -238,7 +238,7 @@ Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu 
 | Baumart | Biom | Stamm | Laub | Formen | Kategorie |
 | --- | --- | --- | --- | --- | --- |
 | Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | vier: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder (17 × 20) | Weichholz |
-| Buche | Blossom Downs und Old Wood, in beiden selten | Stamm von `EB-T10`, die Buche aus Extra Biomes | Laub von `EB-T10` | vier: klein nach `BB-T5` (7 × 13), mittel nach `BB-T6` (7 × 16), groß als verkleinerte Elder-Form (13 × 20), Elder nach `BB-T32` mit längerem Stamm und Wurzeln (16 × 25) | Hartholz |
+| Buche | Blossom Downs und Old Wood, in beiden selten | Stamm `BB1` aus Better Biomes; zuerst war es der Stamm von `EB-T10` | Laub von `EB-T10`, die Buche aus Extra Biomes | vier: klein nach `BB-T5` (7 × 13), mittel nach `BB-T6` (7 × 16), groß als verkleinerte Elder-Form (13 × 20), Elder nach `BB-T32` mit längerem Stamm und Wurzeln (16 × 25) | Hartholz |
 
 Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen geschnitten. Es sitzt dort, wo das Laub am Rand einer Krone frei herabhängt, in allen vier Formen. Das ist eine Ausnahme von den drei Blöcken je Holzart, die der Autor am 24.11.2026 für die Birke gewählt hat.
 
