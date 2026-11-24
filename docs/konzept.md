@@ -196,12 +196,12 @@ Die Biome sind eigene, aus vorhandenem Material neu zusammengesetzt. Jedes ist e
 
 Jedes Biom hat außerdem etwas, das es nur dort gibt:
 
-- **eine eigene Holzart**, siehe „Bäume und Holz“
+- **eigene Baumarten**, von denen einzelne auch im Nachbarbiom stehen dürfen; siehe „Bäume und Holz“
 - **eine Feldfrucht**
 - **eine Kochzutat**
 - **eine Zutat für die Alchemie**
 
-Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Holzarten, Feldfrüchte, Kochzutaten und Zutaten für die Alchemie.
+Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Feldfrüchte, Kochzutaten und Zutaten für die Alchemie, und zwei bis drei Baumarten je Biom.
 
 ### Bäume und Holz
 
@@ -218,7 +218,7 @@ Ein Baum besteht aus Form und Material. Die Form ist eine Bauanleitung und koste
 - **Alle Hölzer werden auf dieselbe Weise angemeldet,** mit denselben Gruppen, Klängen, Härten und Rezepten. So verhalten sich alle Bäume gleich: fällen, Laub zerfällt, Setzling.
 - **Von fremden Mods kommen nur Texturen und Formen.** Eine fremde Bauanleitung wird auf die eigenen Blöcke umgeschrieben; die Blöcke des fremden Mods kommen nicht ins Spiel.
 
-Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke. Mit eigenen Brettern und allem daraus je Holzart wären es etwa 180.
+Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke, 30 kosten 90. Mit eigenen Brettern und allem daraus je Holzart wären es bei 15 schon etwa 180.
 
 Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu klären. Offen ist auch, ob Laub in mehreren Farbtönen aus einem Block entstehen kann, über eine Farbpalette; das ist nicht geprüft.
 
@@ -232,7 +232,23 @@ Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen g
 
 Die Elder-Form der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein Stamm von zwei mal zwei Blöcken, der oben einfach wird, Äste mit je einer Krone und hängendes Laub am Rand der Kronen. Sie ist etwa anderthalbmal so groß wie die große Form; ein doppelt so großer erster Entwurf war dem Autor zu viel, eine schlanke Variante hat er nicht gewählt. Beschrieben sind die Formen in `mods/wl_catalog/selection.lua` des Katalogs.
 
-Weichholz ist die erste benannte Holzkategorie. Welche Bretter sie bekommt, ist offen, ebenso der Setzling der Birke.
+Der Setzling der Birke ist offen.
+
+**Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Die Bretter von Hartholz sind offen.
+
+**Die Baumarten von Zone 1,** wie der Autor sie am 24.11.2026 skizziert hat. Ausgearbeitet ist davon bisher nur die Birke.
+
+| Biom | Baumart | Kategorie | Häufigkeit |
+| --- | --- | --- | --- |
+| Blossom Downs | Birke | Weichholz | – |
+| Blossom Downs | Buche | Hartholz | selten |
+| Old Wood | Eiche | Hartholz | häufig |
+| Old Wood | Ahorn | Weichholz | mäßig |
+| Old Wood | Buche | Hartholz | selten |
+| Reed Meres | Weide | Weichholz | – |
+| Reed Meres | ein zweiter Sumpfbaum | offen | – |
+
+Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Für den zweiten Sumpfbaum schlägt Claude die Erle vor, als Hartholz; entschieden ist das nicht.
 
 Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 
