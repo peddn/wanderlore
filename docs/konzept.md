@@ -219,9 +219,14 @@ Ein Baum besteht aus Form und Material. Die Form ist eine Bauanleitung und koste
 - **Von fremden Mods kommen nur Texturen und Formen.** Eine fremde Bauanleitung wird auf die eigenen Blöcke umgeschrieben; die Blöcke des fremden Mods kommen nicht ins Spiel.
 
 - **Kein Baum gleicht dem anderen.** Beim Setzen wird jede Form leicht abgewandelt: gedreht oder gespiegelt, der Stamm einen Block länger oder kürzer, am Rand der Krone einzelne Blätter weg oder dazu. Die Abweichungen werden berechnet, nicht als eigene Formen gezeichnet, und bleiben geringfügig. Der Katalog zeigt das Verfahren an der Birke.
-- **Ein Baum fällt als Ganzes.** Baut man am Stamm eine ganze Schicht ab, verschwinden die Blöcke des Baums von unten nach oben und lassen ihre Gegenstände fallen: jeder Stamm-Block einen Stamm, jeder zweite Laub-Block ein Laub, dazu Setzlinge mit einer Wahrscheinlichkeit. Das gilt für alle Baumarten gleich und ist an einer Stelle festgelegt. Zu lösen ist dabei, dass der Baum ein gewachsener ist und kein gebautes Haus aus Stämmen, und dass von zwei ineinanderstehenden Kronen nur der gefällte Baum verschwindet.
+- **Ein Baum fällt als Ganzes.** Baut man am Stamm in Bodennähe eine ganze Schicht ab, verschwinden die Blöcke des Baums von unten nach oben und lassen ihre Gegenstände fallen. Weiter oben am Stamm löst das Abbauen nichts aus; man fällt einen Baum am Fuß.
+  - Jeder Stamm-Block gibt einen Stamm, jeder zweite Laub-Block ein Laub. Hängendes Laub zählt wie Laub.
+  - Ein Laub-Block lässt mit 1 zu 20 einen Setzling fallen, wie in Minetest Game.
+  - Die Gegenstände entstehen dort, wo der Block war, und fallen senkrecht nach unten.
+  - Das gilt für alle Baumarten gleich und ist an einer Stelle festgelegt.
+  - Zu lösen ist dabei, dass der Baum ein gewachsener ist und kein gebautes Haus aus Stämmen, und dass von zwei ineinanderstehenden Kronen nur der gefällte Baum verschwindet. Wie hoch „Bodennähe“ reicht, ist noch festzulegen; Claude schlägt die untersten zwei Schichten vor.
 
-Beide Regeln hat der Autor am 24.11.2026 entschieden. Zum Vergleich: In Minetest Game lässt ein Laub-Block mit 1 zu 20 einen Setzling fallen, bei Büschen mit 1 zu 5, sonst sich selbst, und ein Stamm fällt nicht mit. Die Wahrscheinlichkeit für Setzlinge in Wanderlore ist noch nicht festgelegt.
+Beide Regeln hat der Autor am 24.11.2026 entschieden. Zum Vergleich: In Minetest Game lässt ein Laub-Block mit 1 zu 20 einen Setzling fallen, bei Büschen mit 1 zu 5, sonst sich selbst, und der Baum fällt nicht mit.
 
 Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke, 30 kosten 90. Mit eigenen Brettern und allem daraus je Holzart wären es bei 15 schon etwa 180.
 
@@ -251,9 +256,9 @@ Der Setzling der Birke ist `EB86`, der Birkensetzling aus Extra Biomes.
 | Old Wood | Ahorn | Weichholz | mäßig |
 | Old Wood | Buche | Hartholz | selten |
 | Reed Meres | Weide | Weichholz | – |
-| Reed Meres | Erle | offen | – |
+| Reed Meres | Erle | Weichholz | – |
 
-Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Die Erle hat der Autor als zweiten Sumpfbaum gewählt, auf Vorschlag von Claude. Ob sie Hartholz ist, wie vorgeschlagen, hat er noch nicht gesagt. Als Nächstes arbeitet er die Buche aus.
+Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Die Erle hat der Autor als zweiten Sumpfbaum gewählt, auf Vorschlag von Claude. Sie ist Weichholz; Reed Meres hat damit kein Hartholz. Als Nächstes arbeitet er die Buche aus.
 
 Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 
