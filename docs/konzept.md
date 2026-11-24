@@ -218,6 +218,11 @@ Ein Baum besteht aus Form und Material. Die Form ist eine Bauanleitung und koste
 - **Alle Hölzer werden auf dieselbe Weise angemeldet,** mit denselben Gruppen, Klängen, Härten und Rezepten. So verhalten sich alle Bäume gleich: fällen, Laub zerfällt, Setzling.
 - **Von fremden Mods kommen nur Texturen und Formen.** Eine fremde Bauanleitung wird auf die eigenen Blöcke umgeschrieben; die Blöcke des fremden Mods kommen nicht ins Spiel.
 
+- **Kein Baum gleicht dem anderen.** Beim Setzen wird jede Form leicht abgewandelt: gedreht oder gespiegelt, der Stamm einen Block länger oder kürzer, am Rand der Krone einzelne Blätter weg oder dazu. Die Abweichungen werden berechnet, nicht als eigene Formen gezeichnet, und bleiben geringfügig. Der Katalog zeigt das Verfahren an der Birke.
+- **Ein Baum fällt als Ganzes.** Baut man am Stamm eine ganze Schicht ab, verschwinden die Blöcke des Baums von unten nach oben und lassen ihre Gegenstände fallen: jeder Stamm-Block einen Stamm, jeder zweite Laub-Block ein Laub, dazu Setzlinge mit einer Wahrscheinlichkeit. Das gilt für alle Baumarten gleich und ist an einer Stelle festgelegt. Zu lösen ist dabei, dass der Baum ein gewachsener ist und kein gebautes Haus aus Stämmen, und dass von zwei ineinanderstehenden Kronen nur der gefällte Baum verschwindet.
+
+Beide Regeln hat der Autor am 24.11.2026 entschieden. Zum Vergleich: In Minetest Game lässt ein Laub-Block mit 1 zu 20 einen Setzling fallen, bei Büschen mit 1 zu 5, sonst sich selbst, und ein Stamm fällt nicht mit. Die Wahrscheinlichkeit für Setzlinge in Wanderlore ist noch nicht festgelegt.
+
 Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke, 30 kosten 90. Mit eigenen Brettern und allem daraus je Holzart wären es bei 15 schon etwa 180.
 
 Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu klären. Offen ist auch, ob Laub in mehreren Farbtönen aus einem Block entstehen kann, über eine Farbpalette; das ist nicht geprüft.

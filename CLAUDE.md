@@ -136,6 +136,7 @@ Am 23.11.2026, für den Bewuchs in M4:
 - Die erste Baumart ist gewählt, am 24.11.2026: die Birke für Blossom Downs, mit vier Formen und hängendem Laub als viertem Block. Sie ist Weichholz, ihr Setzling ist `EB86`. Stamm, Laub und Formen stehen im Konzept unter „Bäume und Holz“. Als Nächstes kommt die Buche.
 - Zone 1 hat die Kategorien Weichholz, mit den Brettern `EB25` aus Extra Biomes, und Hartholz, mit den Brettern `EB33`. Skizze der Baumarten: Blossom Downs mit Birke und selten Buche; Old Wood mit Eiche häufig, Ahorn mäßig, Buche selten; Reed Meres mit Weide und Erle. Baumarten dürfen in mehreren Biomen stehen.
 - Der Autor wählt Stamm und Laub getrennt von den Formen und kombiniert sie. Der Katalog zeigt die Kombination in seinem Bereich „Auswahl“ (`/auswahl`), beschrieben in dessen `mods/wl_catalog/selection.lua`.
+- Beim Setzen wird jede Baumform leicht abgewandelt, berechnet statt gezeichnet. Ein Baum fällt als Ganzes, sobald am Stamm eine ganze Schicht abgebaut ist: Die Blöcke verschwinden von unten nach oben, Stamm 1 zu 1, Laub 1 zu 2, Setzlinge nach Wahrscheinlichkeit. Beides steht im Konzept unter „Bäume und Holz“ und ist noch nicht gebaut.
 - Australia ist als Quelle gestrichen. Aotearoa bleibt wegen seiner Formen.
 - ContentDB und Codeberg sind in der Umgebung „wanderlore“ freigegeben.
 
