@@ -232,9 +232,9 @@ Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen g
 
 Die Elder-Form der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein Stamm von zwei mal zwei Blöcken, der oben einfach wird, Äste mit je einer Krone und hängendes Laub am Rand der Kronen. Sie ist etwa anderthalbmal so groß wie die große Form; ein doppelt so großer erster Entwurf war dem Autor zu viel, eine schlanke Variante hat er nicht gewählt. Beschrieben sind die Formen in `mods/wl_catalog/selection.lua` des Katalogs.
 
-Der Setzling der Birke ist offen.
+Der Setzling der Birke ist `EB86`, der Birkensetzling aus Extra Biomes.
 
-**Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Die Bretter von Hartholz sind offen.
+**Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Hartholz bekommt `EB33`, die Eichenbretter aus Extra Biomes.
 
 **Die Baumarten von Zone 1,** wie der Autor sie am 24.11.2026 skizziert hat. Ausgearbeitet ist davon bisher nur die Birke.
 
@@ -246,9 +246,9 @@ Der Setzling der Birke ist offen.
 | Old Wood | Ahorn | Weichholz | mäßig |
 | Old Wood | Buche | Hartholz | selten |
 | Reed Meres | Weide | Weichholz | – |
-| Reed Meres | ein zweiter Sumpfbaum | offen | – |
+| Reed Meres | Erle | offen | – |
 
-Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Für den zweiten Sumpfbaum schlägt Claude die Erle vor, als Hartholz; entschieden ist das nicht.
+Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Die Erle hat der Autor als zweiten Sumpfbaum gewählt, auf Vorschlag von Claude. Ob sie Hartholz ist, wie vorgeschlagen, hat er noch nicht gesagt. Als Nächstes arbeitet er die Buche aus.
 
 Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 

@@ -133,8 +133,8 @@ Am 23.11.2026, für den Bewuchs in M4:
 - M4 beginnt mit dem Bewuchs. Vorher wählt der Autor Pflanzen und Bäume im Katalog aus; gebaut ist am Bewuchs noch nichts.
 - Eine Holzart hat drei Blöcke: Stamm, Laub, Setzling. Bretter und alles daraus gehören einer Holzkategorie. Zehn Kategorien, je zwei für Zone 1, 2, 3, Inseln und Unterwelt, vorerst nur als Farbe. Näheres im Konzept unter „Bäume und Holz“.
 - Die Bretter von Minetest Game sind die ersten Kategorien; Bretter anderer Quellen kommen auch in Betracht.
-- Die erste Baumart ist gewählt, am 24.11.2026: die Birke für Blossom Downs, mit vier Formen und hängendem Laub als viertem Block. Sie ist Weichholz. Stamm, Laub und Formen stehen im Konzept unter „Bäume und Holz“. Der Setzling ist offen.
-- Zone 1 hat die Kategorien Weichholz, mit den Brettern `EB25` aus Extra Biomes, und Hartholz, dessen Bretter offen sind. Skizze der Baumarten: Blossom Downs mit Birke und selten Buche; Old Wood mit Eiche häufig, Ahorn mäßig, Buche selten; Reed Meres mit Weide und einem zweiten Sumpfbaum, der offen ist. Baumarten dürfen in mehreren Biomen stehen.
+- Die erste Baumart ist gewählt, am 24.11.2026: die Birke für Blossom Downs, mit vier Formen und hängendem Laub als viertem Block. Sie ist Weichholz, ihr Setzling ist `EB86`. Stamm, Laub und Formen stehen im Konzept unter „Bäume und Holz“. Als Nächstes kommt die Buche.
+- Zone 1 hat die Kategorien Weichholz, mit den Brettern `EB25` aus Extra Biomes, und Hartholz, mit den Brettern `EB33`. Skizze der Baumarten: Blossom Downs mit Birke und selten Buche; Old Wood mit Eiche häufig, Ahorn mäßig, Buche selten; Reed Meres mit Weide und Erle. Baumarten dürfen in mehreren Biomen stehen.
 - Der Autor wählt Stamm und Laub getrennt von den Formen und kombiniert sie. Der Katalog zeigt die Kombination in seinem Bereich „Auswahl“ (`/auswahl`), beschrieben in dessen `mods/wl_catalog/selection.lua`.
 - Australia ist als Quelle gestrichen. Aotearoa bleibt wegen seiner Formen.
 - ContentDB und Codeberg sind in der Umgebung „wanderlore“ freigegeben.
