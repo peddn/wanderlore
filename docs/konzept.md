@@ -219,12 +219,13 @@ Ein Baum besteht aus Form und Material. Die Form ist eine Bauanleitung und koste
 - **Von fremden Mods kommen nur Texturen und Formen.** Eine fremde Bauanleitung wird auf die eigenen Blöcke umgeschrieben; die Blöcke des fremden Mods kommen nicht ins Spiel.
 
 - **Kein Baum gleicht dem anderen.** Beim Setzen wird jede Form leicht abgewandelt: gedreht oder gespiegelt, der Stamm einen Block länger oder kürzer, am Rand der Krone einzelne Blätter weg oder dazu. Die Abweichungen werden berechnet, nicht als eigene Formen gezeichnet, und bleiben geringfügig. Der Katalog zeigt das Verfahren an der Birke.
-- **Ein Baum fällt als Ganzes.** Baut man am Stamm in Bodennähe eine ganze Schicht ab, verschwinden die Blöcke des Baums von unten nach oben und lassen ihre Gegenstände fallen. Weiter oben am Stamm löst das Abbauen nichts aus; man fällt einen Baum am Fuß.
+- **Ein Baum fällt oberhalb des Schnitts.** Baut man am aufrechten Stamm eine ganze Schicht ab, verschwindet alles, was darüber zum Baum gehört, von unten nach oben und lässt seine Gegenstände fallen. Was unter dem Schnitt steht, bleibt als Stumpf. Wo man schneidet, ist frei; am Fuß lohnt es am meisten.
+  - Ein Ast ist keine Schicht des Stamms. Baut man ihn ab, fällt nichts.
   - Jeder Stamm-Block gibt einen Stamm, jeder zweite Laub-Block ein Laub. Hängendes Laub zählt wie Laub.
   - Ein Laub-Block lässt mit 1 zu 20 einen Setzling fallen, wie in Minetest Game.
   - Die Gegenstände entstehen dort, wo der Block war, und fallen senkrecht nach unten.
   - Das gilt für alle Baumarten gleich und ist an einer Stelle festgelegt.
-  - Zu lösen ist dabei, dass der Baum ein gewachsener ist und kein gebautes Haus aus Stämmen, und dass von zwei ineinanderstehenden Kronen nur der gefällte Baum verschwindet. Wie hoch „Bodennähe“ reicht, ist noch festzulegen; Claude schlägt die untersten zwei Schichten vor.
+  - Zu lösen ist dabei, dass der Baum ein gewachsener ist und kein gebautes Haus aus Stämmen, und dass von zwei ineinanderstehenden Kronen nur der gefällte Baum verschwindet.
 
 Beide Regeln hat der Autor am 24.11.2026 entschieden. Zum Vergleich: In Minetest Game lässt ein Laub-Block mit 1 zu 20 einen Setzling fallen, bei Büschen mit 1 zu 5, sonst sich selbst, und der Baum fällt nicht mit.
 
