@@ -226,11 +226,13 @@ Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu 
 
 | Baumart | Biom | Stamm | Laub | Formen | Kategorie |
 | --- | --- | --- | --- | --- | --- |
-| Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | fünf: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder schlank (13 × 21) und Elder breit (17 × 20) | offen |
+| Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | vier: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder (17 × 20) | Weichholz |
 
-Die beiden Elder-Formen der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein Stamm von zwei mal zwei Blöcken, der oben einfach wird, Äste mit je einer Krone und Laub, das vom Rand der Kronen herabhängt. Sie sind etwa anderthalbmal so groß wie die große Form; ein doppelt so großer erster Entwurf war dem Autor zu viel. Der Autor hat alle fünf Formen am 24.11.2026 gewählt. Beschrieben sind sie in `mods/wl_catalog/selection.lua` des Katalogs.
+Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen geschnitten. Es sitzt dort, wo das Laub am Rand einer Krone frei herabhängt, in allen vier Formen. Das ist eine Ausnahme von den drei Blöcken je Holzart, die der Autor am 24.11.2026 für die Birke gewählt hat.
 
-Offen bei der Birke: ob sie einen vierten Block bekommt, hängendes Laub aus demselben Laub in Strähnen, und der Setzling.
+Die Elder-Form der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein Stamm von zwei mal zwei Blöcken, der oben einfach wird, Äste mit je einer Krone und hängendes Laub am Rand der Kronen. Sie ist etwa anderthalbmal so groß wie die große Form; ein doppelt so großer erster Entwurf war dem Autor zu viel, eine schlanke Variante hat er nicht gewählt. Beschrieben sind die Formen in `mods/wl_catalog/selection.lua` des Katalogs.
+
+Weichholz ist die erste benannte Holzkategorie. Welche Bretter sie bekommt, ist offen, ebenso der Setzling der Birke.
 
 Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 

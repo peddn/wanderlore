@@ -133,7 +133,7 @@ Am 23.11.2026, für den Bewuchs in M4:
 - M4 beginnt mit dem Bewuchs. Vorher wählt der Autor Pflanzen und Bäume im Katalog aus; gebaut ist am Bewuchs noch nichts.
 - Eine Holzart hat drei Blöcke: Stamm, Laub, Setzling. Bretter und alles daraus gehören einer Holzkategorie. Zehn Kategorien, je zwei für Zone 1, 2, 3, Inseln und Unterwelt, vorerst nur als Farbe. Näheres im Konzept unter „Bäume und Holz“.
 - Die Bretter von Minetest Game sind die ersten Kategorien; Bretter anderer Quellen kommen auch in Betracht.
-- Die erste Baumart ist gewählt, am 24.11.2026: die Birke für Blossom Downs, mit fünf Formen. Stamm, Laub und Formen stehen im Konzept unter „Bäume und Holz“. Ihre Holzkategorie, der Setzling und ein möglicher vierter Block für hängendes Laub sind offen.
+- Die erste Baumart ist gewählt, am 24.11.2026: die Birke für Blossom Downs, mit vier Formen und hängendem Laub als viertem Block. Sie ist Weichholz. Stamm, Laub und Formen stehen im Konzept unter „Bäume und Holz“. Die Bretter von Weichholz und der Setzling sind offen.
 - Der Autor wählt Stamm und Laub getrennt von den Formen und kombiniert sie. Der Katalog zeigt die Kombination in seinem Bereich „Auswahl“ (`/auswahl`), beschrieben in dessen `mods/wl_catalog/selection.lua`.
 - Australia ist als Quelle gestrichen. Aotearoa bleibt wegen seiner Formen.
 - ContentDB und Codeberg sind in der Umgebung „wanderlore“ freigegeben.
