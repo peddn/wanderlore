@@ -238,7 +238,7 @@ Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu 
 | Baumart | Biom | Stamm | Laub | Formen | Kategorie |
 | --- | --- | --- | --- | --- | --- |
 | Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | vier: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder (17 × 20) | Weichholz |
-| Buche | Blossom Downs und Old Wood, in beiden selten | Stamm von `EB-T10`, die Buche aus Extra Biomes | Laub von `EB-T10` | vier: klein nach `BB-T5` (7 × 13), mittel nach `BB-T6` (7 × 16), groß von Claude gebaut (13 × 20), Elder nach `BB-T32` mit längerem Stamm und Wurzeln (16 × 25) | Hartholz |
+| Buche | Blossom Downs und Old Wood, in beiden selten | Stamm von `EB-T10`, die Buche aus Extra Biomes | Laub von `EB-T10` | vier: klein nach `BB-T5` (7 × 13), mittel nach `BB-T6` (7 × 16), groß nach `BB-T7`, verbreitert (13 × 20), Elder nach `BB-T32` mit längerem Stamm und Wurzeln (16 × 25) | Hartholz |
 
 Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen geschnitten. Es sitzt dort, wo das Laub am Rand einer Krone frei herabhängt, in allen vier Formen. Das ist eine Ausnahme von den drei Blöcken je Holzart, die der Autor am 24.11.2026 für die Birke gewählt hat.
 
@@ -246,7 +246,7 @@ Die Elder-Form der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein
 
 Der Setzling der Birke ist `EB86`, der Birkensetzling aus Extra Biomes.
 
-Die Buche hat der Autor am 24.11.2026 gewählt. Klein und mittel stammen aus Better Biomes und sind dort Espen; die Elder-Form ist dort eine Eiche. Alle tragen Stamm und Laub der Buche. Die große Form hat Claude gebaut, weil dem Autor die zuerst gewählte Espe `BB-T7` zu schmal war: ein freier Stamm, einige Äste und eine breite Krone, fast eine Kugel. Die Elder-Form hat gegenüber der Vorlage einen um fünf Blöcke längeren Stamm, damit sie die große Form überragt, und Wurzeln am Fuß. Ob dem Autor beide so passen, ist offen. Ihr Setzling ist `MG24`, der Espensetzling aus Minetest Game. Hängendes Laub hat sie nicht.
+Die Buche hat der Autor am 24.11.2026 gewählt. Klein und mittel stammen aus Better Biomes und sind dort Espen; die Elder-Form ist dort eine Eiche. Alle tragen Stamm und Laub der Buche. Die große Form ist die Espe `BB-T7`, die dem Autor zu schmal war, verbreitert: Das Laub ist vom Stamm weg nach außen geschoben, in halber Höhe der Krone am meisten, sodass die Krone fast eine Kugel wird und weiter in Bodennähe beginnt. Dazu kommen sechs kurze Äste aus liegenden Stamm-Blöcken, wie bei der Elder-Form. Eine von Claude frei gebaute Form mit hohem, freiem Stamm hat der Autor abgelehnt. Die Elder-Form hat gegenüber der Vorlage einen um fünf Blöcke längeren Stamm, damit sie die große Form überragt, und Wurzeln am Fuß. Ob dem Autor beide so passen, ist offen. Ihr Setzling ist `MG24`, der Espensetzling aus Minetest Game. Hängendes Laub hat sie nicht.
 
 **Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Hartholz bekommt `EB33`, die Eichenbretter aus Extra Biomes.
 
