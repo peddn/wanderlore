@@ -259,7 +259,14 @@ Die dritte Art ist die Eiche für Old Wood, Hartholz: Stamm und Laub von `MT-T8`
 - Das Laub sitzt in Büscheln an den Astenden: flach gedrückte Kugeln, keine Teller.
 - Die Büschel liegen auf der Hülle einer Kugel, die etwa so breit wie hoch ist, und bedecken gut die Hälfte davon. Dazwischen sieht man Himmel und innen das Holz.
 
-Der Autor will zuerst die Elder-Form richtig haben: dieselbe Form, größer, ohne „Stangen“. Sie ist so gebaut, sein Urteil steht aus. Wie eine junge Eiche zurückgebaut wird, ist noch nicht ausgearbeitet; auch der Setzling fehlt.
+Das Ergebnis fand der Autor besser, aber noch nicht richtig, und gab am 25.11.2026 das Foto einer frei stehenden alten Eiche als Maß vor. Von der Vorlage bleiben seither der Wurzelstern und das Gabeln des Holzes; Proportionen und Krone folgen dem Foto:
+
+- Der Stamm ist kurz und dick, ein Fünftel bis ein Viertel der Baumhöhe.
+- Alle großen Äste gehen vom Kopf des Stamms aus wie Strahlen und gabeln sich unterwegs. Die untersten laufen fast waagerecht bis an den Rand der Krone, und ihre Enden hängen leicht; je höher ein Ast zielt, desto steiler steigt er.
+- Die Krone ist eine halbe Kugel, unten flach und oben rund, breiter als hoch. Ihre flache Unterseite liegt knapp über dem Stamm.
+- Das Laub sitzt in luftigen, klumpigen Büscheln um die Astenden und entlang der langen Äste. Darunter ist die Krone offen.
+
+Die Elder-Form misst so etwa 31 × 23. Sein Urteil dazu steht aus. Wie eine junge Eiche zurückgebaut wird, ist noch nicht ausgearbeitet; auch der Setzling fehlt.
 
 **Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Hartholz bekommt `EB33`, die Eichenbretter aus Extra Biomes.
 
