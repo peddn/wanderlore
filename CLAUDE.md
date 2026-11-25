@@ -16,7 +16,7 @@ Die Skizzen unter `docs/weltkarte/` und `docs/landschaft/` sind Diskussionshilfe
 
 Verwandte Repositories:
 
-- [`peddn/wanderlore-catalog`](https://github.com/peddn/wanderlore-catalog): zeigt 200 Monster und Tiere aus acht Mods in Luanti, zum Auswählen nach Nummer. Sein Aufbau mit `sources.toml`, `scripts/setup.sh` und `scripts/run.sh` ist das Vorbild für die Skripte hier.
+- [`peddn/wanderlore-catalog`](https://github.com/peddn/wanderlore-catalog): zeigt 200 Monster und Tiere aus acht Mods in Luanti, zum Auswählen nach Nummer. Seit dem 23.11.2026 hat er eine zweite Welt mit Pflanzen aus 26 Quellen, auf dem Zweig `catalog/plants`: Blöcke auf Tafeln, Bäume in Reihen je Quelle und nach Art, Bodenpflanzen als Beete. `scripts/run.sh plants` startet sie. Sein Aufbau mit `sources.toml`, `scripts/setup.sh` und `scripts/run.sh` ist das Vorbild für die Skripte hier.
 - [`peddn/luanti-education-platform`](https://github.com/peddn/luanti-education-platform) (LEP): Wanderlore muss in dessen Welten laufen können, hängt aber nicht davon ab. Die Vorgaben stehen im Konzept.
 
 ## Stand
@@ -89,7 +89,7 @@ Das Paket bringt das Programm `luanti` mit. Selbst kompilieren war nicht nötig.
 
 Der Host `ppa.launchpadcontent.net` muss im Netzwerk der Cloud-Umgebung erlaubt sein. In der Umgebung „wanderlore“ ist er das, in der Standardumgebung nicht.
 
-**Erreichbar** waren GitHub und Codeberg per `git clone`. ContentDB (`content.luanti.org`) war aus der Shell nicht erreichbar, nur über das Werkzeug zum Abrufen von Webseiten.
+**Erreichbar** waren GitHub und Codeberg per `git clone`. ContentDB (`content.luanti.org`) ist seit dem 23.11.2026 in der Umgebung „wanderlore“ freigegeben und aus der Shell erreichbar, auch über seine Schnittstelle unter `/api/packages/`.
 
 **Eigenes Benutzerverzeichnis.** Luanti legt alles unter `$HOME/.minetest` ab. Mit `HOME=<Ordner>` vor dem Aufruf bleibt eine Testumgebung für sich.
 
@@ -127,6 +127,21 @@ DISPLAY=:9 import -window root bild.png
 - Aus dem Rückruf von `core.emerge_area` nicht gleich die nächste Anfrage stellen, sondern erst mit `core.after(0, ...)` herausspringen. Ohne das blieb der Server in einem Lauf hängen, in dem zugleich der Generator scheiterte; die Ursache ist nicht einzeln geprüft.
 
 ## Was der Autor zuletzt entschieden hat
+
+Am 23.11.2026, für den Bewuchs in M4:
+
+- M4 beginnt mit dem Bewuchs. Vorher wählt der Autor Pflanzen und Bäume im Katalog aus; gebaut ist am Bewuchs noch nichts.
+- Eine Holzart hat drei Blöcke: Stamm, Laub, Setzling. Bretter und alles daraus gehören einer Holzkategorie. Zehn Kategorien, je zwei für Zone 1, 2, 3, Inseln und Unterwelt, vorerst nur als Farbe. Näheres im Konzept unter „Bäume und Holz“.
+- Die Bretter von Minetest Game sind die ersten Kategorien; Bretter anderer Quellen kommen auch in Betracht.
+- Die erste Baumart ist gewählt, am 24.11.2026: die Birke für Blossom Downs, mit vier Formen und hängendem Laub als viertem Block. Sie ist Weichholz, ihr Setzling ist `EB86`. Stamm, Laub und Formen stehen im Konzept unter „Bäume und Holz“. Die zweite ist die Buche, Hartholz, mit dem Stamm `BB1` aus Better Biomes, Laub aus Extra Biomes und dem Setzling `MG24`. Die dritte ist die Eiche, die vierte der Ahorn, die fünfte die Weide. Es fehlt die Erle.
+- Zone 1 hat die Kategorien Weichholz, mit den Brettern `EB25` aus Extra Biomes, und Hartholz, mit den Brettern `EB33`. Skizze der Baumarten: Blossom Downs mit Birke und selten Buche; Old Wood mit Eiche häufig, Ahorn mäßig, Buche selten; Reed Meres mit Weide und Erle, beide Weichholz. Baumarten dürfen in mehreren Biomen stehen.
+- Der Autor wählt Stamm und Laub getrennt von den Formen und kombiniert sie. Der Katalog zeigt die Kombination in seinem Bereich „Auswahl“ (`/auswahl`), beschrieben in dessen `mods/wl_catalog/selection.lua`.
+- Beim Setzen wird jede Baumform leicht abgewandelt, berechnet statt gezeichnet. Baut man am aufrechten Stamm eine ganze Schicht ab, verschwindet alles darüber von unten nach oben, der Stumpf darunter bleibt; wo man schneidet, ist frei: Stamm 1 zu 1, Laub 1 zu 2 (auch hängendes Laub), Setzlinge mit 1 zu 20 je Laub-Block. Die Gegenstände fallen senkrecht von dort, wo der Block war. Beides steht im Konzept unter „Bäume und Holz“ und ist noch nicht gebaut.
+- Versuch seit dem 24.11.2026: jede Baumart mit eigenem Verfahren, von der Elder-Form zurück zum Jungbaum gebaut, statt übernommener Formen. Im Katalog an Birke und Buche erprobt (`species.lua`, `treekit.lua`); mit Birke und Buche ist der Autor zufrieden. Die Eiche (Stamm und Laub von `MT-T8`) ist nach `AO-T47` und dann nach einem Foto beschrieben, das der Autor als Maß gab: kurzer dicker Stamm auf einem Wurzelstern, ein Mittelstamm, Äste als Fächer, eine Krone wie eine halbe Kugel, anderthalbmal so breit wie hoch. Er ist vorerst zufrieden; ihr Setzling ist `BB15`. Der Ahorn (Stamm `EB17`, Laub `MT38` hellgrün umgefärbt) ist nach einem Foto als Ei auf dem breiten Ende beschrieben; der Autor findet ihn gut getroffen, der Setzling fehlt. Die Weide (Stamm von `MT-T15`, Laub von `EB-T55` heller) ist nach einem Foto und `ET-T22` als flache Kuppel mit Vorhängen beschrieben und wartet auf sein Urteil. Ein Foto mit ein paar Sätzen des Autors ist das beste Vorbild. Ein Vorbild von allen Seiten ansehen, ganz und nur als Holz, hat sich bewährt (`study` in `selection.lua`). Ausdrücklich entschieden ist der Weg nicht, aber er arbeitet nur noch auf ihm weiter. Das Bearbeiten von Formen im Spiel und einen einzigen Baukasten für alle Arten hat der Autor abgelehnt.
+- Die Nummern der Bäume im Katalog waren bis zum 25.11.2026 nicht bei jedem Start gleich; bei Ethereal und Minetest Game konnten sie sich um eins verschieben. Das ist behoben. Nennt der Autor eine Baumnummer, im Zweifel am Bild prüfen, ob sie den gemeinten Baum trifft.
+- Vorsicht mit alten Tafeln: Die Nummern der Bäume aus Aotearoa haben sich am 23.11.2026 verschoben, als der Katalog auch Baumformen las, die als Tabellen angemeldet sind. Tafeln von vorher zeigen dort falsche Nummern; maßgeblich ist das Spiel.
+- Australia ist als Quelle gestrichen. Aotearoa bleibt wegen seiner Formen.
+- ContentDB und Codeberg sind in der Umgebung „wanderlore“ freigegeben.
 
 Am 23.11.2026, für M3:
 

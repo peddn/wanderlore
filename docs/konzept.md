@@ -196,12 +196,102 @@ Die Biome sind eigene, aus vorhandenem Material neu zusammengesetzt. Jedes ist e
 
 Jedes Biom hat außerdem etwas, das es nur dort gibt:
 
-- **eine eigene Holzart**
+- **eigene Baumarten**, von denen einzelne auch im Nachbarbiom stehen dürfen; siehe „Bäume und Holz“
 - **eine Feldfrucht**
 - **eine Kochzutat**
 - **eine Zutat für die Alchemie**
 
-Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Holzarten, Feldfrüchte, Kochzutaten und Zutaten für die Alchemie.
+Dazu kommen gegebenenfalls sein Erz, seine Monster und sein Stronghold-Typ. Bei 15 Biomen sind das je 15 Feldfrüchte, Kochzutaten und Zutaten für die Alchemie, und zwei bis drei Baumarten je Biom.
+
+### Bäume und Holz
+
+Der Autor hat das am 23.11.2026 entschieden. Gebaut ist davon noch nichts.
+
+Ein Baum besteht aus Form und Material. Die Form ist eine Bauanleitung und kostet keinen Block; eine Holzart kann viele Formen haben, jung, alt, riesig. Das Material kostet Blöcke, und viele neue Blöcke sind die Hauptgefahr. Deshalb ist es knapp gehalten:
+
+- **Eine Holzart hat drei eigene Blöcke:** Stamm, Laub und Setzling.
+- **Bretter gehören nicht der Holzart, sondern einer Holzkategorie.** Jede Holzart gehört zu genau einer Kategorie. Wer Stämme zu Brettern verarbeitet, bekommt die Bretter der Kategorie.
+- **Alles aus Brettern hängt an der Kategorie,** nicht an der Holzart: Treppen, Platten, Zäune, Tore.
+- **Eine Kategorie ist vorerst nur eine Farbe.** Sie ändert keine Werte.
+- **Die Kategorien sind an die Zonen gebunden,** je zwei: Zone 1, Zone 2, Zone 3, Inseln und Unterwelt. Das sind zehn. Eine neue Kategorie ist damit selbst eine Entdeckung.
+- **Die Bretter kommen zuerst aus Minetest Game.** Es bringt fünf mit, jeweils schon mit Treppen, Platten, Zäunen und Toren. Bretter aus anderen Quellen kommen ebenfalls in Betracht; für zehn Kategorien braucht es ohnehin mindestens fünf weitere. Welche Bretter zu welcher Kategorie werden und wie die Kategorien heißen, ist offen.
+- **Alle Hölzer werden auf dieselbe Weise angemeldet,** mit denselben Gruppen, Klängen, Härten und Rezepten. So verhalten sich alle Bäume gleich: fällen, Laub zerfällt, Setzling.
+- **Von fremden Mods kommen nur Texturen und Formen.** Eine fremde Bauanleitung wird auf die eigenen Blöcke umgeschrieben; die Blöcke des fremden Mods kommen nicht ins Spiel.
+
+- **Kein Baum gleicht dem anderen.** Beim Setzen wird jede Form leicht abgewandelt: gedreht oder gespiegelt, der Stamm einen Block länger oder kürzer, am Rand der Krone einzelne Blätter weg oder dazu. Die Abweichungen werden berechnet, nicht als eigene Formen gezeichnet, und bleiben geringfügig. Der Katalog zeigt das Verfahren an der Birke.
+- **Ein Baum fällt oberhalb des Schnitts.** Baut man am aufrechten Stamm eine ganze Schicht ab, verschwindet alles, was darüber zum Baum gehört, von unten nach oben und lässt seine Gegenstände fallen. Was unter dem Schnitt steht, bleibt als Stumpf. Wo man schneidet, ist frei; am Fuß lohnt es am meisten.
+  - Ein Ast ist keine Schicht des Stamms. Baut man ihn ab, fällt nichts.
+  - Jeder Stamm-Block gibt einen Stamm, jeder zweite Laub-Block ein Laub. Hängendes Laub zählt wie Laub.
+  - Ein Laub-Block lässt mit 1 zu 20 einen Setzling fallen, wie in Minetest Game.
+  - Die Gegenstände entstehen dort, wo der Block war, und fallen senkrecht nach unten.
+  - Das gilt für alle Baumarten gleich und ist an einer Stelle festgelegt.
+  - Zu lösen ist dabei, dass der Baum ein gewachsener ist und kein gebautes Haus aus Stämmen, und dass von zwei ineinanderstehenden Kronen nur der gefällte Baum verschwindet.
+
+Beide Regeln hat der Autor am 24.11.2026 entschieden. Zum Vergleich: In Minetest Game lässt ein Laub-Block mit 1 zu 20 einen Setzling fallen, bei Büschen mit 1 zu 5, sonst sich selbst, und der Baum fällt nicht mit.
+
+Die Rechnung dahinter, als Schätzung: 15 Holzarten kosten 45 Blöcke, 30 kosten 90. Mit eigenen Brettern und allem daraus je Holzart wären es bei 15 schon etwa 180.
+
+Ob „Unterwelt“ die Zwischenschicht meint oder auch die Höhlen, ist noch zu klären. Offen ist auch, ob Laub in mehreren Farbtönen aus einem Block entstehen kann, über eine Farbpalette; das ist nicht geprüft.
+
+**Gewählte Baumarten.** Die Nummern sind die des Katalogs.
+
+| Baumart | Biom | Stamm | Laub | Formen | Kategorie |
+| --- | --- | --- | --- | --- | --- |
+| Weide | Reed Meres | Stamm von `MT-T15`, die Weide aus More Trees | Laub von `EB-T55`, die Weide aus Extra Biomes, heller gefärbt | aus dem Verfahren: klein (11 × 9), mittel (13 × 11), groß (21 × 15), Elder (27 × 19); noch nicht angenommen | Weichholz |
+| Ahorn | Old Wood, mäßig | Stamm `EB17` aus Extra Biomes, dort der Stamm der Steineiche | Laub `MT38` aus More Trees, dort Birkenlaub, in ein sattes Hellgrün umgefärbt | aus dem Verfahren: klein (11 × 12), mittel (13 × 16), groß (23 × 23), Elder (27 × 31) | Weichholz |
+| Eiche | Old Wood, häufig | Stamm von `MT-T8`, die Eiche aus More Trees | Laub von `MT-T8` | aus dem Verfahren: klein (etwa 11 × 11), mittel (15 × 15), groß (27 × 18), Elder (37 × 23) | Hartholz |
+| Birke | Blossom Downs | Stamm von `MT-T3`, die Birke aus More Trees | Laub von `NB-T22`, die Birke aus Natural Biomes | vier: klein nach `EB-T20` (3 × 7), mittel nach `NB-T22` (7 × 11), groß nach `NB-T21` (9 × 14), Elder (17 × 20) | Weichholz |
+| Buche | Blossom Downs und Old Wood, in beiden selten | Stamm `BB1` aus Better Biomes; zuerst war es der Stamm von `EB-T10` | Laub von `EB-T10`, die Buche aus Extra Biomes | vier: klein nach `BB-T5` (7 × 13), mittel nach `BB-T6` (7 × 16), groß als verkleinerte Elder-Form (13 × 20), Elder nach `BB-T32` mit längerem Stamm und Wurzeln (16 × 25) | Hartholz |
+
+Die Birke hat einen vierten Block: hängendes Laub, dasselbe Laub in Strähnen geschnitten. Es sitzt dort, wo das Laub am Rand einer Krone frei herabhängt, in allen vier Formen. Das ist eine Ausnahme von den drei Blöcken je Holzart, die der Autor am 24.11.2026 für die Birke gewählt hat.
+
+Die Elder-Form der Birke hat Claude gebaut, weil sich im Bestand keine fand: ein Stamm von zwei mal zwei Blöcken, der oben einfach wird, Äste mit je einer Krone und hängendes Laub am Rand der Kronen. Sie ist etwa anderthalbmal so groß wie die große Form; ein doppelt so großer erster Entwurf war dem Autor zu viel, eine schlanke Variante hat er nicht gewählt. Beschrieben sind die Formen in `mods/wl_catalog/selection.lua` des Katalogs.
+
+Der Setzling der Birke ist `EB86`, der Birkensetzling aus Extra Biomes.
+
+Die Buche hat der Autor am 24.11.2026 gewählt. Klein und mittel stammen aus Better Biomes und sind dort Espen; die Elder-Form, und mit ihr die große, ist dort eine Eiche. Alle tragen Stamm und Laub der Buche. Die Elder-Form hat gegenüber der Vorlage einen um fünf Blöcke längeren Stamm, damit sie die große Form überragt, und etwa zehn Wurzelblöcke am Fuß; der Autor hat sie am 24.11.2026 so angenommen. Die große Form ist diese Elder-Form, auf vier Fünftel verkleinert. Das hat der Autor vorgeschlagen, nachdem drei Versuche, die zuerst gewählte schmale Espe `BB-T7` zu verbreitern, nicht passten: eine Kugel, eine Glocke und eine Kugel mit Kerben. Die verkleinerte Form fand er sehr gut und bat für beide, groß und Elder, um eine weitere Reihe Äste unter der bisher untersten, nicht breiter als diese, und um etwas mehr Laub in der Reihe darüber. Gebaut ist das so: Das unterste Band der Krone steht ein zweites Mal vier Blöcke tiefer, um ein Viertel um den Stamm gedreht, und der Stamm bleibt darunter fünf Blöcke frei. Dieses Ergebnis hat er am 24.11.2026 angenommen; damit stehen alle vier Formen der Buche.
+
+**Versuch: Baumarten mit eigenem Verfahren.** Der Autor hat am 24.11.2026 vorgeschlagen, jede Baumart mit einem eigenen Verfahren zu erzeugen, statt Formen aus fremden Mods zu übernehmen und umzuformen: Die Elder-Form ist der Entwurf, die jüngeren Stufen entstehen daraus durch Zurückbauen, und ein gemeinsamer Werkzeugkasten liefert Stamm, Wurzeln, Äste, Laubballen und Strähnen. Ein junger Baum ist dabei kein kleiner alter: Jede Art hat eigene Regeln, was mit dem Alter verschwindet. Das Verfahren darf eine fremde Form nachbilden, aber nicht ihre Baudatei auslesen; dann entfällt die Lizenzfrage für die Formen, nicht für die Texturen. Im Katalog ist das an der Birke erprobt und steht dort neben den angenommenen Formen. Der Autor arbeitet seither an den Formen aus dem Verfahren weiter: Die jüngeren Birken haben eine Krone aus einem Stück, rund und nach oben fließend, ab den mittleren Jahren unten nur als ausgefranster Rand mit Strähnen, damit der Baum innen licht ist; den flachen, breiten Schopf der Elder-Form hat er angenommen. Mit der Birke aus dem Verfahren ist er am 24.11.2026 vorerst zufrieden und hat die Buche als Nächstes freigegeben. Die Buche ist ebenfalls beschrieben: als Elder-Form ein hoher Stamm von zwei mal zwei Blöcken mit Wurzeln und Reihen von Ästen, jeder mit einem flachen Laubballen und eigener Höhe, Länge und Größe; zurückgebaut wird sie zu einer belaubten Säule ohne Astreihen. Nach mehreren Runden ist er auch mit der Buche zufrieden: Die jungen Buchen sind volle Kronen aus einem Stück mit Ausbuchtungen und Lücken, die große und die Elder-Form haben Astreihen, deren Laubballen sich berühren, mit Zweigen dazwischen; die Elder-Form ist drei Blöcke höher als ihr Alter allein ergäbe. Ausdrücklich entschieden ist nicht, ob dieser Weg die übernommenen Formen ersetzt, aber der Autor arbeitet seither nur noch auf ihm weiter.
+
+Die dritte Art ist die Eiche für Old Wood, Hartholz: Stamm und Laub von `MT-T8`, der Eiche aus More Trees. Als große Form hat der Autor `AO-T47` aus Aotearoa gewählt. Ein erster Versuch, sie zu beschreiben, mit flachen Laubtellern auf langen Ästen, war ihm nicht gut genug. Danach hat Claude die Vorlage von allen Seiten angesehen, ganz und nur als Holz, und diese Bauregeln abgeleitet:
+
+- Acht Wurzeln laufen sternförmig über den Boden, etwa ein Drittel der Kronenbreite lang, manche mit Knick; am Stamm stehen sie zwei bis drei Blöcke hoch.
+- Kein einzelner Stamm, sondern ein Bündel: ein Kern und einige Stämme dicht daneben, die verschieden hoch enden.
+- Äste zweigen in jeder Höhe vom Holz und voneinander ab und steigen in Stufen; kein Stück Holz läuft weit, ohne sich zu gabeln.
+- Das Laub sitzt in Büscheln an den Astenden: flach gedrückte Kugeln, keine Teller.
+- Die Büschel liegen auf der Hülle einer Kugel, die etwa so breit wie hoch ist, und bedecken gut die Hälfte davon. Dazwischen sieht man Himmel und innen das Holz.
+
+Das Ergebnis fand der Autor besser, aber noch nicht richtig, und gab am 25.11.2026 das Foto einer frei stehenden alten Eiche als Maß vor. Von der Vorlage bleiben seither der Wurzelstern und das Gabeln des Holzes; Proportionen und Krone folgen dem Foto:
+
+- Der Stamm ist kurz und dick, ein Fünftel bis ein Viertel der Baumhöhe.
+- Ein Mittelstamm geht vom Stamm durch die Krone. Er wird schnell dünner und endet in einem schmalen, senkrechten Ast, der die Höhe des Baums bestimmt. Das hat der Autor nach dem ersten Versuch ohne Mittelstamm verlangt.
+- Die Äste gehen von diesem Mittelstamm ab wie ein Fächer: unten waagerecht bis an den Rand der Krone, mit leicht hängenden Enden, und je höher sie ansetzen, desto steiler.
+- Die Krone ist eine halbe Kugel, unten flach und oben rund, anderthalbmal so breit wie der Baum hoch ist. Ihre flache Unterseite liegt über dem Stamm, der sichtbar bleibt.
+- Das Laub sitzt in luftigen, klumpigen Büscheln um die Astenden und entlang der langen Äste. Darunter ist die Krone offen.
+
+Die Elder-Form misst so etwa 37 × 23. Auf Wunsch des Autors sind die Wurzelausläufer danach gekürzt, und der Stamm ist am Übergang zu den Ästen so dick wie darunter. Die jüngeren Stufen sind zurückgebaut: Die Eiche wird niedriger und im Verhältnis schmaler, bis etwa so breit wie hoch; aus drei Ringen von Büscheln werden zwei, dann einer; Stammbündel und Wurzelstern entfallen unterhalb der großen Form; die kleinste hat keine Äste aus Holz, nur einen kurzen Stamm in runder Krone. Das Ergebnis fand der Autor am 25.11.2026 schon sehr gut und hat nachgebessert: Die kleine Eiche bekommt einen einzelnen Wurzelblock, die mittlere einen Stamm aus drei Blöcken, und beide eine rundere Kuppe, weil die Krone oben zu flach wirkte. Das fand er gut; zuletzt bekam die mittlere Form noch Laub unter den untersten Ästen. Zuletzt kamen Laub auf Höhe der untersten Äste der mittleren Form und ein kürzerer Stamm der kleinen dazu. Am 25.11.2026 war der Autor mit der Eiche vorerst zufrieden; ihr Setzling ist `BB15` aus Better Biomes. 
+
+Die vierte Art ist der Ahorn, am 25.11.2026 nach einem Foto des Autors und seinen Worten beschrieben: die Form einer Zirbelnuss, unten recht flach und oben nicht zu spitz. Die Krone ist ein Ei auf dem breiten Ende, im unteren Viertel am breitesten, etwa ein Drittel höher als breit, und beginnt knapp über dem Boden. Der Stamm ist kurz und dick; ein Mittelstamm geht bis zur Spitze, und alle Äste steigen steil. Die Krone ist dicht, mit Laubklumpen auf der ganzen Hülle und Laub im Inneren. Das Laub ist umgefärbt und damit im Katalog ein eigener Block; in Wanderlore wird daraus eine veränderte Textur, die in `docs/medien.md` als verändert einzutragen ist. Der Autor fand den Ahorn am 25.11.2026 ziemlich gut getroffen. Der Setzling fehlt noch.
+
+Die fünfte Art ist die Weide, am 25.11.2026 nach einem Foto des Autors und nach `ET-T22` aus Ethereal beschrieben, dessen Form ihm gefällt: ein kurzer, dicker Stamm mit liegenden Wurzeln, der sich tief in wenige Arme gabelt; darüber eine flache Kuppel aus Laub, deutlich breiter als der Baum hoch ist; und vom ganzen Rand hängen Vorhänge aus demselben Laub fast bis zum Boden, verschieden lang. Die Textur des Weidenlaubs besteht selbst aus Strähnen, einen eigenen Block für hängendes Laub braucht die Weide deshalb nicht. Sein Urteil und der Setzling stehen aus.
+
+**Die Kategorien von Zone 1** sind Weichholz und Hartholz. Weichholz bekommt die Bretter `EB25`, die Birkenbretter aus Extra Biomes; das hat der Autor am 24.11.2026 gewählt. Hartholz bekommt `EB33`, die Eichenbretter aus Extra Biomes.
+
+**Die Baumarten von Zone 1,** wie der Autor sie am 24.11.2026 skizziert hat. Ausgearbeitet sind davon bisher Birke und Buche.
+
+| Biom | Baumart | Kategorie | Häufigkeit |
+| --- | --- | --- | --- |
+| Blossom Downs | Birke | Weichholz | – |
+| Blossom Downs | Buche | Hartholz | selten |
+| Old Wood | Eiche | Hartholz | häufig |
+| Old Wood | Ahorn | Weichholz | mäßig |
+| Old Wood | Buche | Hartholz | selten |
+| Reed Meres | Weide | Weichholz | – |
+| Reed Meres | Erle | Weichholz | – |
+
+Die Buche steht in zwei Biomen. Ein Biom hat also nicht mehr nur eine einzige, ihm allein gehörende Holzart, sondern eine Mischung, in der einzelne Arten auch beim Nachbarn vorkommen. Die Erle hat der Autor als zweiten Sumpfbaum gewählt, auf Vorschlag von Claude. Sie ist Weichholz; Reed Meres hat damit kein Hartholz. Ausgearbeitet sind Birke und Buche; es fehlen Eiche, Ahorn, Weide und Erle.
+
+Zum Auswählen dient der [Wanderlore-Katalog](https://github.com/peddn/wanderlore-catalog). Seine Welt der Pflanzen zeigt die Blöcke, Bäume und Bodenpflanzen der Quellen mit Nummern, die Bäume auch nach Art sortiert, und in einem eigenen Bereich die Auswahl: jede gewählte Form mit dem gewählten Stamm und Laub.
 
 Welche Biome es gibt, entsteht mit der Zeit am Generator. Festgelegt sind die drei Biome von Zone 1, mit denen der Prototyp beginnt; die übrigen sind erste Skizzen. Alle Namen sind Arbeitsnamen.
 
